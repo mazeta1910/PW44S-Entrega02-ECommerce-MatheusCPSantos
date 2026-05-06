@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("products")
 public class ProductController extends CrudController<Product, ProductDTO, Long> {
@@ -39,14 +41,13 @@ public class ProductController extends CrudController<Product, ProductDTO, Long>
         return productMapper.toEntity(dto);
     }
 
-//    @GetMapping("/categories/{id}")
-//    public ResponseEntity<ProductDTO> findOne(@PathVariable Long id) {
-//        Product entity = getService().findById(id);
-//        if (entity != null) {
-//            return ResponseEntity.ok(convertToDto(entity));
-//        } else {
-//            return ResponseEntity.noContent().build();
-//        }
-//    }
+    @GetMapping("by-category/{categoryId}")
+    public ResponseEntity<List<ProductDTO>> findByCategory(@PathVariable Long categoryId) {
+        List<ProductDTO> products = productService.findByCategoryId(categoryId)
+                .stream()
+                .map(productMapper::toDto)
+                .toList();
+        return ResponseEntity.ok(products);
+    }
 
 }
