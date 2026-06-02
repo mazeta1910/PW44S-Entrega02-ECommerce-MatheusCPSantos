@@ -119,8 +119,8 @@ export default function Footer() {
         {/* Copyright */}
         <div className="footer-bottom">
           <p>
-            © 2025 THDFM - Técnicos Horríveis do Futebol Mundial. Todos os
-            direitos reservados.
+            © 2026 Nexus Store — Games, periféricos e hardware. Todos os direitos
+            reservados.
           </p>
         </div>
       </div>

@@ -5,7 +5,7 @@ import br.edu.utfpr.pb.pw44s.server.model.Address;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = UserMapper.class)
 public interface AddressMapper {
     AddressDTO toDto(Address entity);
 

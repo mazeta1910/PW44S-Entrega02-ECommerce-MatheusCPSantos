@@ -1,5 +1,6 @@
 package br.edu.utfpr.pb.pw44s.server.dto;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -20,8 +21,9 @@ public class OrderDTO {
 
     private UserDTO user;
 
-    @NotEmpty(message = "O pedido deve conter pelo menos um produto.")
-    private List<ProductDTO> products;
+    @NotEmpty(message = "O pedido deve conter pelo menos um item.")
+    @Valid
+    private List<OrderItemDTO> items;
 
     @NotNull(message = "O endereço de entrega é obrigatório.")
     private AddressDTO deliveryAddress;

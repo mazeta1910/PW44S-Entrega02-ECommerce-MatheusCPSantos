@@ -1,18 +1,24 @@
-import type { IProduct, IResponse } from "@/commons/types";
+import type {
+  DeliveryType,
+  IPage,
+  IProduct,
+  IResponse,
+  ItemCondition,
+  Platform,
+} from "@/commons/types";
 import { api } from "@/lib/axios";
 
-// URL base para as requisições de produtos
-const categoryURL = "/products";
+const productsURL = "/products";
 
 /**
  * Função para salvar um produto
- * @param category - Dados do produto que será salvo
+ * @param product - Dados do produto que será salvo
  * @returns - Retorna uma Promise com a resposta da API
  **/
-const save = async (category: IProduct): Promise<IResponse> => {
+const save = async (product: IProduct): Promise<IResponse> => {
   let response = {} as IResponse;
   try {
-    const data = await api.post(categoryURL, category);
+    const data = await api.post(productsURL, product);
     response = {
       status: 200,
       success: true,
@@ -21,10 +27,10 @@ const save = async (category: IProduct): Promise<IResponse> => {
     };
   } catch (err: any) {
     response = {
-      status: err.response.status,
+      status: err.response?.status ?? 0,
       success: false,
       message: "Falha ao salvar produto",
-      data: err.response.data,
+      data: err.response?.data,
     };
   }
   return response;
@@ -38,19 +44,19 @@ const save = async (category: IProduct): Promise<IResponse> => {
 const findAll = async (): Promise<IResponse> => {
   let response = {} as IResponse;
   try {
-    const data = await api.get(categoryURL);
+    const { status, data } = await api.get(productsURL);
     response = {
-      status: 200,
+      status,
       success: true,
       message: "Lista de produtos carregada com sucesso!",
-      data: data.data,
+      data,
     };
   } catch (err: any) {
     response = {
-      status: err.response.status,
+      status: err.response?.status ?? 0,
       success: false,
       message: "Falha ao carregar a lista de produtos",
-      data: err.response.data,
+      data: err.response?.data,
     };
   }
   return response;
@@ -64,7 +70,7 @@ const findAll = async (): Promise<IResponse> => {
 const remove = async (id: number): Promise<IResponse> => {
   let response = {} as IResponse;
   try {
-    const data = await api.delete(`${categoryURL}/${id}`);
+    const data = await api.delete(`${productsURL}/${id}`);
     response = {
       status: 200,
       success: true,
@@ -73,10 +79,10 @@ const remove = async (id: number): Promise<IResponse> => {
     };
   } catch (err: any) {
     response = {
-      status: err.response.status,
+      status: err.response?.status ?? 0,
       success: false,
       message: "Falha ao remover o produto",
-      data: err.response.data,
+      data: err.response?.data,
     };
   }
   return response;
@@ -90,7 +96,7 @@ const remove = async (id: number): Promise<IResponse> => {
 const findById = async (id: number): Promise<IResponse> => {
   let response = {} as IResponse;
   try {
-    const data = await api.get(`${categoryURL}/${id}`);
+    const data = await api.get(`${productsURL}/${id}`);
     response = {
       status: 200,
       success: true,
@@ -99,10 +105,83 @@ const findById = async (id: number): Promise<IResponse> => {
     };
   } catch (err: any) {
     response = {
-      status: err.response.status,
+      status: err.response?.status ?? 0,
       success: false,
       message: "Falha ao carregar o produto",
-      data: err.response.data,
+      data: err.response?.data,
+    };
+  }
+  return response;
+};
+
+/**
+ * Busca produtos filtrados por categoria
+ * @param categoryId - ID da categoria
+ */
+const findByCategory = async (categoryId: number): Promise<IResponse> => {
+  let response = {} as IResponse;
+  try {
+    const data = await api.get(`${productsURL}/by-category/${categoryId}`);
+    response = {
+      status: 200,
+      success: true,
+      message: "Produtos da categoria carregados com sucesso!",
+      data: data.data,
+    };
+  } catch (err: any) {
+    response = {
+      status: err.response?.status ?? 0,
+      success: false,
+      message: "Falha ao carregar produtos da categoria",
+      data: err.response?.data,
+    };
+  }
+  return response;
+};
+
+export interface CatalogParams {
+  page?: number;
+  size?: number;
+  categoryIds?: number[];
+  deliveryTypes?: DeliveryType[];
+  platforms?: Platform[];
+  itemConditions?: ItemCondition[];
+}
+
+const findCatalog = async ({
+  page = 0,
+  size = 9,
+  categoryIds,
+  deliveryTypes,
+  platforms,
+  itemConditions,
+}: CatalogParams): Promise<IResponse> => {
+  let response = {} as IResponse;
+  try {
+    const params = new URLSearchParams({
+      page: String(page),
+      size: String(size),
+    });
+    categoryIds?.forEach((id) => params.append("categoryIds", String(id)));
+    deliveryTypes?.forEach((type) => params.append("deliveryTypes", type));
+    platforms?.forEach((platform) => params.append("platforms", platform));
+    itemConditions?.forEach((condition) =>
+      params.append("itemConditions", condition),
+    );
+
+    const { status, data } = await api.get(`${productsURL}/catalog?${params}`);
+    response = {
+      status,
+      success: true,
+      message: "Catálogo carregado com sucesso!",
+      data,
+    };
+  } catch (err: any) {
+    response = {
+      status: err.response?.status ?? 0,
+      success: false,
+      message: "Falha ao carregar o catálogo",
+      data: err.response?.data,
     };
   }
   return response;
@@ -112,6 +191,8 @@ const findById = async (id: number): Promise<IResponse> => {
 const ProductService = {
   save,
   findAll,
+  findCatalog,
+  findByCategory,
   remove,
   findById,
 };

@@ -1,4 +1,9 @@
 import type { IProduct } from "@/commons/types";
+import {
+  formatConditionSummary,
+  formatVariantCount,
+  getProductDisplayPrice,
+} from "@/utils/product-utils";
 import { Button } from "primereact/button";
 import { Card } from "primereact/card";
 
@@ -6,16 +11,27 @@ interface ProductCardProps {
   product: IProduct;
 }
 
+const PLACEHOLDER_IMAGE =
+  "https://primefaces.org/cdn/primereact/images/product/blue-band.jpg";
+
 export const ProductCard = ({ product }: ProductCardProps) => {
+  const price = getProductDisplayPrice(product);
+  const variantHint = formatVariantCount(product);
+  const conditionHint = formatConditionSummary(product);
+  const priceLabel =
+    variantHint != null
+      ? `A partir de R$ ${price.toFixed(2)}`
+      : `R$ ${price.toFixed(2)}`;
+
   return (
     <div key={product.id} className="p-col-12 p-sm-6 p-md-4 p-lg-3 mb-4">
       <Card
         title={product.name}
-        subTitle={`R$ ${product.price.toFixed(2)}`}
+        subTitle={priceLabel}
         header={
           <img
             alt={product.name}
-            src="https://primefaces.org/cdn/primereact/images/product/blue-band.jpg"
+            src={product.image || PLACEHOLDER_IMAGE}
             style={{ width: "100%", height: "200px", objectFit: "cover" }}
           />
         }
@@ -35,6 +51,11 @@ export const ProductCard = ({ product }: ProductCardProps) => {
         }
       >
         <p>{product.description}</p>
+        {(variantHint || conditionHint) && (
+          <p className="text-sm text-color-secondary mt-2">
+            {[variantHint, conditionHint].filter(Boolean).join(" · ")}
+          </p>
+        )}
       </Card>
     </div>
   );

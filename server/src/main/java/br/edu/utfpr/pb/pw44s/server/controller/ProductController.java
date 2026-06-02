@@ -3,12 +3,18 @@ package br.edu.utfpr.pb.pw44s.server.controller;
 import br.edu.utfpr.pb.pw44s.server.dto.ProductDTO;
 import br.edu.utfpr.pb.pw44s.server.mapper.ProductMapper;
 import br.edu.utfpr.pb.pw44s.server.model.Product;
+import br.edu.utfpr.pb.pw44s.server.model.enums.DeliveryType;
+import br.edu.utfpr.pb.pw44s.server.model.enums.ItemCondition;
+import br.edu.utfpr.pb.pw44s.server.model.enums.Platform;
 import br.edu.utfpr.pb.pw44s.server.service.ICrudService;
 import br.edu.utfpr.pb.pw44s.server.service.IProductService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -48,6 +54,24 @@ public class ProductController extends CrudController<Product, ProductDTO, Long>
                 .map(productMapper::toDto)
                 .toList();
         return ResponseEntity.ok(products);
+    }
+
+    @GetMapping("catalog")
+    public ResponseEntity<Page<ProductDTO>> findCatalog(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "9") int size,
+            @RequestParam(required = false) List<Long> categoryIds,
+            @RequestParam(required = false) List<DeliveryType> deliveryTypes,
+            @RequestParam(required = false) List<Platform> platforms,
+            @RequestParam(required = false) List<ItemCondition> itemConditions) {
+        Page<Product> productPage = productService.findCatalog(
+                PageRequest.of(page, size),
+                categoryIds,
+                deliveryTypes,
+                platforms,
+                itemConditions
+        );
+        return ResponseEntity.ok(productPage.map(productMapper::toDto));
     }
 
 }

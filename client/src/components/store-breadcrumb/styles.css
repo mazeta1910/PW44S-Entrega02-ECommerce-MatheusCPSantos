@@ -1,0 +1,26 @@
+.store-breadcrumb {
+  margin-bottom: 1.25rem;
+}
+
+.store-breadcrumb .p-breadcrumb {
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+.store-breadcrumb .p-menuitem-link {
+  font-size: 0.9rem;
+  gap: 0.5rem;
+}
+
+.store-breadcrumb .p-breadcrumb-home .p-menuitem-link {
+  gap: 0.5rem;
+}
+
+.store-breadcrumb .p-breadcrumb-home .p-menuitem-icon {
+  margin-right: 0.35rem;
+}
+
+.store-breadcrumb .p-breadcrumb-chevron {
+  font-size: 0.75rem;
+}

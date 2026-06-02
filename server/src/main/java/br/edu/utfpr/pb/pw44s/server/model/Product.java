@@ -4,8 +4,9 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -13,7 +14,8 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Getter @Setter
+@Getter
+@Setter
 public class Product {
 
     @Id
@@ -28,9 +30,6 @@ public class Product {
     private String description;
 
     @NotNull
-    private BigDecimal price;
-
-    @NotNull
     private String image;
 
     @ManyToOne
@@ -41,7 +40,10 @@ public class Product {
     @Column(name = "is_adult_only")
     private Boolean adultOnly = false;
 
-    // Lógica de conferência no Checkout ou Carrinho
+    @Builder.Default
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProductVariant> variants = new ArrayList<>();
+
     public void validatePurchase(User user, Product product) {
         int userAge = java.time.Period.between(user.getBirthDate(), LocalDate.now()).getYears();
 

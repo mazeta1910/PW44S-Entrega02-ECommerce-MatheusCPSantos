@@ -4,6 +4,7 @@ import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import type { IProduct } from "@/commons/types";
 import ProductService from "@/services/product-service";
+import { formatVariantCount, getProductDisplayPrice } from "@/utils/product-utils";
 import { useNavigate } from "react-router-dom";
 import { Toast } from "primereact/toast";
 
@@ -82,11 +83,16 @@ export const ProductListPage = () => {
   );
 
   const priceTemplate = (rowData: IProduct) => {
-    return rowData.price.toLocaleString("pt-BR", {
+    const price = getProductDisplayPrice(rowData);
+    const prefix = formatVariantCount(rowData) ? "A partir de " : "";
+    return `${prefix}${price.toLocaleString("pt-BR", {
       style: "currency",
       currency: "BRL",
-    });
+    })}`;
   };
+
+  const variantsTemplate = (rowData: IProduct) =>
+    rowData.variants?.length ?? 0;
 
   return (
     <div className="container mx-auto px-4 pt-24">
@@ -97,6 +103,7 @@ export const ProductListPage = () => {
         <Column field="name" header="Nome" />
         <Column field="description" header="Descrição" />
         <Column header="Preço" body={priceTemplate} style={{ width: "15%" }} />
+        <Column header="Variações" body={variantsTemplate} style={{ width: "10%" }} />
         <Column field="category.name" header="Categoria" />
         <Column body={actionTemplate} header="Ações" style={{ width: "15%" }} />
       </DataTable>

@@ -21,10 +21,10 @@ const save = async (category: ICategory): Promise<IResponse> => {
     };
   } catch (err: any) {
     response = {
-      status: err.response.status,
+      status: err.response?.status ?? 0,
       success: false,
       message: "Falha ao salvar categoria",
-      data: err.response.data,
+      data: err.response?.data,
     };
   }
   return response;
@@ -38,19 +38,19 @@ const save = async (category: ICategory): Promise<IResponse> => {
 const findAll = async (): Promise<IResponse> => {
   let response = {} as IResponse;
   try {
-    const data = await api.get(categoryURL);
+    const { status, data } = await api.get(categoryURL);
     response = {
-      status: 200,
+      status,
       success: true,
       message: "Lista de categorias carregada com sucesso!",
-      data: data.data,
+      data,
     };
   } catch (err: any) {
     response = {
-      status: err.response.status,
+      status: err.response?.status ?? 0,
       success: false,
       message: "Falha ao carregar a lista de categorias",
-      data: err.response.data,
+      data: err.response?.data,
     };
   }
   return response;
@@ -73,10 +73,10 @@ const remove = async (id: number): Promise<IResponse> => {
     };
   } catch (err: any) {
     response = {
-      status: err.response.status,
+      status: err.response?.status ?? 0,
       success: false,
       message: "Falha ao remover categoria",
-      data: err.response.data,
+      data: err.response?.data,
     };
   }
   return response;
@@ -99,10 +99,10 @@ const findById = async (id: number): Promise<IResponse> => {
     };
   } catch (err: any) {
     response = {
-      status: err.response.status,
+      status: err.response?.status ?? 0,
       success: false,
       message: "Falha ao carregar categoria",
-      data: err.response.data,
+      data: err.response?.data,
     };
   }
   return response;

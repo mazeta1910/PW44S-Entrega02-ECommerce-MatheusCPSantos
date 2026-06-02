@@ -2,7 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import type { ReactNode } from "react";
 import type { AuthenticatedUser, AuthenticationResponse } from "@/commons/types";
 import { api } from "@/lib/axios";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 interface AuthContextType {
   authenticated: boolean;
@@ -17,23 +17,35 @@ interface AuthProviderProps {
 
 const AuthContext = createContext({} as AuthContextType);
 
+function getStoredToken(): string | null {
+  const stored = localStorage.getItem("token");
+  if (!stored) return null;
+  try {
+    return stored.startsWith('"') ? JSON.parse(stored) : stored;
+  } catch {
+    return stored;
+  }
+}
+
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [authenticated, setAuthenticated] = useState(false);
   const [authenticatedUser, setAuthenticatedUser] =
     useState<AuthenticatedUser>();
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
-    const storedToken = localStorage.getItem("token");
-
-    if (storedUser && storedToken) {
+    const token = getStoredToken();
+    if (storedUser && token) {
       setAuthenticatedUser(JSON.parse(storedUser));
       setAuthenticated(true);
-      api.defaults.headers.common["Authorization"] = `Bearer ${JSON.parse(
-        storedToken
-      )}`;
-      navigate("/");
+      api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
+      const authOnlyPaths = ["/login", "/register"];
+      if (authOnlyPaths.includes(location.pathname)) {
+        navigate("/", { replace: true });
+      }
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -42,14 +54,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     authenticationResponse: AuthenticationResponse
   ) => {
     try {
-      localStorage.setItem(
-        "token",
-        JSON.stringify(authenticationResponse.token)
-      );
+      localStorage.setItem("token", authenticationResponse.token);
       localStorage.setItem("user", JSON.stringify(authenticationResponse.user));
-      api.defaults.headers.common[
-        "Authorization"
-      ] = `Bearer ${authenticationResponse.token}`;
+      api.defaults.headers.common["Authorization"] =
+        `Bearer ${authenticationResponse.token}`;
 
       setAuthenticatedUser(authenticationResponse.user);
       setAuthenticated(true);

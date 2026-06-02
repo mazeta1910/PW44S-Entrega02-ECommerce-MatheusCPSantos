@@ -3,7 +3,7 @@ import { useContext } from "react";
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (!context) {
+  if (!context?.handleLogin) {
     throw new Error("useAuth precisa estar dentro de AuthProvider");
   }
   return context;

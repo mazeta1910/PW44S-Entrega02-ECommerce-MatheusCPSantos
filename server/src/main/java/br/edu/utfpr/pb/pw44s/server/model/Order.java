@@ -7,6 +7,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -33,13 +34,9 @@ public class Order {
     @JsonIgnoreProperties({"password", "authorities"})
     private User user;
 
-    @ManyToMany
-    @JoinTable(
-            name = "tb_order_product",
-            joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id")
-    )
-    private List<Product> products;
+    @Builder.Default
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderItem> items = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "address_id", nullable = false)
@@ -48,13 +45,5 @@ public class Order {
     @PrePersist
     public void prePersist() {
         this.orderDate = LocalDateTime.now();
-    }
-
-    public void calculateTotal() {
-        if (products != null) {
-            this.total = products.stream()
-                    .map(Product::getPrice)
-                    .reduce(BigDecimal.ZERO, BigDecimal::add);
-        }
     }
 }

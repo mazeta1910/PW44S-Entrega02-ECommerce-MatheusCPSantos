@@ -1,25 +1,37 @@
 package br.edu.utfpr.pb.pw44s.server.service.impl;
 
+import br.edu.utfpr.pb.pw44s.server.dto.OrderDTO;
+import br.edu.utfpr.pb.pw44s.server.dto.OrderItemDTO;
+import br.edu.utfpr.pb.pw44s.server.mapper.AddressMapper;
 import br.edu.utfpr.pb.pw44s.server.model.Order;
-import br.edu.utfpr.pb.pw44s.server.model.Product;
+import br.edu.utfpr.pb.pw44s.server.model.OrderItem;
+import br.edu.utfpr.pb.pw44s.server.model.ProductVariant;
+import br.edu.utfpr.pb.pw44s.server.model.User;
 import br.edu.utfpr.pb.pw44s.server.repository.OrderRepository;
-import br.edu.utfpr.pb.pw44s.server.repository.ProductRepository;
+import br.edu.utfpr.pb.pw44s.server.repository.ProductVariantRepository;
 import br.edu.utfpr.pb.pw44s.server.service.IOrderService;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class OrderServiceImpl extends CrudServiceImpl<Order, Long> implements IOrderService {
 
     private final OrderRepository orderRepository;
-    private final ProductRepository productRepository;
+    private final ProductVariantRepository productVariantRepository;
+    private final AddressMapper addressMapper;
 
-    public OrderServiceImpl(OrderRepository orderRepository, ProductRepository productRepository) {
+    public OrderServiceImpl(
+            OrderRepository orderRepository,
+            ProductVariantRepository productVariantRepository,
+            AddressMapper addressMapper) {
         this.orderRepository = orderRepository;
-        this.productRepository = productRepository;
+        this.productVariantRepository = productVariantRepository;
+        this.addressMapper = addressMapper;
     }
 
     @Override
@@ -33,29 +45,80 @@ public class OrderServiceImpl extends CrudServiceImpl<Order, Long> implements IO
     }
 
     @Override
-    public java.util.List<Order> findAll() {
-        String username = org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication().getName();
+    public List<Order> findAll() {
+        String username = org.springframework.security.core.context.SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getName();
         return orderRepository.findByUserUsername(username);
     }
 
     @Override
+    @Transactional
     public Order save(Order order) {
-        java.math.BigDecimal totalCalculado = java.math.BigDecimal.ZERO;
+        if (order.getItems() != null && !order.getItems().isEmpty()) {
+            return saveWithItems(order);
+        }
+        return super.save(order);
+    }
 
-        if (order.getProducts() != null) {
-            for (Product productRef : order.getProducts()) {
+    @Override
+    @Transactional
+    public Order saveFromDto(OrderDTO dto, User user) {
+        Order order = new Order();
+        order.setUser(user);
+        order.setDeliveryAddress(addressMapper.toEntity(dto.getDeliveryAddress()));
+        order.setItems(new ArrayList<>());
 
-                Product realProduct = productRepository.findById(productRef.getId())
-                        .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado no catálogo. ID: " + productRef.getId()));
+        if (dto.getItems() != null) {
+            for (OrderItemDTO itemDto : dto.getItems()) {
+                ProductVariant variant = productVariantRepository
+                        .findById(itemDto.getVariantId())
+                        .orElseThrow(() -> new IllegalArgumentException(
+                                "Variação não encontrada. ID: " + itemDto.getVariantId()));
 
-                if (realProduct.getPrice() != null) {
-                    totalCalculado = totalCalculado.add(realProduct.getPrice());
+                if (!Boolean.TRUE.equals(variant.getActive())) {
+                    throw new IllegalArgumentException(
+                            "Variação indisponível: " + variant.getLabel());
                 }
+
+                int quantity = itemDto.getQuantity() != null ? itemDto.getQuantity() : 1;
+
+                OrderItem item = OrderItem.builder()
+                        .order(order)
+                        .variant(variant)
+                        .quantity(quantity)
+                        .unitPrice(variant.getPrice())
+                        .build();
+                order.getItems().add(item);
             }
         }
 
-        order.setTotal(totalCalculado);
+        return saveWithItems(order);
+    }
 
-        return super.save(order);
+    private Order saveWithItems(Order order) {
+        BigDecimal total = BigDecimal.ZERO;
+
+        for (OrderItem item : order.getItems()) {
+            item.setOrder(order);
+
+            if (item.getVariant() != null && item.getVariant().getId() != null) {
+                ProductVariant variant = productVariantRepository
+                        .findById(item.getVariant().getId())
+                        .orElseThrow(() -> new IllegalArgumentException(
+                                "Variação não encontrada. ID: " + item.getVariant().getId()));
+
+                item.setVariant(variant);
+                item.setUnitPrice(variant.getPrice());
+            }
+
+            BigDecimal lineTotal = item.getUnitPrice()
+                    .multiply(BigDecimal.valueOf(item.getQuantity()));
+            total = total.add(lineTotal);
+        }
+
+        order.setTotal(total);
+        return orderRepository.save(order);
     }
 }

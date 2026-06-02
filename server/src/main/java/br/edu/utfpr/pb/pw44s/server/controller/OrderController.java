@@ -53,10 +53,7 @@ public class OrderController extends CrudController<Order, OrderDTO, Long> {
     @PostMapping("checkout")
     public ResponseEntity<OrderResponseDTO> finalizePurchase(@RequestBody OrderDTO orderDto,
                                                              @AuthenticationPrincipal User user) {
-        Order order = orderMapper.toEntity(orderDto);
-        order.setUser(user);
-
-        Order savedOrder = orderService.save(order);
+        Order savedOrder = orderService.saveFromDto(orderDto, user);
         Order completeOrder = orderService.findById(savedOrder.getId());
 
         return ResponseEntity.ok(orderMapper.toResponseDto(completeOrder));

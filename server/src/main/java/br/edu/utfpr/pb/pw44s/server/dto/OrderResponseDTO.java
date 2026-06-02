@@ -18,10 +18,11 @@ public class OrderResponseDTO {
 
     private UserResponseDTO user;
 
-    private List<ProductDTO> products;
+    private List<OrderItemResponseDTO> items;
+
     private AddressDTO deliveryAddress;
 
     private Double total;
-    private LocalDate orderDate;
 
+    private LocalDate orderDate;
 }
