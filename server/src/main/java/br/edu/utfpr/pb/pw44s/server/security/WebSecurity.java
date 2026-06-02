@@ -69,6 +69,15 @@ public class WebSecurity {
                 .requestMatchers(HttpMethod.GET, "/categories/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/images/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/freights/calculate").permitAll()
+                .requestMatchers(HttpMethod.POST, "/categories/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/categories/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/categories/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.POST, "/products/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/products/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/products/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.POST, "/product-variants/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/product-variants/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/product-variants/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
         );
 

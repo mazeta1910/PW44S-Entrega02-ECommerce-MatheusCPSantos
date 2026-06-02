@@ -1,14 +1,27 @@
 package br.edu.utfpr.pb.pw44s.server.model;
 
+import java.math.BigDecimal;
+import java.util.Objects;
+
 import br.edu.utfpr.pb.pw44s.server.model.enums.DeliveryType;
 import br.edu.utfpr.pb.pw44s.server.model.enums.ItemCondition;
 import br.edu.utfpr.pb.pw44s.server.model.enums.Platform;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
-
-import java.math.BigDecimal;
-import java.util.Objects;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "tb_product_variant")
@@ -37,6 +50,9 @@ public class ProductVariant {
 
     @NotNull
     private BigDecimal price;
+
+    @Column(name = "list_price")
+    private BigDecimal listPrice;
 
     @NotNull
     @Enumerated(EnumType.STRING)

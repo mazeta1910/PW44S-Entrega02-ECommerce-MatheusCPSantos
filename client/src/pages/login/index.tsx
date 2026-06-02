@@ -8,6 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import type { AuthenticationResponse, IUserLogin } from "@/commons/types";
 import { useAuth } from "@/context/hooks/use-auth";
 import AuthService from "@/services/auth-service";
+import { getPostLoginPath } from "@/utils/auth-utils";
 import { Toast } from "primereact/toast";
 
 export const LoginPage = () => {
@@ -37,7 +38,7 @@ export const LoginPage = () => {
           life: 3000,
         });
         setTimeout(() => {
-          navigate("/");
+          navigate(getPostLoginPath(authenticationResponse.user));
         }, 1000);
       } else {
         toast.current?.show({

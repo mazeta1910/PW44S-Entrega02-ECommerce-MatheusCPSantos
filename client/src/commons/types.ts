@@ -61,6 +61,7 @@ export interface IProductVariant {
   label: string;
   sku: string;
   price: number;
+  listPrice?: number;
   deliveryType: DeliveryType;
   platform: Platform;
   itemCondition: ItemCondition;

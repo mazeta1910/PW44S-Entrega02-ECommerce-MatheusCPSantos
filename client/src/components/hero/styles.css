@@ -2,9 +2,9 @@
 .hero-carousel-component {
   position: relative;
   width: 100%;
-  height: 450px;
+  height: 300px;
   overflow: hidden;
-  background-color: #000; /* Fundo preto de fallback */
+  background-color: #000;
 }
 
 /* O Slide individual */
@@ -51,11 +51,10 @@
 .hero-content {
   text-align: center;
   color: white;
-  max-width: 800px;
-  padding: 2rem;
+  max-width: 640px;
+  padding: 1rem;
   width: 100%;
   box-sizing: border-box;
-  /* Pequena animação para o texto subir suavemente */
   transform: translateY(20px);
   transition: transform 0.8s ease-out;
 }
@@ -65,29 +64,29 @@
 }
 
 .hero-content h1 {
-  font-size: 3rem;
+  font-size: 1.75rem;
   font-weight: bold;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   text-transform: uppercase;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 }
 
 .hero-content p {
-  font-size: 1.25rem;
-  margin-bottom: 2rem;
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
   text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
 }
 
-/* Botão do Banner */
 .btn-hero {
   display: inline-block;
-  background-color: #2563eb; /* var(--color-primary) */
+  background-color: #2563eb;
   color: white;
-  padding: 1rem 2rem;
+  padding: 0.55rem 1.25rem;
   border-radius: 4px;
   text-decoration: none;
   font-weight: 600;
+  font-size: 0.8rem;
   text-transform: uppercase;
   transition: background-color 0.3s, transform 0.2s;
   cursor: pointer;
@@ -109,11 +108,11 @@
   z-index: 10;
   background-color: rgba(0, 0, 0, 0.3);
   color: white;
-  width: 50px;
-  height: 50px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   border: none;
-  font-size: 1.5rem;
+  font-size: 1.1rem;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -157,8 +156,8 @@
 
 /* Responsivo */
 @media (max-width: 768px) {
-  .hero-carousel-component { height: 350px; }
-  .hero-content h1 { font-size: 1.8rem; }
-  .hero-content p { font-size: 1rem; }
-  .hero-arrow { width: 35px; height: 35px; font-size: 1rem; }
+  .hero-carousel-component { height: 240px; }
+  .hero-content h1 { font-size: 1.25rem; }
+  .hero-content p { font-size: 0.85rem; }
+  .hero-arrow { width: 30px; height: 30px; font-size: 0.9rem; }
 }

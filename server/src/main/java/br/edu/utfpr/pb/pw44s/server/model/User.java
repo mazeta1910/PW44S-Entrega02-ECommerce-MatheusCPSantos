@@ -76,6 +76,9 @@ public class User implements UserDetails {
     @Transient
     @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        if (username != null && "admin".equalsIgnoreCase(username)) {
+            return AuthorityUtils.createAuthorityList("ROLE_ADMIN", "ROLE_USER");
+        }
         return AuthorityUtils.createAuthorityList("ROLE_USER");
     }
 

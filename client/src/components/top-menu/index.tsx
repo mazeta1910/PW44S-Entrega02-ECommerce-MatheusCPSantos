@@ -5,7 +5,10 @@ import { Avatar } from "primereact/avatar";
 import { Button } from "primereact/button";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/hooks/use-auth";
+import { isAdmin } from "@/utils/auth-utils";
 import { InputSwitch } from "primereact/inputswitch";
+import { StoreCategoriesMenu } from "@/components/store-categories-menu";
+import "./styles.css";
 
 const TopMenu: React.FC = () => {
   const navigate = useNavigate();
@@ -26,31 +29,22 @@ const TopMenu: React.FC = () => {
     localStorage.setItem("theme", darkMode ? "dark" : "light");
   }, [darkMode]);
 
-  const goToCatalog = () => {
-    navigate("/catalog");
-  };
-
   const handleLogoutClick = () => {
     handleLogout();
     navigate("/");
   };
 
-  const menuItems = useMemo<MenuItem[]>(() => {
-    const storeItems: MenuItem[] = [
-      { label: "Início", icon: "pi pi-home", command: () => navigate("/") },
-      {
-        label: "Produtos",
-        icon: "pi pi-shopping-bag",
-        command: goToCatalog,
-      },
-    ];
-
-    if (!authenticated) {
-      return storeItems;
+  const adminMenuItems = useMemo<MenuItem[]>(() => {
+    if (!authenticated || !isAdmin(authenticatedUser)) {
+      return [];
     }
 
     return [
-      ...storeItems,
+      {
+        label: "Painel admin",
+        icon: "pi pi-th-large",
+        command: () => navigate("/admin"),
+      },
       {
         label: "Administração",
         icon: "pi pi-cog",
@@ -90,24 +84,42 @@ const TopMenu: React.FC = () => {
         ],
       },
     ];
-  }, [authenticated, navigate, location.pathname]);
+  }, [authenticated, authenticatedUser, navigate]);
 
   const handleLogoClick = () => {
+    if (authenticated && isAdmin(authenticatedUser)) {
+      navigate("/admin");
+      return;
+    }
     navigate("/");
   };
 
   const start = (
-    <div
-      className="flex align-items-center gap-2 cursor-pointer"
-      onClick={handleLogoClick}
-    >
-      <img
-        src="/assets/images/utfpr-logo-nb.png"
-        alt="Logo"
-        height={32}
-        style={{ objectFit: "contain" }}
-      />
-      <span className="font-bold text-lg hidden sm:block">Nexus Store</span>
+    <div className="top-menu-start">
+      <div
+        className="top-menu-brand flex align-items-center gap-2 cursor-pointer"
+        onClick={handleLogoClick}
+      >
+        <img
+          src="/assets/images/utfpr-logo-nb.png"
+          alt="Logo"
+          height={32}
+          style={{ objectFit: "contain" }}
+        />
+        <span className="font-bold text-lg hidden sm:block">Nexus Store</span>
+      </div>
+
+      <nav className="top-menu-store-nav" aria-label="Navegação da loja">
+        <button
+          type="button"
+          className="top-menu-nav-link"
+          onClick={() => navigate("/")}
+        >
+          <span className="pi pi-home top-menu-nav-icon" aria-hidden />
+          <span>Início</span>
+        </button>
+        <StoreCategoriesMenu />
+      </nav>
     </div>
   );
 
@@ -182,11 +194,11 @@ const TopMenu: React.FC = () => {
         backgroundColor: "var(--surface-ground)",
         boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
       }}
-      className="fixed top-0 left-0 w-full z-50"
+      className="fixed top-0 left-0 w-full z-50 top-menu-shell"
     >
       <Menubar
         key={authenticated ? "auth" : "guest"}
-        model={menuItems}
+        model={adminMenuItems}
         start={start}
         end={end}
       />

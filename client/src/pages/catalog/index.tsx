@@ -41,6 +41,20 @@ function parseEnumList<T extends string>(param: string | null): T[] {
   return param.split(",").map((value) => value.trim()) as T[];
 }
 
+function sameNumberArray(a: number[], b: number[]): boolean {
+  if (a.length !== b.length) return false;
+  const sortedA = [...a].sort((x, y) => x - y);
+  const sortedB = [...b].sort((x, y) => x - y);
+  return sortedA.every((value, index) => value === sortedB[index]);
+}
+
+function sameStringArray(a: string[], b: string[]): boolean {
+  if (a.length !== b.length) return false;
+  const sortedA = [...a].sort();
+  const sortedB = [...b].sort();
+  return sortedA.every((value, index) => value === sortedB[index]);
+}
+
 export function CatalogPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [categories, setCategories] = useState<ICategory[]>([]);
@@ -132,6 +146,31 @@ export function CatalogPage() {
     };
     loadCategories();
   }, []);
+
+  useEffect(() => {
+    const nextCategories = parseIds(searchParams.get("categories"));
+    const nextDelivery = parseEnumList<DeliveryType>(searchParams.get("delivery"));
+    const nextPlatforms = parseEnumList<Platform>(searchParams.get("platforms"));
+    const nextConditions = parseEnumList<ItemCondition>(
+      searchParams.get("conditions"),
+    );
+    const urlPage = Number(searchParams.get("page") ?? "0");
+    const nextPage = Number.isNaN(urlPage) || urlPage < 0 ? 0 : urlPage;
+
+    setSelectedCategoryIds((prev) =>
+      sameNumberArray(prev, nextCategories) ? prev : nextCategories,
+    );
+    setSelectedDeliveryTypes((prev) =>
+      sameStringArray(prev, nextDelivery) ? prev : nextDelivery,
+    );
+    setSelectedPlatforms((prev) =>
+      sameStringArray(prev, nextPlatforms) ? prev : nextPlatforms,
+    );
+    setSelectedConditions((prev) =>
+      sameStringArray(prev, nextConditions) ? prev : nextConditions,
+    );
+    setPage((prev) => (prev === nextPage ? prev : nextPage));
+  }, [searchParams]);
 
   useEffect(() => {
     loadCatalog(

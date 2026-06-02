@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import type { AuthenticatedUser, AuthenticationResponse } from "@/commons/types";
 import { api } from "@/lib/axios";
 import { useLocation, useNavigate } from "react-router-dom";
+import { getPostLoginPath } from "@/utils/auth-utils";
 
 interface AuthContextType {
   authenticated: boolean;
@@ -38,13 +39,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     const storedUser = localStorage.getItem("user");
     const token = getStoredToken();
     if (storedUser && token) {
-      setAuthenticatedUser(JSON.parse(storedUser));
+      const user = JSON.parse(storedUser) as AuthenticatedUser;
+      setAuthenticatedUser(user);
       setAuthenticated(true);
       api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-
       const authOnlyPaths = ["/login", "/register"];
       if (authOnlyPaths.includes(location.pathname)) {
-        navigate("/", { replace: true });
+        navigate(getPostLoginPath(user), { replace: true });
       }
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -5,23 +5,12 @@ import type { ICategory, IProduct } from "@/commons/types";
 import Footer from "@/components/footer";
 import Hero from "@/components/hero";
 import { ProductCard } from "@/components/product-card";
+import { PromoCarousel } from "@/components/promo-carousel";
 import CategoryService from "@/services/category-service";
 import ProductService from "@/services/product-service";
+import { getCategoryIconClass } from "@/constants/category-icons";
+import { getPromoProducts } from "@/utils/product-utils";
 import "./styles.css";
-
-const CATEGORY_ICONS: Record<string, string> = {
-  Periféricos: "🎮",
-  Jogos: "🕹️",
-  "PC e Hardware": "💻",
-  Monitores: "🖥️",
-  Cadeiras: "🪑",
-  Consoles: "🎯",
-  "Serviços e Conectividade": "📡",
-};
-
-function getCategoryIcon(name: string): string {
-  return CATEGORY_ICONS[name] ?? "📦";
-}
 
 export function HomePage() {
   const [products, setProducts] = useState<IProduct[]>([]);
@@ -87,10 +76,14 @@ export function HomePage() {
     (c) => c.id === selectedCategoryId,
   )?.name;
 
-  const featuredProducts = useMemo(
-    () => products.slice(0, 4),
-    [products],
-  );
+  const featuredProducts = useMemo(() => {
+    if (selectedCategoryId !== null) {
+      return products.slice(0, 8);
+    }
+    return getPromoProducts(products);
+  }, [products, selectedCategoryId]);
+
+  const isPromoSection = selectedCategoryId === null;
 
   return (
     <div className="page-container">
@@ -101,17 +94,21 @@ export function HomePage() {
           <h2>
             {selectedCategoryName
               ? `Produtos — ${selectedCategoryName}`
-              : "Destaques"}
+              : "Promoções"}
           </h2>
           <p className="section-subtitle">
             {selectedCategoryName
               ? "Produtos filtrados pela categoria selecionada"
-              : "Uma seleção das melhores ofertas — veja o catálogo completo para mais"}
+              : "Ofertas com desconto — preços promocionais por tempo limitado"}
           </p>
 
           <div className="filter-actions">
             <Link to="/catalog">
-              <Button label="Ver catálogo completo" icon="pi pi-arrow-right" />
+              <Button
+                label="Ver catálogo completo"
+                icon="pi pi-arrow-right"
+                size="small"
+              />
             </Link>
           </div>
 
@@ -133,8 +130,16 @@ export function HomePage() {
             <div className="loading-message error-message">{errorMessage}</div>
           ) : products.length === 0 ? (
             <div className="loading-message">
-              Nenhum produto encontrado nesta categoria.
+              Nenhum produto encontrado.
             </div>
+          ) : featuredProducts.length === 0 ? (
+            <div className="loading-message">
+              {isPromoSection
+                ? "Nenhuma promoção ativa no momento."
+                : "Nenhum produto encontrado nesta categoria."}
+            </div>
+          ) : isPromoSection ? (
+            <PromoCarousel products={featuredProducts} />
           ) : (
             <div className="products-grid">
               {featuredProducts.map((product) => (
@@ -161,9 +166,10 @@ export function HomePage() {
                   className="category-card"
                 >
                   <div className="category-image category-image--placeholder">
-                    <span className="category-icon" aria-hidden>
-                      {getCategoryIcon(category.name)}
-                    </span>
+                    <i
+                      className={`category-icon ${getCategoryIconClass(category.name)}`}
+                      aria-hidden
+                    />
                   </div>
                   <h3>{category.name}</h3>
                 </Link>

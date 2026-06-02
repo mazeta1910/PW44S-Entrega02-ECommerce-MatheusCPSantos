@@ -1,0 +1,56 @@
+.promo-carousel {
+  padding: 0 2.5rem;
+}
+
+.promo-carousel__item {
+  padding: 0 0.4rem;
+  height: 100%;
+}
+
+.promo-carousel .p-carousel-content {
+  align-items: stretch;
+}
+
+.promo-carousel .p-carousel-items-content {
+  align-items: stretch;
+}
+
+.promo-carousel .p-carousel-item {
+  display: flex;
+  align-items: stretch;
+}
+
+.promo-carousel .p-carousel-prev-button,
+.promo-carousel .p-carousel-next-button {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: var(--surface-100, rgba(255, 255, 255, 0.08));
+  border: 1px solid var(--surface-border, rgba(255, 255, 255, 0.12));
+  color: var(--text-color, #e2e8f0);
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.promo-carousel .p-carousel-prev-button:hover,
+.promo-carousel .p-carousel-next-button:hover {
+  background: var(--primary-color, #3b82f6);
+  border-color: var(--primary-color, #3b82f6);
+  color: #fff;
+}
+
+.promo-carousel .p-carousel-indicator-list {
+  margin-top: 0.75rem;
+  gap: 0.35rem;
+}
+
+.promo-carousel .p-carousel-indicator-button {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+}
+
+@media (max-width: 768px) {
+  .promo-carousel {
+    padding: 0 1.75rem;
+  }
+}

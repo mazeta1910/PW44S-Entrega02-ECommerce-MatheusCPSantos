@@ -28,6 +28,8 @@ public class ProductVariantDTO {
     @NotNull
     private BigDecimal price;
 
+    private BigDecimal listPrice;
+
     @NotNull
     private DeliveryType deliveryType;
 

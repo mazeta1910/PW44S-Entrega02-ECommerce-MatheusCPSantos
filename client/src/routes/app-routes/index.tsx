@@ -4,6 +4,8 @@ import { RegisterPage } from "@/pages/register";
 import { HomePage } from "@/pages/home";
 import { CatalogPage } from "@/pages/catalog";
 import { RequireAuth } from "@/components/require-auth";
+import { RequireAdmin } from "@/components/require-admin";
+import { AdminDashboardPage } from "@/pages/admin-dashboard";
 import { Layout } from "@/components/layout";
 import { CategoryListPage } from "@/pages/category-list";
 import { CategoryFormPage } from "@/pages/category-form";
@@ -24,18 +26,21 @@ export function AppRoutes() {
         <Route path="login" element={<LoginPage />} />
         <Route path="register" element={<RegisterPage />} />
 
-        {/* rotas administrativas (exigem login) */}
+        {/* rotas administrativas (exigem login e perfil admin) */}
         <Route element={<RequireAuth />}>
-          <Route path="categories" element={<CategoryListPage />} />
-          <Route path="categories/new" element={<CategoryFormPage />} />
-          <Route path="categories/:id" element={<CategoryFormPage />} />
+          <Route element={<RequireAdmin />}>
+            <Route path="admin" element={<AdminDashboardPage />} />
+            <Route path="categories" element={<CategoryListPage />} />
+            <Route path="categories/new" element={<CategoryFormPage />} />
+            <Route path="categories/:id" element={<CategoryFormPage />} />
 
-          <Route path="products" element={<ProductListPage />} />
-          <Route path="products/new" element={<ProductFormPage />} />
-          <Route path="products/:id" element={<ProductFormPage />} />
+            <Route path="products" element={<ProductListPage />} />
+            <Route path="products/new" element={<ProductFormPage />} />
+            <Route path="products/:id" element={<ProductFormPage />} />
 
-          <Route path="products/show" element={<ProductShow />} />
-          <Route path="products/card-list" element={<ProductCardListPage />} />
+            <Route path="products/show" element={<ProductShow />} />
+            <Route path="products/card-list" element={<ProductCardListPage />} />
+          </Route>
         </Route>
 
         <Route path="*" element={<NotFound />} />
