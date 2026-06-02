@@ -1,0 +1,98 @@
+.footer {
+  background-color: #1e293b;
+  color: #cbd5e1;
+  margin-top: auto;
+  padding: 0.5rem 0 0.5rem;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: auto; /* Mantido 'auto' como pedido, mas '2rem' seria mais padrão */
+  margin-bottom: 0.8rem;
+}
+
+.footer-column h3 {
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.footer-column ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-column ul li {
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+}
+
+/* Melhoria Visual dos Links */
+.footer-column a {
+  color: #94a3b8; /* Cor mais clara para diferenciar do texto normal */
+  text-decoration: none;
+  transition: all 0.2s;
+  border-bottom: 1px solid transparent; /* Prepara para o hover */
+}
+
+.footer-column a:hover {
+  color: white;
+  border-bottom: 1px solid white; /* Sublinhado sutil no hover */
+  padding-left: 4px; /* Pequeno deslocamento para indicar interação */
+}
+
+.social-links {
+  margin-top: 1.5rem;
+}
+
+.social-links h4 {
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.social-icons {
+  display: flex;
+  gap: 1rem;
+}
+
+.social-icons a {
+  font-size: 1.5rem;
+  color: #cbd5e1;
+  transition: transform 0.2s, color 0.2s;
+  border-bottom: none; /* Remove borda dos ícones se herdar */
+}
+
+.social-icons a:hover {
+  transform: scale(1.1);
+  color: white;
+  padding-left: 0; /* Remove deslocamento dos ícones */
+}
+
+.footer-bottom {
+  border-top: 1px solid #334155;
+  padding-top: 2rem;
+  text-align: center;
+  font-size: 0.875rem;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .footer-grid {
+    grid-template-columns: 1fr; /* Coluna única no mobile */
+    text-align: center; /* Centraliza texto no mobile */
+    gap: 2rem; /* Adiciona espaçamento vertical entre colunas no mobile */
+  }
+
+  .social-icons {
+    justify-content: center; /* Centraliza ícones no mobile */
+  }
+  
+  .footer-column h3 {
+    margin-top: 1rem; /* Espaço extra antes dos títulos no mobile */
+  }
+}

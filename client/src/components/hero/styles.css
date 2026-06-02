@@ -1,0 +1,164 @@
+/* Container Principal do Componente */
+.hero-carousel-component {
+  position: relative;
+  width: 100%;
+  height: 450px;
+  overflow: hidden;
+  background-color: #000; /* Fundo preto de fallback */
+}
+
+/* O Slide individual */
+.hero-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0; /* Invisível por padrão */
+  transition: opacity 0.8s ease-in-out;
+  z-index: 1;
+}
+
+/* O Slide Ativo */
+.hero-slide.active {
+  opacity: 1; /* Visível */
+  z-index: 2;
+}
+
+/* A div que segura a imagem de fundo */
+.hero-bg {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+/* A máscara escura por cima da imagem */
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* O texto */
+.hero-content {
+  text-align: center;
+  color: white;
+  max-width: 800px;
+  padding: 2rem;
+  width: 100%;
+  box-sizing: border-box;
+  /* Pequena animação para o texto subir suavemente */
+  transform: translateY(20px);
+  transition: transform 0.8s ease-out;
+}
+
+.hero-slide.active .hero-content {
+  transform: translateY(0);
+}
+
+.hero-content h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.hero-content p {
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+/* Botão do Banner */
+.btn-hero {
+  display: inline-block;
+  background-color: #2563eb; /* var(--color-primary) */
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 600;
+  text-transform: uppercase;
+  transition: background-color 0.3s, transform 0.2s;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-hero:hover {
+  background-color: #1d4ed8;
+  color: white !important;
+  transform: scale(1.05);
+}
+
+/* --- CONTROLES (Setas e Bolinhas) --- */
+
+.hero-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background-color: rgba(0, 0, 0, 0.3);
+  color: white;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s;
+}
+
+.hero-arrow:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.hero-arrow.prev { left: 20px; }
+.hero-arrow.next { right: 20px; }
+
+.hero-pagination {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  z-index: 10;
+}
+
+.hero-dot {
+  width: 12px;
+  height: 12px;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.hero-dot.active {
+  background-color: #2563eb; /* Cor ativa */
+  transform: scale(1.2);
+}
+.hero-dot:hover {
+  background-color: white;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .hero-carousel-component { height: 350px; }
+  .hero-content h1 { font-size: 1.8rem; }
+  .hero-content p { font-size: 1rem; }
+  .hero-arrow { width: 35px; height: 35px; font-size: 1rem; }
+}

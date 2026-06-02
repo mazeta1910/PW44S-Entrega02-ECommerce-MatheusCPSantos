@@ -1,0 +1,193 @@
+/* --- PÁGINA HOME --- */
+.home-page {
+  width: 100%;
+}
+
+/* --- Hero Section (Carrossel) --- */
+.hero-carousel-component, /* Caso o componente use esta classe */
+.hero-carousel {
+  position: relative;
+  width: 100%;
+  height: 450px;
+  overflow: hidden;
+}
+
+/* Se o Hero for componente, os estilos dele devem estar em src/components/Hero/styles.css.
+   Mas mantemos aqui classes genéricas de estrutura da página caso necessário. */
+
+/* --- Seção "Mais Vendidas" --- */
+.featured-section {
+  max-width: 1200px;
+  margin: 2rem auto 0;
+  padding: 0 1rem;
+}
+
+.featured-section h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: var(--color-text-main);
+}
+
+.loading-message {
+  text-align: center;
+  padding: 4rem 0;
+  font-size: 1.25rem;
+  color: var(--color-text-muted);
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 2rem;
+  justify-items: center;
+}
+
+/* REMOVIDO: Todo o CSS de .product-card, .product-image, .product-info, etc.
+   MOTIVO: Agora isso é controlado exclusivamente por src/components/ProductCard/styles.css
+*/
+
+/* REMOVIDO: .btn-add-cart com !important 
+   MOTIVO: Estava causando conflito na Página de Produto, impedindo a personalização dos botões.
+*/
+
+/* --- Container das Seções Inferiores --- */
+.bottom-sections-container {
+  width: 100%;
+  background-color: white;
+  padding: 2rem 1rem;
+  margin-top: 2rem;
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;
+}
+
+/* --- Personalize sua Camisa --- */
+.personalize-section {
+  width: 100%;
+  padding: 0;
+  margin-bottom: 4rem;
+}
+.personalize-content {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  color: var(--color-text-main);
+}
+.personalize-content h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--color-text-main);
+}
+.personalize-content p {
+  font-size: 1.125rem;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+  color: var(--color-text-muted);
+}
+.personalize-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.btn-personalize {
+  background-color: var(--color-primary);
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 600;
+  text-transform: uppercase;
+  transition: all 0.3s;
+}
+.btn-personalize:hover {
+  background-color: var(--color-primary-hover);
+  color: white !important;
+}
+.btn-know-more {
+  background-color: transparent;
+  color: var(--color-text-main);
+  border: 2px solid var(--color-text-main);
+  padding: 1rem 2rem;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 600;
+  text-transform: uppercase;
+  transition: all 0.3s;
+}
+.btn-know-more:hover {
+  background-color: var(--color-text-main);
+  color: white !important;
+}
+
+/* --- Categorias --- */
+.categories-section {
+  padding: 0 1rem;
+  margin-bottom: 4rem;
+}
+.categories-section h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: var(--color-text-main);
+}
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.category-card {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  text-decoration: none;
+  transition: transform 0.3s;
+}
+.category-card:hover {
+  transform: translateY(-5px);
+}
+.category-image {
+  width: 100%;
+  aspect-ratio: 4/3;
+  background-color: #f3f4f6;
+  overflow: hidden;
+}
+.category-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+.category-card:hover .category-image img {
+  transform: scale(1.1);
+}
+.category-card h3 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+  color: white;
+  padding: 2rem 1rem 1rem;
+  margin: 0;
+  font-size: 1.125rem;
+  text-align: center;
+}
+
+/* --- Responsivo --- */
+@media (max-width: 768px) {
+  .products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+  }
+  .personalize-content h2 {
+    font-size: 1.75rem;
+  }
+  .personalize-buttons {
+    flex-direction: column;
+  }
+}
