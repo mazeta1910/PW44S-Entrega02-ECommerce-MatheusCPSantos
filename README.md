@@ -1,58 +1,203 @@
-# NEXUS - E-commerce Gamer (Projeto PW44S - Turma 4SI)
+# NEXUS Store — Comércio Eletrônico (PW44S - Turma 4SI)
 
-**Desenvolvedores:** Matheus C. P. Santos e Isacar Freitas
-
-**Instituição:** UTFPR - Câmpus Pato Branco
-
----
-
-O objetivo da disciplina é desenvolver aplicações Cliente-Servidor Web com acesso a Banco de Dados, dominando os conceitos básicos da programação para Internet e aplicando-os adequadamente no desenvolvimento de software.
-
-Para esta avaliação, está sendo desenvolvida a plataforma **NEXUS**, um ecossistema de comércio eletrônico focado no público gamer. Atualmente, o projeto encontra-se na fase de consolidação da **API RESTful (Back-end)**, desenvolvida com alto rigor técnico e focada em boas práticas de engenharia de software.
+**Desenvolvedores:** Matheus C. P. Santos e Isacar Freitas  
+**Instituição:** UTFPR — Câmpus Pato Branco  
+**Branch:** `Entrega02`
 
 ---
 
-## API RESTful (*Back-end*)
+## Sobre o projeto
 
-A API REST foi desenvolvida utilizando o ecossistema **Spring Boot** com a linguagem Java, abordando segurança com JWT, validações estritas de regras de negócio e persistência de dados.
+A **NEXUS Store** é uma aplicação web de comércio eletrônico desenvolvida como projeto da disciplina de Programação Web. A solução é dividida em:
 
-### Ferramentas e Tecnologias Utilizadas
+- **Servidor:** API REST com Spring Boot, persistência em banco de dados e autenticação JWT.
+- **Cliente:** SPA em React com consumo da API, vitrine pública e fluxos autenticados.
 
-- <img src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/java.png" alt="Java" width="20" /> JDK 17 / 24
-- IDE: <img width="20" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/intellij.png" alt="IntelliJ" title="IntelliJ"/> [IntelliJ IDEA](https://www.jetbrains.com/idea/)
-- Banco de Dados: <img width="20" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/postgresql.png" alt="PostgreSQL" title="PostgreSQL"/> PostgreSQL (e H2 em memória para testes locais)
-- Teste de API: <img width="20" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/postman.png" alt="Postman" title="Postman"/> Postman / Insomnia
-- Versionamento: <img width="20" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/git.png" alt="Git" title="Git"/> Git
+O escopo segue o enunciado da disciplina: catálogo acessível sem login, página individual de produto, carrinho persistente para visitantes, cadastro/autenticação para finalização de compra, gestão de endereços, checkout com confirmação e histórico de pedidos.
 
 ---
 
-## Arquitetura e Boas Práticas (Diferenciais Técnicos)
+## Estrutura do repositório
 
-- **Segurança Avançada:** Implementação de Spring Security com emissão e validação de tokens JWT (JSON Web Token) e criptografia unidirecional de senhas utilizando o algoritmo **BCrypt**.
-- **Padrão DTO e MapStruct:** Proteção das entidades de banco de dados e controle de exposição de dados através de *Data Transfer Objects*, com conversão automatizada utilizando a biblioteca MapStruct.
-- **Tratamento Global de Exceções:** Uso de `@ControllerAdvice` para capturar falhas em tempo de execução e retornar respostas JSON padronizadas, limpas e compreensíveis para o cliente HTTP.
-- **Deleção Lógica (Soft Delete):** Inativação segura de registros sensíveis (como endereços de entrega) para manter a integridade referencial do histórico de compras e auditorias financeiras.
-- **Reaproveitamento de Código (Generics):** Criação de interfaces e classes genéricas (`CrudController`, `CrudServiceImpl`) para padronizar e otimizar as operações repetitivas de banco de dados.
+```
+Entrega01-ECommerce-MatheusCPSantos/
+├── client/          # Front-end React + Vite + PrimeReact
+├── server/          # Back-end Spring Boot + H2/PostgreSQL
+└── README.md
+```
+
+Documentação complementar:
+
+- `server/README.md` — detalhes da API e endpoints
+- `client/readme.md` — guia do projeto React
 
 ---
 
-## Escopo e Funcionalidades (NEXUS)
+## Tecnologias
 
-### Área Pública
-- [x] **Catálogo de Produtos:** Listagem geral de produtos com suporte a referências de imagens.
-- [x] **Detalhes do Produto:** Visualização individual de itens por ID.
-- [x] **Lista de Categorias:** Listagem de categorias para filtro de catálogo.
-- [x] **Simulação de Frete:** Cálculo dinâmico de prazos e valores de entrega, baseado na região do CEP do usuário.
-- [x] **Carrinho de Compras (Lógica Base):** Preparação da API para cálculo total de itens.
+| Camada | Stack |
+|--------|--------|
+| **Back-end** | Java 25, Spring Boot 4.x, Spring Security, JWT, MapStruct, Lombok, H2 (dev) / PostgreSQL |
+| **Front-end** | React 19, TypeScript, Vite 8, React Router 7, PrimeReact, Axios, React Hook Form |
+| **Ferramentas** | Git, Maven, npm, Postman/Insomnia |
 
-### Área do Cliente (Requer Autenticação)
-- [x] **Cadastro de Usuário:** Criação de perfil com validação avançada de credenciais, CPF e contatos.
-- [x] **Autenticação de Acesso:** Sistema seguro de login interceptado por filtros de segurança customizados.
-- [x] **Gestão de Endereços:** Suporte a múltiplos endereços de entrega vinculados e validados exclusivamente por usuário autenticado.
-- [x] **Sistema de Cupons:** Aplicação inteligente de descontos com regras de negócio ativas (ex: exclusividade para primeira compra e controle de validade).
-- [x] **Checkout Profissional:** Fechamento de pedidos integrando relacionamento complexo entre Produto, Usuário logado e Endereço selecionado, garantindo total integridade referencial no banco de dados.
-- [x] **Histórico de Compras:** Consulta segura da lista de pedidos realizados, amarrada estritamente ao token JWT do usuário.
+---
 
-### Área Administrativa (Back-office)
-- [x] **Gestão de Transportadoras:** Painel logístico simulado para adicionar transportadoras, ajustar taxas bases e prazos de entrega.
-- [x] **Controle de Campanhas:** Gerenciamento ativo/inativo e definição de regras para cupons promocionais da loja.
+## Como executar
+
+### Pré-requisitos
+
+- JDK 25 (ou compatível com o `pom.xml`)
+- Node.js 20+
+- Maven (ou use o wrapper `./mvnw`)
+
+### Servidor (API)
+
+```bash
+cd server
+./mvnw spring-boot:run
+# Windows: mvnw.cmd spring-boot:run
+```
+
+- API: `http://localhost:8080`
+- Console H2: `http://localhost:8080/h2-console`  
+  - JDBC: `jdbc:h2:mem:testdb`
+
+Os dados iniciais (categorias, produtos, usuários, endereços e pedidos) são carregados via `server/src/main/resources/import.sql`.
+
+### Cliente (React)
+
+```bash
+cd client
+npm install
+npm run dev
+```
+
+- Aplicação: `http://localhost:5173`
+- A API é acessada em `http://localhost:8080` (configurável por `VITE_API_BASE_URL`)
+
+> Execute **servidor e cliente** ao mesmo tempo para testar a integração completa.
+
+---
+
+## Funcionalidades — Entrega 2
+
+Status alinhado ao enunciado e à avaliação da entrega final (cliente + servidor).
+
+### Requisitos mínimos
+
+| Requisito | Back-end | Front-end |
+|-----------|:--------:|:---------:|
+| Página com lista de produtos (nome, valor, imagem) | ✅ | ✅ |
+| Página individual do produto (detalhes + adicionar ao carrinho) | ✅ | ✅ |
+| Carrinho de compras (quantidade, remover item, esvaziar) | ✅ | ✅ |
+| Cadastro de usuário (username único) | ✅ | ✅ |
+| Autenticação (login) | ✅ | ✅ |
+| Resumo da compra e finalização enviada ao servidor | ✅ | ⏳ |
+| Catálogo, produto e carrinho acessíveis sem login | ✅ | ✅ |
+
+### Requisitos extras
+
+| Requisito | Back-end | Front-end |
+|-----------|:--------:|:---------:|
+| Histórico de pedidos do usuário | ✅ | ⏳ |
+| Filtro de produtos por categoria | ✅ | ✅ |
+| Paginação na listagem de produtos | ✅ | ✅ |
+| Múltiplos endereços por usuário | ✅ | ⏳ |
+| Consulta de CEP (ex.: ViaCEP) | — | ⏳ |
+| Cálculo de frete (API externa / simulação) | ✅ | ⏳ |
+
+**Legenda:** ✅ implementado · ⏳ em desenvolvimento / integração pendente
+
+### O que já está disponível no cliente (`Entrega02`)
+
+- **Vitrine pública:** home, catálogo paginado, filtros por categoria, plataforma, condição e entrega.
+- **Página de produto:** detalhes, variações, preços promocionais e fluxo de adicionar ao carrinho.
+- **Carrinho:** persistência em `localStorage` para usuários não autenticados.
+- **Autenticação:** login, registro e sessão JWT.
+- **Painel administrativo:** gestão de categorias e produtos (perfil `ADMIN`).
+
+### O que ainda será integrado nesta entrega
+
+- Fluxo completo de **checkout** (`POST /orders/checkout`).
+- Telas de **endereços** do cliente (`/addresses/me`).
+- **Histórico de pedidos** (`GET /orders/me`).
+- Integração de **frete por CEP** e **cupons** no carrinho/checkout.
+
+---
+
+## API REST — visão geral
+
+Principais recursos expostos pelo servidor:
+
+| Recurso | Endpoints principais |
+|---------|----------------------|
+| Autenticação | `POST /login`, `GET /auth/user-info` |
+| Usuários | `POST /users` |
+| Categorias | CRUD em `/categories` |
+| Produtos | CRUD em `/products`, `GET /products/catalog`, `GET /products/by-category/{id}` |
+| Variações | CRUD em `/product-variants`, `GET /product-variants/by-product/{id}` |
+| Endereços | CRUD em `/addresses`, `GET /addresses/me` |
+| Pedidos | `POST /orders/checkout`, `GET /orders/me`, CRUD em `/orders` |
+| Frete | `GET /freights/calculate?zipCode=` |
+| Cupons / Transportadoras | CRUD administrativo |
+
+Rotas públicas incluem listagem de produtos, categorias, variações e imagens. Demais operações exigem token JWT; alterações de catálogo exigem perfil administrador.
+
+---
+
+## Usuários de teste
+
+Senha padrão de todos os usuários seed: **`password`**
+
+| Username | Nome | E-mail | Perfil |
+|----------|------|--------|--------|
+| `admin` | Administrador | admin@nexus.com.br | ADMIN |
+| `enzo15` | Enzo | enzo@nexus.com.br | USER |
+| `maria_gamer` | Maria | maria@gmail.com | USER |
+| `lucas_pro` | Lucas | lucas@gmail.com | USER |
+
+---
+
+## Entidades do domínio
+
+Modelo principal da aplicação (além do sugerido no enunciado, com extensões para e-commerce gamer):
+
+- **User**, **Category**, **Product**, **ProductVariant**
+- **Address**, **Order**, **OrderItem**
+- **Coupon**, **Carrier**
+
+Produtos possuem variações (plataforma, condição, tipo de entrega, preço e `listPrice` para promoções). Imagens referenciadas por URL servidas pelo back-end (`/images/...`).
+
+---
+
+## Testes automatizados
+
+A API possui teste de contexto Spring (`ServerApplicationTests`). Casos de teste adicionais de integração e regras de negócio serão ampliados conforme a consolidação da entrega.
+
+---
+
+## Diferenciais técnicos (back-end)
+
+- Spring Security com JWT e senhas em BCrypt
+- DTOs com MapStruct e validação de entrada
+- Tratamento global de exceções (`@ControllerAdvice`)
+- Soft delete em registros sensíveis
+- Camada genérica reutilizável (`CrudController`, `CrudServiceImpl`)
+
+---
+
+## Cronograma de entregas (disciplina)
+
+| Entrega | Prazo | Escopo |
+|---------|-------|--------|
+| **1ª entrega** | 04/05/2026 | API REST (Spring Boot) — demonstrada via Postman/Insomnia |
+| **Entrega final** | 30/06/2026 | Cliente React + servidor integrados — demonstração completa |
+
+Esta branch (`Entrega02`) concentra o desenvolvimento e a integração do **cliente React** com a API já entregue na primeira fase.
+
+---
+
+## Licença e uso acadêmico
+
+Projeto desenvolvido exclusivamente para fins acadêmicos na UTFPR — Câmpus Pato Branco.
