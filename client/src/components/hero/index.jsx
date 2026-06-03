@@ -10,7 +10,7 @@ const heroBanners = [
       "Teclados, mouses e headsets com condições especiais para montar seu cantinho.",
     link: "/catalog",
     btnText: "VER OFERTAS",
-    imgUrl: "/logo/THDFM_logo_fundo_preto.png",
+    imgUrl: "/banner-bg3.png",
   },
   {
     id: 2,
@@ -18,7 +18,7 @@ const heroBanners = [
     subtitle: "Os lançamentos mais jogados com entrega imediata.",
     link: "/catalog",
     btnText: "EXPLORAR JOGOS",
-    imgUrl: "/logo/THDFM_logo_fundo_preto.png",
+    imgUrl: "/banner-bg1.png",
   },
   {
     id: 3,
@@ -26,7 +26,7 @@ const heroBanners = [
     subtitle: "Placas de vídeo, monitores e periféricos para rodar tudo no ultra.",
     link: "/catalog",
     btnText: "VER PRODUTOS",
-    imgUrl: "/logo/THDFM_logo_fundo_preto.png",
+    imgUrl: "/banner-bg2.png",
   },
 ];
 

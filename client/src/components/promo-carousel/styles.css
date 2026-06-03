@@ -1,23 +1,73 @@
 .promo-carousel {
-  padding: 0 2.5rem;
-}
-
-.promo-carousel__item {
-  padding: 0 0.4rem;
-  height: 100%;
+  padding: 0 2.25rem;
+  overflow: hidden;
 }
 
 .promo-carousel .p-carousel-content {
-  align-items: stretch;
+  overflow: hidden;
 }
 
 .promo-carousel .p-carousel-items-content {
-  align-items: stretch;
+  overflow: hidden;
 }
 
-.promo-carousel .p-carousel-item {
+.promo-carousel .p-carousel-items-container {
   display: flex;
-  align-items: stretch;
+  align-items: center;
+}
+
+/* Corrige flex injetado pelo PrimeReact (media queries sobrepostas → 1 item gigante) */
+.promo-carousel .p-carousel-item {
+  flex: 0 0 20% !important;
+  max-width: 20%;
+  box-sizing: border-box;
+  padding: 0 0.35rem;
+  display: flex;
+  align-items: center;
+  align-self: center;
+}
+
+.promo-carousel__item {
+  width: 100%;
+}
+
+.promo-carousel .product-card-wrapper {
+  width: 100%;
+  height: auto;
+}
+
+.promo-carousel .product-card {
+  height: auto;
+  width: 100%;
+}
+
+/* Cards mais compactos na vitrine de promoções */
+.promo-carousel .product-card__image {
+  height: 190px;
+}
+
+.promo-carousel .product-card .p-card-body {
+  padding: 0.55rem 0.65rem;
+}
+
+.promo-carousel .product-card .p-card-footer {
+  padding: 0.55rem 0.65rem 0.65rem;
+}
+
+.promo-carousel .product-card__title {
+  --product-card-title-font-size: 0.85rem;
+  min-height: calc(
+    var(--product-card-title-font-size) * var(--product-card-title-line-height) *
+      var(--product-card-title-lines)
+  );
+}
+
+.promo-carousel .product-card__media {
+  margin: -0.55rem -0.65rem 0.5rem;
+}
+
+.promo-carousel .product-card__price {
+  font-size: 0.9rem;
 }
 
 .promo-carousel .p-carousel-prev-button,
@@ -49,8 +99,34 @@
   border-radius: 50%;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1199px) {
+  .promo-carousel .p-carousel-item {
+    flex: 0 0 25% !important;
+    max-width: 25%;
+  }
+}
+
+@media (max-width: 991px) {
+  .promo-carousel .p-carousel-item {
+    flex: 0 0 33.3333% !important;
+    max-width: 33.3333%;
+  }
+}
+
+@media (max-width: 767px) {
+  .promo-carousel .p-carousel-item {
+    flex: 0 0 50% !important;
+    max-width: 50%;
+  }
+
   .promo-carousel {
     padding: 0 1.75rem;
+  }
+}
+
+@media (max-width: 575px) {
+  .promo-carousel .p-carousel-item {
+    flex: 0 0 100% !important;
+    max-width: 100%;
   }
 }

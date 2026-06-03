@@ -44,3 +44,14 @@
 .top-menu-shell .store-categories-menu {
   position: relative;
 }
+
+.top-menu-user-avatar {
+  width: 2.25rem;
+  height: 2.25rem;
+  overflow: hidden;
+}
+
+.top-menu-user-avatar img {
+  object-fit: cover;
+  object-position: center top;
+}

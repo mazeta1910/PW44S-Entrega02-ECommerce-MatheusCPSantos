@@ -1,27 +1,25 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
+import Footer from "@/components/footer";
+import { readCartItems, writeCartItems } from "@/utils/cart-storage";
 import "./styles.css";
 
 export default function CartPage() {
   const [cartItems, setCartItems] = useState([]);
 
-  // Carrega itens do localStorage ao iniciar
   useEffect(() => {
-    const savedCart = JSON.parse(localStorage.getItem("thdfm_cart")) || [];
-    const normalizedCart = savedCart.map((item) => ({
-      ...item,
-      quantidade: Number(item.quantidade) || 1,
-    }));
-    setCartItems(normalizedCart);
+    setCartItems(readCartItems());
   }, []);
 
-  // Função para atualizar o localStorage e disparar evento
+  useEffect(() => {
+    const syncCart = () => setCartItems(readCartItems());
+    window.addEventListener("cartUpdated", syncCart);
+    return () => window.removeEventListener("cartUpdated", syncCart);
+  }, []);
+
   const updateCartStorage = (newItems) => {
     setCartItems(newItems);
-    localStorage.setItem("thdfm_cart", JSON.stringify(newItems));
-    window.dispatchEvent(new Event("cartUpdated"));
+    writeCartItems(newItems);
   };
 
   // Remover item único
@@ -65,7 +63,6 @@ export default function CartPage() {
 
   return (
     <div className="page-container">
-      <Header />
       <main className="cart-main">
         <div className="container">
           {cartItems.length === 0 ? (
@@ -124,7 +121,7 @@ export default function CartPage() {
                         <div className="item-product-details">
                           <div className="product-image-new">
                             {/* --- NOVO: Link na Imagem --- */}
-                            <Link to={`/produto/${item.id}`}>
+                            <Link to={`/catalog/product/${item.id}`}>
                               <img
                                 src={item.imagem}
                                 alt={item.nome}
@@ -136,15 +133,13 @@ export default function CartPage() {
                             </Link>
                           </div>
                           <div className="product-info-new">
-                            {/* --- NOVO: Link no Título --- */}
-                            <Link to={`/produto/${item.id}`} className="product-name-link">
+                            <Link to={`/catalog/product/${item.id}`} className="product-name-link">
                               <h3 className="product-name-new">{item.nome}</h3>
                             </Link>
-                            
-                            <p className="product-spec">
-                              Tamanho: {item.tamanho}
-                            </p>
-                            <p className="product-spec">Cor: {item.cor}</p>
+
+                            {item.variante && (
+                              <p className="product-spec">Opção: {item.variante}</p>
+                            )}
                           </div>
                         </div>
 

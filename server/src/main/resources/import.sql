@@ -29,129 +29,129 @@ INSERT INTO tb_category (name) VALUES ('Projetores');
 -- 2. POPULANDO PRODUTOS (tb_product) — catálogo
 -- ==========================================
 -- Periféricos (categoria 1)
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Teclado Gaming Redragon', 'Teclado mecânico switch blue com RGB', 1, FALSE, 'https://images.unsplash.com/photo-1595225476474-87563907a212?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Mouse Gaming Logitech G203', 'Mouse com sensor ótico de 8000 DPI', 1, FALSE, 'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Headset HyperX Cloud II', 'Headset fechado com som surround 7.1 virtual', 1, FALSE, 'https://images.unsplash.com/photo-1545127398-14699f92334b?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Mousepad Gamer XL RGB', 'Mousepad estendido 90x40cm com borda RGB', 1, FALSE, 'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Webcam Logitech C920', 'Webcam Full HD 1080p para streaming', 1, FALSE, 'https://images.unsplash.com/photo-1587826080692-f439cd3fabc5?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Controle Xbox Wireless', 'Controle sem fio compatível com PC e Xbox', 6, FALSE, 'https://images.unsplash.com/photo-1606144042614-bcd7d99b6c63?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Teclado Logitech G Pro', 'Teclado mecânico compacto para eSports', 1, FALSE, 'https://images.unsplash.com/photo-1511467687858-23d96c4e0a11?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Fone Razer Kraken X', 'Fone leve com drivers 40mm e microfone cardioide', 1, FALSE, 'https://images.unsplash.com/photo-1484704849700-f032a568e944?w=500&q=80');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Teclado Gaming Redragon', 'Teclado mecânico switch blue com RGB', 1, FALSE, '/images/image1.jpg');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Mouse Gaming Logitech G203', 'Mouse com sensor ótico de 8000 DPI', 1, FALSE, '/images/image2.jpg');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Headset HyperX Cloud II', 'Headset fechado com som surround 7.1 virtual', 1, FALSE, '/images/image3.jpg');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Mousepad Gamer XL RGB', 'Mousepad estendido 90x40cm com borda RGB', 1, FALSE, '/images/image4.jpg');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Webcam Logitech C920', 'Webcam Full HD 1080p para streaming', 1, FALSE, '/images/image5.jpg');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Controle Xbox Wireless', 'Controle sem fio compatível com PC e Xbox', 6, FALSE, '/images/image6.jpg');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Teclado Logitech G Pro', 'Teclado mecânico compacto para eSports', 1, FALSE, '/images/image7.jpg');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Fone Razer Kraken X', 'Fone leve com drivers 40mm e microfone cardioide', 1, FALSE, '/images/image8.jpg');
 
 -- Jogos digitais (categoria 2)
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Project Zomboid', 'Jogo de sobrevivência zombie hardcore (+18)', 2, TRUE, 'https://images.unsplash.com/photo-1605901309584-818e25960b8f?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Grand Theft Auto V', 'Ação e aventura em mundo aberto (+18)', 2, TRUE, 'https://images.unsplash.com/photo-1605901302628-86d7cb02c385?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Cyberpunk 2077', 'RPG futurista em Night City (+18)', 2, TRUE, 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Elden Ring', 'RPG de ação da FromSoftware em mundo aberto', 2, TRUE, 'https://images.unsplash.com/photo-1538481199705-c710c4e965a0?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Hogwarts Legacy', 'Aventura no universo Harry Potter', 2, FALSE, 'https://images.unsplash.com/photo-1612287230202-1ff1d85c1e53?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Red Dead Redemption 2', 'Faroeste épico da Rockstar (+18)', 2, TRUE, 'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('EA Sports FC 24', 'Simulador de futebol da temporada 2024', 2, FALSE, 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Minecraft Java Edition', 'Sandbox criativo versão Java para PC', 2, FALSE, 'https://images.unsplash.com/photo-1606144042614-bcd7d99b6c63?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Counter-Strike 2', 'FPS tático competitivo da Valve', 2, FALSE, 'https://images.unsplash.com/photo-1542751117-08027c6ed4b8?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('The Witcher 3: Wild Hunt', 'RPG de fantasia premiado da CD Projekt', 2, TRUE, 'https://images.unsplash.com/photo-1493711662062-85a7c8c1e4e4?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Baldurs Gate 3', 'RPG tático baseado em D&D', 2, TRUE, 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Stardew Valley', 'Simulador de fazenda indie relaxante', 2, FALSE, 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=500&q=80');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Project Zomboid', 'Jogo de sobrevivência zombie hardcore (+18)', 2, TRUE, '/images/image9.jpg');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Grand Theft Auto V', 'Ação e aventura em mundo aberto (+18)', 2, TRUE, '/images/image10.jpg');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Cyberpunk 2077', 'RPG futurista em Night City (+18)', 2, TRUE, '/images/image11.jpg');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Elden Ring', 'RPG de ação da FromSoftware em mundo aberto', 2, TRUE, '/images/image12.jpg');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Hogwarts Legacy', 'Aventura no universo Harry Potter', 2, FALSE, '/images/image13.jpg');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Red Dead Redemption 2', 'Faroeste épico da Rockstar (+18)', 2, TRUE, '/images/image14.jpg');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('EA Sports FC 24', 'Simulador de futebol da temporada 2024', 2, FALSE, '/images/image15.jpg');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Minecraft Java Edition', 'Sandbox criativo versão Java para PC', 2, FALSE, '/images/image16.jpg');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Counter-Strike 2', 'FPS tático competitivo da Valve', 2, FALSE, '/images/image17.jpg');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('The Witcher 3: Wild Hunt', 'RPG de fantasia premiado da CD Projekt', 2, TRUE, '/images/image18.jpg');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Baldurs Gate 3', 'RPG tático baseado em D&D', 2, TRUE, '/images/image19.jpg');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Stardew Valley', 'Simulador de fazenda indie relaxante', 2, FALSE, '/images/image20.jpg');
 
 -- Hardware (categoria 3)
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Placa Gráfica RTX 4060', 'NVIDIA GeForce RTX 4060 8GB', 3, FALSE, 'https://images.unsplash.com/photo-1591488320449-011701bb6704?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Placa Gráfica RTX 4070 Super', 'NVIDIA GeForce RTX 4070 Super 12GB', 3, FALSE, 'https://images.unsplash.com/photo-1591799264318-7f042e74e040?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Processador AMD Ryzen 7 5800X', 'CPU 8 núcleos 16 threads AM4', 3, FALSE, 'https://images.unsplash.com/photo-1555617981-dac3880eac6e?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('SSD NVMe Samsung 990 1TB', 'SSD PCIe 4.0 leitura até 7450 MB/s', 3, FALSE, 'https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Memória Kingston Fury 16GB', 'Kit DDR4 3200MHz dual channel', 3, FALSE, 'https://images.unsplash.com/photo-1562976540-150ebf58e033?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Gabinete Gamer RGB ATX', 'Gabinete mid-tower com 4 fans ARGB', 3, FALSE, 'https://images.unsplash.com/photo-1587202372775-e229f172a9d7?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Fonte Corsair RM750e 750W', 'Fonte modular 80 Plus Gold', 3, FALSE, 'https://images.unsplash.com/photo-1591488320449-011701bb6704?w=500&q=80');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Placa Gráfica RTX 4060', 'NVIDIA GeForce RTX 4060 8GB', 3, FALSE, '/images/image21.jpg');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Placa Gráfica RTX 4070 Super', 'NVIDIA GeForce RTX 4070 Super 12GB', 3, FALSE, '/images/image22.jpg');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Processador AMD Ryzen 7 5800X', 'CPU 8 núcleos 16 threads AM4', 3, FALSE, '/images/image23.jpg');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('SSD NVMe Samsung 990 1TB', 'SSD PCIe 4.0 leitura até 7450 MB/s', 3, FALSE, '/images/image24.jpg');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Memória Kingston Fury 16GB', 'Kit DDR4 3200MHz dual channel', 3, FALSE, '/images/image25.jpg');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Gabinete Gamer RGB ATX', 'Gabinete mid-tower com 4 fans ARGB', 3, FALSE, '/images/image26.jpg');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Fonte Corsair RM750e 750W', 'Fonte modular 80 Plus Gold', 3, FALSE, '/images/image27.jpg');
 
 -- Monitores (categoria 4)
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Monitor LG Ultrawide 29', 'Monitor 29 polegadas IPS Full HD', 4, FALSE, 'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Monitor Samsung Odyssey G5 27', 'Monitor curvo 144Hz QHD 1ms', 4, FALSE, 'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Monitor AOC 24G2 24', 'Monitor IPS 144Hz para competir', 4, FALSE, 'https://images.unsplash.com/photo-1614624532983-4ce03382d63d?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Monitor Dell UltraSharp 32 4K', 'Monitor 32 polegadas 4K IPS', 4, FALSE, 'https://images.unsplash.com/photo-1614624532983-4ce03382d63d?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Monitor ASUS TUF 27 165Hz', 'Monitor gaming 27 polegadas IPS', 4, FALSE, 'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=500&q=80');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Monitor LG Ultrawide 29', 'Monitor 29 polegadas IPS Full HD', 4, FALSE, '/images/Logo.png');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Monitor Samsung Odyssey G5 27', 'Monitor curvo 144Hz QHD 1ms', 4, FALSE, '/images/image29.jpg');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Monitor AOC 24G2 24', 'Monitor IPS 144Hz para competir', 4, FALSE, '/images/image28.jpg');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Monitor Dell UltraSharp 32 4K', 'Monitor 32 polegadas 4K IPS', 4, FALSE, '/images/Logo.png');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Monitor ASUS TUF 27 165Hz', 'Monitor gaming 27 polegadas IPS', 4, FALSE, '/images/Logo.png');
 
 -- Cadeiras gaming (categoria 5)
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Cadeira Gaming DXRacer', 'Cadeira ergonómica reclinável preta', 5, FALSE, 'https://images.unsplash.com/photo-1505843490538-5133c6c7d0e1?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Cadeira ThunderX3 TC3', 'Cadeira com apoio lombar e reclinação 180°', 5, FALSE, 'https://images.unsplash.com/photo-1580480055273-592b5f38f1b4?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Cadeira Flexform Ergo', 'Cadeira ergonómica para longas sessões', 5, FALSE, 'https://images.unsplash.com/photo-1592078615290-033ee584e267?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Cadeira Nitro Concepts S300', 'Cadeira inspirada em esportivos com almofadas', 5, FALSE, 'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=500&q=80');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Cadeira Gaming DXRacer', 'Cadeira ergonómica reclinável preta', 5, FALSE, '/images/Logo.png');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Cadeira ThunderX3 TC3', 'Cadeira com apoio lombar e reclinação 180°', 5, FALSE, '/images/Logo.png');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Cadeira Flexform Ergo', 'Cadeira ergonómica para longas sessões', 5, FALSE, '/images/Logo.png');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Cadeira Nitro Concepts S300', 'Cadeira inspirada em esportivos com almofadas', 5, FALSE, '/images/Logo.png');
 
 -- Consoles (categoria 6)
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Console Xbox Series S', 'Console digital 512GB com Game Pass trial', 6, FALSE, 'https://images.unsplash.com/photo-1606144042614-bcd7d99b6c63?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('PlayStation 5 Slim', 'Console Sony com SSD 1TB e controle DualSense', 6, FALSE, 'https://images.unsplash.com/photo-1606813907291-d86efa9b94db?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Nintendo Switch OLED', 'Console híbrido com tela OLED 7 polegadas', 6, FALSE, 'https://images.unsplash.com/photo-1578303512597-81aebf224f1d?w=500&q=80');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Console Xbox Series S', 'Console digital 512GB com Game Pass trial', 6, FALSE, '/images/image32.jpg');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('PlayStation 5 Slim', 'Console Sony com SSD 1TB e controle DualSense', 6, FALSE, '/images/Logo.png');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Nintendo Switch OLED', 'Console híbrido com tela OLED 7 polegadas', 6, FALSE, '/images/Logo.png');
 
 -- Armazenamento (categoria 7)
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('SSD NVMe WD Black 2TB', 'SSD PCIe 4.0 para jogos com dissipador', 3, FALSE, 'https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('HD Externo Seagate 4TB', 'HD USB 3.0 para backup e biblioteca de jogos', 3, FALSE, 'https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Cartão microSD 512GB', 'Cartão A2 para Steam Deck e Nintendo Switch', 3, FALSE, 'https://images.unsplash.com/photo-1625729342355-b78f1f43a70e?w=500&q=80');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('SSD NVMe WD Black 2TB', 'SSD PCIe 4.0 para jogos com dissipador', 3, FALSE, '/images/Logo.png');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('HD Externo Seagate 4TB', 'HD USB 3.0 para backup e biblioteca de jogos', 3, FALSE, '/images/Logo.png');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Cartão microSD 512GB', 'Cartão A2 para Steam Deck e Nintendo Switch', 3, FALSE, '/images/Logo.png');
 
 -- Serviços e conectividade (categoria 7) — rede
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Roteador Wi-Fi 6 TP-Link', 'Roteador AX1800 para baixa latência em jogos', 7, FALSE, 'https://images.unsplash.com/photo-1606902968464-b3a32b7a4f0b?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Mesh Wi-Fi 6 2-pack', 'Sistema mesh para cobertura em toda a casa', 7, FALSE, 'https://images.unsplash.com/photo-1558494943-ef010cbdcc31?w=500&q=80');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Roteador Wi-Fi 6 TP-Link', 'Roteador AX1800 para baixa latência em jogos', 7, FALSE, '/images/Logo.png');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Mesh Wi-Fi 6 2-pack', 'Sistema mesh para cobertura em toda a casa', 7, FALSE, '/images/Logo.png');
 
 -- Notebooks Gamer (categoria 8)
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Notebook Acer Nitro 5', 'Intel i5, RTX 4050, 16GB RAM, SSD 512GB', 8, FALSE, 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Notebook Lenovo Legion 5', 'AMD Ryzen 7, RTX 4060, 16GB RAM, tela 165Hz', 8, FALSE, 'https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Notebook ASUS TUF A15', 'Ryzen 7, RTX 4070, 32GB RAM, SSD 1TB', 8, FALSE, 'https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=500&q=80');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Notebook Acer Nitro 5', 'Intel i5, RTX 4050, 16GB RAM, SSD 512GB', 8, FALSE, '/images/image31.jpg');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Notebook Lenovo Legion 5', 'AMD Ryzen 7, RTX 4060, 16GB RAM, tela 165Hz', 8, FALSE, '/images/Logo.png');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Notebook ASUS TUF A15', 'Ryzen 7, RTX 4070, 32GB RAM, SSD 1TB', 8, FALSE, '/images/Logo.png');
 
 -- Áudio e Streaming (categoria 9)
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Microfone Blue Yeti', 'Microfone USB condensador para stream e podcast', 9, FALSE, 'https://images.unsplash.com/photo-1590602847861-f95a83018457?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Placa de Captura Elgato HD60 X', 'Captura 4K60 HDR para console e PC', 9, FALSE, 'https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Mixer de Áudio Behringer', 'Mesa compacta com 2 canais para live', 9, FALSE, 'https://images.unsplash.com/photo-1598488035139-bdbb2231d847?w=500&q=80');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Microfone Blue Yeti', 'Microfone USB condensador para stream e podcast', 9, FALSE, '/images/Logo.png');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Placa de Captura Elgato HD60 X', 'Captura 4K60 HDR para console e PC', 9, FALSE, '/images/Logo.png');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Mixer de Áudio Behringer', 'Mesa compacta com 2 canais para live', 9, FALSE, '/images/Logo.png');
 
 -- Realidade Virtual (categoria 10)
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Meta Quest 3 128GB', 'Headset VR standalone com controles Touch Plus', 10, FALSE, 'https://images.unsplash.com/photo-1622979135225-d2b39b745ff2?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('PlayStation VR2', 'Headset VR para PS5 com eye tracking', 10, FALSE, 'https://images.unsplash.com/photo-1632823471565-37b38a7f9d6c?w=500&q=80');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Meta Quest 3 128GB', 'Headset VR standalone com controles Touch Plus', 10, FALSE, '/images/Logo.png');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('PlayStation VR2', 'Headset VR para PS5 com eye tracking', 10, FALSE, '/images/Logo.png');
 
 -- Mesa e Setup (categoria 11)
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Mesa Gamer Eletrificada 140cm', 'Mesa com USB, RGB e ajuste de altura', 11, FALSE, 'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Suporte Articulado para Monitor', 'Braço duplo VESA até 32 polegadas', 11, FALSE, 'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Ring Light 18 polegadas', 'Iluminação LED com tripé para stream', 11, FALSE, 'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=500&q=80');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Mesa Gamer Eletrificada 140cm', 'Mesa com USB, RGB e ajuste de altura', 11, FALSE, '/images/Logo.png');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Suporte Articulado para Monitor', 'Braço duplo VESA até 32 polegadas', 11, FALSE, '/images/Logo.png');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Ring Light 18 polegadas', 'Iluminação LED com tripé para stream', 11, FALSE, '/images/Logo.png');
 
 -- Acessórios e Cabos (categoria 12)
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Kit Cabos HDMI 2.1 3m', 'Pacote com 2 cabos 4K 120Hz', 12, FALSE, 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Hub USB-C 7 em 1', 'Hub com HDMI, USB 3.0 e leitor SD', 12, FALSE, 'https://images.unsplash.com/photo-1625948515291-696f1c5431b9?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Base Refrigerada Notebook', 'Cooler com 5 fans ajustáveis e USB', 12, FALSE, 'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=500&q=80');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Kit Cabos HDMI 2.1 3m', 'Pacote com 2 cabos 4K 120Hz', 12, FALSE, '/images/Logo.png');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Hub USB-C 7 em 1', 'Hub com HDMI, USB 3.0 e leitor SD', 12, FALSE, '/images/Logo.png');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Base Refrigerada Notebook', 'Cooler com 5 fans ajustáveis e USB', 12, FALSE, '/images/Logo.png');
 
 -- Gift Cards e Assinaturas (categoria 16)
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Xbox Game Pass Ultimate 3 meses', 'Assinatura digital com catálogo de centenas de jogos', 16, FALSE, 'https://images.unsplash.com/photo-1612287230202-1ff1d85c1e53?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('PlayStation Plus Extra 12 meses', 'Assinatura anual com jogos mensais', 16, FALSE, 'https://images.unsplash.com/photo-1605901302628-86d7cb02c385?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Gift Card Steam R$ 100', 'Crédito digital para loja Steam', 16, FALSE, 'https://images.unsplash.com/photo-1614680376573-df3480a0c6b0?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Gift Card Nintendo eShop R$ 150', 'Crédito digital para Nintendo Switch', 16, FALSE, 'https://images.unsplash.com/photo-1578303512597-81aebf224f1d?w=500&q=80');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Xbox Game Pass Ultimate 3 meses', 'Assinatura digital com catálogo de centenas de jogos', 16, FALSE, '/images/Logo.png');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('PlayStation Plus Extra 12 meses', 'Assinatura anual com jogos mensais', 16, FALSE, '/images/Logo.png');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Gift Card Steam R$ 100', 'Crédito digital para loja Steam', 16, FALSE, '/images/image30.jpg');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Gift Card Nintendo eShop R$ 150', 'Crédito digital para Nintendo Switch', 16, FALSE, '/images/Logo.png');
 
 -- Computadores (categoria 13)
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('PC Gamer Intel i7 RTX 4070', 'Desktop montado 32GB RAM, SSD 1TB, Wi-Fi 6', 13, FALSE, 'https://images.unsplash.com/photo-1587202372775-e229f172a9d7?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('PC Gamer AMD Ryzen 5 RTX 4060', 'Desktop entry level para 1080p alto', 13, FALSE, 'https://images.unsplash.com/photo-1591488320449-011701bb6704?w=500&q=80');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('PC Gamer Intel i7 RTX 4070', 'Desktop montado 32GB RAM, SSD 1TB, Wi-Fi 6', 13, FALSE, '/images/Logo.png');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('PC Gamer AMD Ryzen 5 RTX 4060', 'Desktop entry level para 1080p alto', 13, FALSE, '/images/Logo.png');
 
 -- Celular e Smartphone (categoria 14)
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Smartphone Gamer 256GB', 'Tela 144Hz, Snapdragon, bateria 5000mAh', 14, FALSE, 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Controle Backbone para iPhone', 'Controle clip-on para jogos mobile', 14, FALSE, 'https://images.unsplash.com/photo-1611374246607-5d337f97b053?w=500&q=80');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Smartphone Gamer 256GB', 'Tela 144Hz, Snapdragon, bateria 5000mAh', 14, FALSE, '/images/Logo.png');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Controle Backbone para iPhone', 'Controle clip-on para jogos mobile', 14, FALSE, '/images/Logo.png');
 
 -- TV Gamer (categoria 15)
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Smart TV 55 4K 120Hz', 'TV com HDMI 2.1 e modo jogo ALLM', 15, FALSE, 'https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Smart TV 43 4K', 'TV compacta para quarto gamer', 15, FALSE, 'https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=500&q=80');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Smart TV 55 4K 120Hz', 'TV com HDMI 2.1 e modo jogo ALLM', 15, FALSE, '/images/Logo.png');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Smart TV 43 4K', 'TV compacta para quarto gamer', 15, FALSE, '/images/Logo.png');
 
 -- Tablets e Handhelds (categoria 17)
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Steam Deck OLED 512GB', 'Handheld PC portátil com tela OLED', 17, FALSE, 'https://images.unsplash.com/photo-1622979135225-d2b39b745ff2?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Tablet Samsung Tab S9', 'Tablet AMOLED 11 polegadas para cloud gaming', 17, FALSE, 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=500&q=80');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Steam Deck OLED 512GB', 'Handheld PC portátil com tela OLED', 17, FALSE, '/images/Logo.png');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Tablet Samsung Tab S9', 'Tablet AMOLED 11 polegadas para cloud gaming', 17, FALSE, '/images/Logo.png');
 
 -- Espaço Gamer (categoria 18)
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Kit Setup Gamer Completo', 'Mesa + suporte headset + organizador de cabos', 18, FALSE, 'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Tapete Antiestático XL', 'Tapete 120x60cm para cadeira e periféricos', 18, FALSE, 'https://images.unsplash.com/photo-1618384887920-8476a97d4d0c?w=500&q=80');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Kit Setup Gamer Completo', 'Mesa + suporte headset + organizador de cabos', 18, FALSE, '/images/Logo.png');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Tapete Antiestático XL', 'Tapete 120x60cm para cadeira e periféricos', 18, FALSE, '/images/Logo.png');
 
 -- Energia (categoria 19)
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Nobreak Gamer 1200VA', 'UPS com proteção para PC e console', 19, FALSE, 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Estabilizador 1500VA', 'Proteção contra surtos na rede elétrica', 19, FALSE, 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&q=80');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Nobreak Gamer 1200VA', 'UPS com proteção para PC e console', 19, FALSE, '/images/Logo.png');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Estabilizador 1500VA', 'Proteção contra surtos na rede elétrica', 19, FALSE, '/images/Logo.png');
 
 -- Geek e Colecionáveis (categoria 20)
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Action Figure Edição Colecionador', 'Figura 30cm de personagem de game', 20, FALSE, 'https://images.unsplash.com/photo-1612287230202-1ff1d85c1e53?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Camiseta Gamer Licenciada', 'Camiseta algodão estampa exclusiva', 20, FALSE, 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&q=80');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Action Figure Edição Colecionador', 'Figura 30cm de personagem de game', 20, FALSE, '/images/Logo.png');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Camiseta Gamer Licenciada', 'Camiseta algodão estampa exclusiva', 20, FALSE, '/images/Logo.png');
 
 -- Casa Inteligente (categoria 21)
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Lâmpada LED RGB Wi-Fi', 'Lâmpada inteligente compatível com Alexa', 21, FALSE, 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&q=80');
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Tomada Inteligente 2-pack', 'Tomada Wi-Fi para automação do setup', 21, FALSE, 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&q=80');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Lâmpada LED RGB Wi-Fi', 'Lâmpada inteligente compatível com Alexa', 21, FALSE, '/images/Logo.png');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Tomada Inteligente 2-pack', 'Tomada Wi-Fi para automação do setup', 21, FALSE, '/images/Logo.png');
 
 -- Projetores (categoria 22)
-INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Projetor Gaming 1080p 120Hz', 'Projetor short throw para sala gamer', 22, FALSE, 'https://images.unsplash.com/photo-1478737273439-fef71e6c40d3?w=500&q=80');
+INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VALUES ('Projetor Gaming 1080p 120Hz', 'Projetor short throw para sala gamer', 22, FALSE, '/images/Logo.png');
 
 -- ==========================================
 -- 3. VARIAÇÕES (tb_product_variant)

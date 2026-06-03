@@ -19,3 +19,17 @@ export function isAdmin(user: AuthenticatedUser | undefined): boolean {
 export function getPostLoginPath(user: AuthenticatedUser | undefined): string {
   return isAdmin(user) ? "/admin" : "/";
 }
+
+const USER_AVATARS: Record<string, string> = {
+  enzo15: "/users/enzo-profile.png",
+};
+
+export function getUserAvatarUrl(
+  user: AuthenticatedUser | undefined,
+): string | null {
+  if (!user?.username) {
+    return null;
+  }
+
+  return USER_AVATARS[user.username.toLowerCase()] ?? null;
+}

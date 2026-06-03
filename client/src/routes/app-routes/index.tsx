@@ -3,6 +3,7 @@ import { LoginPage } from "@/pages/login";
 import { RegisterPage } from "@/pages/register";
 import { HomePage } from "@/pages/home";
 import { CatalogPage } from "@/pages/catalog";
+import { ProductDetailPage } from "@/pages/product-detail";
 import { RequireAuth } from "@/components/require-auth";
 import { RequireAdmin } from "@/components/require-admin";
 import { AdminDashboardPage } from "@/pages/admin-dashboard";
@@ -14,6 +15,7 @@ import { ProductFormPage } from "@/pages/product-form";
 import { NotFound } from "@/pages/not-found";
 import { ProductShow } from "@/pages/product-show";
 import { ProductCardListPage } from "@/pages/product-card-list";
+import CartPage from "@/pages/cart";
 
 export function AppRoutes() {
   return (
@@ -23,6 +25,8 @@ export function AppRoutes() {
         <Route index element={<HomePage />} />
         <Route path="home" element={<HomePage />} />
         <Route path="catalog" element={<CatalogPage />} />
+        <Route path="catalog/product/:productId" element={<ProductDetailPage />} />
+        <Route path="cart" element={<CartPage />} />
         <Route path="login" element={<LoginPage />} />
         <Route path="register" element={<RegisterPage />} />
 
