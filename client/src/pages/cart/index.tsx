@@ -1,43 +1,62 @@
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
+import { Button } from "primereact/button";
+import { InputText } from "primereact/inputtext";
 import Footer from "@/components/footer";
 import { readCartItems, writeCartItems } from "@/utils/cart-storage";
+import { formatCurrency } from "@/utils/product-utils";
 import "./styles.css";
 
-export default function CartPage() {
-  const [cartItems, setCartItems] = useState([]);
+interface CartItem {
+  id: number;
+  nome: string;
+  imagem: string;
+  preco: number;
+  quantidade: number;
+  variante?: string;
+}
 
+const FIXED_DISCOUNT = 0.0;
+const PIX_DISCOUNT_PERCENT = 0.05;
+
+export function CartPage() {
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [cepInput, setCepInput] = useState("");
+  const [couponInput, setCouponInput] = useState("");
+
+  // Load cart items from storage
   useEffect(() => {
     setCartItems(readCartItems());
   }, []);
 
+  // Sync cart with other tabs/windows
   useEffect(() => {
     const syncCart = () => setCartItems(readCartItems());
     window.addEventListener("cartUpdated", syncCart);
     return () => window.removeEventListener("cartUpdated", syncCart);
   }, []);
 
-  const updateCartStorage = (newItems) => {
+  const updateCartStorage = useCallback((newItems: CartItem[]) => {
     setCartItems(newItems);
     writeCartItems(newItems);
-  };
+  }, []);
 
-  // Remover item único
-  const removeItem = (indexToRemove) => {
+  const removeItem = (indexToRemove: number) => {
     const newItems = cartItems.filter((_, index) => index !== indexToRemove);
     updateCartStorage(newItems);
   };
 
-  // --- NOVO: Limpar Carrinho Inteiro ---
   const clearCart = () => {
-    if (window.confirm("Tem certeza que deseja remover TODOS os itens do carrinho?")) {
+    if (
+      window.confirm(
+        "Tem certeza que deseja remover TODOS os itens do carrinho?"
+      )
+    ) {
       updateCartStorage([]);
     }
   };
-  // ------------------------------------
 
-  // Atualizar quantidade
-  const updateQuantity = (index, delta) => {
+  const updateQuantity = (index: number, delta: number) => {
     const newItems = [...cartItems];
     const newQuantity = newItems[index].quantidade + delta;
 
@@ -47,19 +66,25 @@ export default function CartPage() {
     }
   };
 
-  // Cálculos Financeiros
-  const calcularSubtotal = () => {
-    return cartItems.reduce(
-      (total, item) => total + item.preco * item.quantidade,
-      0
-    );
+  // Financial calculations
+  const subtotal = cartItems.reduce(
+    (total, item) => total + item.preco * item.quantidade,
+    0
+  );
+
+  const valueWithDiscount = subtotal - FIXED_DISCOUNT;
+  const pixDiscountValue = valueWithDiscount * PIX_DISCOUNT_PERCENT;
+  const totalPix = valueWithDiscount - pixDiscountValue;
+
+  const handleCepSubmit = () => {
+    console.log("CEP calculado:", cepInput);
+    // TODO: Implement CEP calculation
   };
 
-  const descontoFixo = 0.0;
-  const subtotal = calcularSubtotal();
-  const valorComDesconto = subtotal - descontoFixo;
-  const descontoPixValor = valorComDesconto * 0.05;
-  const totalPix = valorComDesconto - descontoPixValor;
+  const handleCouponSubmit = () => {
+    console.log("Cupom aplicado:", couponInput);
+    // TODO: Implement coupon validation
+  };
 
   return (
     <div className="page-container">
@@ -96,127 +121,117 @@ export default function CartPage() {
               </div>
 
               <div className="cart-grid-layout">
-                {/* COLUNA DA ESQUERDA: Lista de Produtos */}
+                {/* Left Column: Product List */}
                 <div className="cart-left-column">
-                  
-                  {/* --- NOVO: Cabeçalho da Lista com Botão Limpar --- */}
                   <div className="cart-list-header-actions">
                     <h2>Itens no Carrinho ({cartItems.length})</h2>
-                    <button className="btn-clear-all" onClick={clearCart}>
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <polyline points="3 6 5 6 21 6"></polyline>
-                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                      </svg>
-                      Limpar Carrinho
-                    </button>
+                    <Button
+                      icon="pi pi-trash"
+                      label="Limpar Carrinho"
+                      severity="danger"
+                      text
+                      onClick={clearCart}
+                      className="btn-clear-all"
+                    />
                   </div>
-                  {/* ------------------------------------------------ */}
 
                   <div className="cart-items-list">
                     {cartItems.map((item, index) => (
-                      <div
-                        key={`${item.id}-${index}`}
-                        className="cart-item-row"
-                      >
+                      <div key={`${item.id}-${index}`} className="cart-item-row">
                         <div className="item-product-details">
                           <div className="product-image-new">
-                            {/* --- NOVO: Link na Imagem --- */}
                             <Link to={`/catalog/product/${item.id}`}>
                               <img
                                 src={item.imagem}
                                 alt={item.nome}
                                 onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = "https://via.placeholder.com/80";
+                                  const target = e.target as HTMLImageElement;
+                                  target.onerror = null;
+                                  target.src =
+                                    "https://via.placeholder.com/80";
                                 }}
                               />
                             </Link>
                           </div>
                           <div className="product-info-new">
-                            <Link to={`/catalog/product/${item.id}`} className="product-name-link">
+                            <Link
+                              to={`/catalog/product/${item.id}`}
+                              className="product-name-link"
+                            >
                               <h3 className="product-name-new">{item.nome}</h3>
                             </Link>
 
                             {item.variante && (
-                              <p className="product-spec">Opção: {item.variante}</p>
+                              <p className="product-spec">
+                                Opção: {item.variante}
+                              </p>
                             )}
                           </div>
                         </div>
 
                         <div className="item-quantity-controls">
                           <div className="quantity-control-new">
-                            <button
+                            <Button
+                              icon="pi pi-minus"
                               className="quantity-btn-new"
                               onClick={() => updateQuantity(index, -1)}
-                            >
-                              -
-                            </button>
+                              text
+                            />
                             <span className="quantity-number-new">
                               {item.quantidade}
                             </span>
-                            <button
+                            <Button
+                              icon="pi pi-plus"
                               className="quantity-btn-new"
                               onClick={() => updateQuantity(index, 1)}
-                            >
-                              +
-                            </button>
+                              text
+                            />
                           </div>
                         </div>
 
                         <div className="item-total-value">
                           <div className="price-group">
                             <span className="price-pix">
-                              R${" "}
-                              {(item.preco * item.quantidade)
-                                .toFixed(2)
-                                .replace(".", ",")}
+                              {formatCurrency(
+                                item.preco * item.quantidade
+                              )}
                             </span>
                             <span className="price-card">
-                              Unid: R$ {item.preco.toFixed(2).replace(".", ",")}
+                              Unid: {formatCurrency(item.preco)}
                             </span>
                           </div>
-                          <button
+                          <Button
+                            icon="pi pi-trash"
                             className="btn-remove-new"
-                            title="Remover item"
+                            text
+                            severity="danger"
                             onClick={() => removeItem(index)}
-                          >
-                            <svg
-                              className="remove-icon"
-                              xmlns="http://www.w3.org/2000/svg"
-                              viewBox="0 0 24 24"
-                              fill="currentColor"
-                            >
-                              <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
-                            </svg>
-                          </button>
+                            title="Remover item"
+                          />
                         </div>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                {/* COLUNA DA DIREITA: Resumo */}
+                {/* Right Column: Summary */}
                 <div className="cart-right-column">
                   <div className="summary-card">
                     <h4>Resumo do Pedido</h4>
 
                     <div className="summary-row-new">
                       <span>Valor dos produtos</span>
-                      <span>R$ {subtotal.toFixed(2).replace(".", ",")}</span>
+                      <span>{formatCurrency(subtotal)}</span>
                     </div>
 
                     <div className="summary-row-new discount-row">
                       <span>Descontos</span>
-                      <span>
-                        - R$ {descontoFixo.toFixed(2).replace(".", ",")}
-                      </span>
+                      <span>- {formatCurrency(FIXED_DISCOUNT)}</span>
                     </div>
 
                     <div className="summary-row-new discount-row">
                       <span>Desconto Pix</span>
-                      <span>
-                        - R$ {descontoPixValor.toFixed(2).replace(".", ",")}
-                      </span>
+                      <span>- {formatCurrency(pixDiscountValue)}</span>
                     </div>
 
                     <div className="summary-row-new">
@@ -229,27 +244,35 @@ export default function CartPage() {
                     <div className="summary-total-block">
                       <div className="summary-row-new total-row">
                         <span>Total da compra</span>
-                        <span>R$ {totalPix.toFixed(2).replace(".", ",")}</span>
+                        <span>{formatCurrency(totalPix)}</span>
                       </div>
                       <p className="total-details-card">
-                        R$ {valorComDesconto.toFixed(2).replace(".", ",")} no
-                        cartão
+                        {formatCurrency(valueWithDiscount)} no cartão
                       </p>
                     </div>
 
-                    <button className="btn-continue-checkout">Continuar</button>
+                    <Button
+                      label="Continuar"
+                      className="btn-continue-checkout"
+                      onClick={() => console.log("Proceed to checkout")}
+                    />
                   </div>
 
                   <div className="extra-options-card">
                     <div className="delivery-section-sidebar">
                       <h5>Entrega</h5>
                       <div className="cep-input-group">
-                        <input
-                          type="text"
+                        <InputText
                           placeholder="CEP"
                           className="cep-input"
+                          value={cepInput}
+                          onChange={(e) => setCepInput(e.target.value)}
                         />
-                        <button className="btn-calculate">OK</button>
+                        <Button
+                          label="OK"
+                          className="btn-calculate"
+                          onClick={handleCepSubmit}
+                        />
                       </div>
                       <a href="#" className="link-policy">
                         Não sei meu CEP
@@ -259,12 +282,17 @@ export default function CartPage() {
                     <div className="coupon-section-sidebar">
                       <h5>Cupom de Desconto</h5>
                       <div className="coupon-input-group-new">
-                        <input
-                          type="text"
+                        <InputText
                           placeholder="Código"
                           className="coupon-input-new"
+                          value={couponInput}
+                          onChange={(e) => setCouponInput(e.target.value)}
                         />
-                        <button className="btn-apply-new">OK</button>
+                        <Button
+                          label="OK"
+                          className="btn-apply-new"
+                          onClick={handleCouponSubmit}
+                        />
                       </div>
                     </div>
                   </div>

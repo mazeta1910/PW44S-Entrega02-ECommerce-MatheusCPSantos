@@ -15,7 +15,7 @@ import { ProductFormPage } from "@/pages/product-form";
 import { NotFound } from "@/pages/not-found";
 import { ProductShow } from "@/pages/product-show";
 import { ProductCardListPage } from "@/pages/product-card-list";
-import CartPage from "@/pages/cart";
+import { CartPage } from "@/pages/cart";
 
 export function AppRoutes() {
   return (
