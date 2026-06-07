@@ -5,6 +5,7 @@ import { Tag } from "primereact/tag";
 import type { IProduct } from "@/commons/types";
 import Footer from "@/components/footer";
 import { AddToCartFlow } from "@/components/add-to-cart-flow";
+import { BuyNowFlow } from "@/components/buy-now-flow";
 import { StoreBreadcrumb } from "@/components/store-breadcrumb";
 import {
   getConditionLabel,
@@ -138,6 +139,7 @@ export function ProductDetailPage() {
                   outlined
                   onClick={() => navigate("/catalog")}
                 />
+                <BuyNowFlow product={product} />
               </div>
 
               {activeVariants.length > 0 && (

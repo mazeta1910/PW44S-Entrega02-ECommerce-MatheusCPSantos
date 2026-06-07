@@ -8,6 +8,8 @@ import { useAuth } from "@/context/hooks/use-auth";
 import { isAdmin, getUserAvatarUrl } from "@/utils/auth-utils";
 import { InputSwitch } from "primereact/inputswitch";
 import { StoreCategoriesMenu } from "@/components/store-categories-menu";
+import { Badge } from "primereact/badge";
+import { getCartItemCount } from "@/utils/cart-storage";
 import "./styles.css";
 
 const TopMenu: React.FC = () => {
@@ -16,6 +18,7 @@ const TopMenu: React.FC = () => {
   const [darkMode, setDarkMode] = useState<boolean>(() => {
     return localStorage.getItem("theme") === "dark";
   });
+  const [cartCount, setCartCount] = useState(0);
   const { authenticated, authenticatedUser, handleLogout } = useAuth();
 
   const displayName =
@@ -29,6 +32,20 @@ const TopMenu: React.FC = () => {
       : "https://unpkg.com/primereact/resources/themes/lara-light-blue/theme.css";
     localStorage.setItem("theme", darkMode ? "dark" : "light");
   }, [darkMode]);
+
+  useEffect(() => {
+    const updateCartCount = () => {
+      setCartCount(getCartItemCount());
+    };
+
+    updateCartCount();
+
+    window.addEventListener("cartUpdated", updateCartCount);
+
+    return () => {
+      window.removeEventListener("cartUpdated", updateCartCount);
+    };
+  }, []);
 
   const handleLogoutClick = () => {
     handleLogout();
@@ -102,7 +119,7 @@ const TopMenu: React.FC = () => {
         onClick={handleLogoClick}
       >
         <img
-          src="/public/Logo.png"
+          src="/Logo.png"
           alt="Logo"
           height={40}
           style={{ objectFit: "contain" }}
@@ -162,6 +179,23 @@ const TopMenu: React.FC = () => {
               aria-label={`Avatar de ${displayName}`}
             />
           )}
+          <div className="cart-button-wrapper">
+            <Button
+              icon="pi pi-shopping-cart"
+              className="p-button-text"
+              onClick={() => navigate("/cart")}
+              tooltip="Meu Carrinho"
+            />
+
+            {cartCount > 0 && (
+              <Badge
+                value={cartCount}
+                severity="danger"
+                className="cart-badge-prime"
+              />
+            )}
+          </div>
+          
           <Button
             icon="pi pi-sign-out"
             className="p-button-text"

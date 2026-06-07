@@ -77,3 +77,5 @@ export function addProductToCart(product: IProduct): boolean {
 export function getCartItemCount(): number {
   return readCartItems().reduce((total, item) => total + item.quantidade, 0);
 }
+
+

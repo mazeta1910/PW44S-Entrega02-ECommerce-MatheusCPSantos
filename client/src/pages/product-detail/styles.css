@@ -110,6 +110,10 @@
   margin-bottom: 2rem;
 }
 
+.product-detail__actions button{
+  width: 49%;
+}
+
 .product-detail__variants h2 {
   margin: 0 0 0.75rem;
   font-size: 1.1rem;

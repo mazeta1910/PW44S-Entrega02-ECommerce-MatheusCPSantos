@@ -55,3 +55,22 @@
   object-fit: cover;
   object-position: center top;
 }
+
+.cart-button-wrapper {
+  position: relative;
+  display: inline-flex;
+}
+
+.cart-badge-prime {
+  position: absolute !important;
+  top: 0;
+  right: 0;
+  transform: translate(40%, -20%);
+  min-width: 18px;
+  height: 18px;
+  font-size: 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
