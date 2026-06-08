@@ -15,9 +15,8 @@ import java.util.List;
 public class AddressServiceImpl extends CrudServiceImpl<Address, Long> implements IAddressService {
 
     private final AddressRepository addressRepository;
-    private final UserRepository userRepository; // Adicionado para buscar o dono
+    private final UserRepository userRepository;
 
-    // Atualizamos o construtor para receber o UserRepository
     public AddressServiceImpl(AddressRepository addressRepository, UserRepository userRepository) {
         this.addressRepository = addressRepository;
         this.userRepository = userRepository;
@@ -28,25 +27,20 @@ public class AddressServiceImpl extends CrudServiceImpl<Address, Long> implement
         return addressRepository;
     }
 
-    // --- SOBRESCRITA DO MÉTODO SAVE PARA VINCULAR O USUÁRIO ---
     @Override
     public Address save(Address address) {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        User loggedUser = userRepository.findUserByUsername(username);
-
-        if (loggedUser == null) {
-            throw new IllegalArgumentException("Usuário logado não encontrado.");
-        }
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        User loggedUser = userRepository.findByEmailIgnoreCase(email)
+                .orElseThrow(() -> new IllegalArgumentException("Usuário logado não encontrado."));
 
         address.setUser(loggedUser);
 
         return super.save(address);
     }
 
-
     @Override
-    public List<Address> findByUsername(String username) {
-        return addressRepository.findByUserUsername(username);
+    public List<Address> findByUserEmail(String email) {
+        return addressRepository.findByUser_Email(email);
     }
 
     @Override
@@ -55,11 +49,10 @@ public class AddressServiceImpl extends CrudServiceImpl<Address, Long> implement
     }
 
     @Override
-    public java.util.List<Address> findAll() {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        return addressRepository.findByUserUsername(username);
+    public List<Address> findAll() {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        return addressRepository.findByUser_Email(email);
     }
-
 
     @Override
     public void deleteById(Long id) {

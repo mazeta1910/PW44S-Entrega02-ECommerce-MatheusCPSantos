@@ -6,6 +6,7 @@ import App from "@/App.tsx";
 
 import { PrimeReactProvider } from "primereact/api";
 import { BrowserRouter } from "react-router-dom";
+import { PRIME_LOCALE_PT } from "@/constants/prime-locale-pt";
 
 import "primereact/resources/themes/lara-light-indigo/theme.css"; //theme
 import "primereact/resources/primereact.min.css"; //core css
@@ -27,7 +28,7 @@ document.head.appendChild(link);
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
-      <PrimeReactProvider>
+      <PrimeReactProvider value={{ locale: PRIME_LOCALE_PT }}>
         <AuthProvider>
           <App />
         </AuthProvider>

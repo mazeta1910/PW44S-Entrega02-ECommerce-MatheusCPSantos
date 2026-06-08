@@ -40,17 +40,17 @@ public class OrderServiceImpl extends CrudServiceImpl<Order, Long> implements IO
     }
 
     @Override
-    public List<Order> findByUsername(String username) {
-        return orderRepository.findByUserUsername(username);
+    public List<Order> findByUserEmail(String email) {
+        return orderRepository.findByUser_Email(email);
     }
 
     @Override
     public List<Order> findAll() {
-        String username = org.springframework.security.core.context.SecurityContextHolder
+        String email = org.springframework.security.core.context.SecurityContextHolder
                 .getContext()
                 .getAuthentication()
                 .getName();
-        return orderRepository.findByUserUsername(username);
+        return orderRepository.findByUser_Email(email);
     }
 
     @Override

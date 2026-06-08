@@ -6,7 +6,7 @@ import type { IProduct } from "@/commons/types";
 import Footer from "@/components/footer";
 import { AddToCartFlow } from "@/components/add-to-cart-flow";
 import { BuyNowFlow } from "@/components/buy-now-flow";
-import { StoreBreadcrumb } from "@/components/store-breadcrumb";
+import { PageBreadcrumb } from "@/components/breadcrumb";
 import {
   getConditionLabel,
   getDeliveryLabel,
@@ -66,11 +66,17 @@ export function ProductDetailPage() {
   return (
     <div className="page-container">
       <main className="product-detail-page">
-        <StoreBreadcrumb
-          trail={
+        <PageBreadcrumb
+          segments={
             product
-              ? [product.category?.name ?? "Produto", product.name]
-              : ["Produto"]
+              ? [
+                  {
+                    label: product.category?.name ?? "Produto",
+                    to: "/catalog",
+                  },
+                  { label: product.name },
+                ]
+              : [{ label: "Produto" }]
           }
         />
 

@@ -146,6 +146,7 @@ export interface CatalogParams {
   deliveryTypes?: DeliveryType[];
   platforms?: Platform[];
   itemConditions?: ItemCondition[];
+  q?: string;
 }
 
 const findCatalog = async ({
@@ -155,6 +156,7 @@ const findCatalog = async ({
   deliveryTypes,
   platforms,
   itemConditions,
+  q,
 }: CatalogParams): Promise<IResponse> => {
   let response = {} as IResponse;
   try {
@@ -168,6 +170,9 @@ const findCatalog = async ({
     itemConditions?.forEach((condition) =>
       params.append("itemConditions", condition),
     );
+    if (q?.trim()) {
+      params.set("q", q.trim());
+    }
 
     const { status, data } = await api.get(`${productsURL}/catalog?${params}`);
     response = {

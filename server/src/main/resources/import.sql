@@ -337,10 +337,10 @@ UPDATE tb_product_variant SET list_price = 4999.00 WHERE sku = 'HAND-STEAMDECK';
 -- 4. POPULANDO UTILIZADORES (tb_user)
 -- A senha padrão é password
 -- ==========================================
-INSERT INTO tb_user (username, display_name, full_name, birth_date, email, cpf, phone, password, newsletter_subscription, terms_accepted, parent_id) VALUES ('admin', 'Administrador', 'Administrador do Sistema', '1990-01-01', 'admin@nexus.com.br', '06569168007', '46999999999', '$2a$10$GRLdNijSQMUvl/au9ofL.eDwmoohzzS7.rmNSJZ.0FxO/BTk76klW', TRUE, TRUE, NULL);
-INSERT INTO tb_user (username, display_name, full_name, birth_date, email, cpf, phone, password, newsletter_subscription, terms_accepted, parent_id) VALUES ('enzo15', 'Enzo', 'Enzo da Silva Santos', '2011-05-10', 'enzo@nexus.com.br', '59341647038', '46999998888', '$2a$10$GRLdNijSQMUvl/au9ofL.eDwmoohzzS7.rmNSJZ.0FxO/BTk76klW', FALSE, TRUE, 1);
-INSERT INTO tb_user (username, display_name, full_name, birth_date, email, cpf, phone, password, newsletter_subscription, terms_accepted, parent_id) VALUES ('maria_gamer', 'Maria', 'Maria Costa Ferreira', '1998-08-20', 'maria@gmail.com', '82645063004', '46988887777', '$2a$10$GRLdNijSQMUvl/au9ofL.eDwmoohzzS7.rmNSJZ.0FxO/BTk76klW', TRUE, TRUE, NULL);
-INSERT INTO tb_user (username, display_name, full_name, birth_date, email, cpf, phone, password, newsletter_subscription, terms_accepted, parent_id) VALUES ('lucas_pro', 'Lucas', 'Lucas Costa Ferreira', '2013-03-15', 'lucas@gmail.com', '40638513009', '46988887777', '$2a$10$GRLdNijSQMUvl/au9ofL.eDwmoohzzS7.rmNSJZ.0FxO/BTk76klW', FALSE, TRUE, 3);
+INSERT INTO tb_user (full_name, birth_date, email, cpf, phone, password, newsletter_subscription, terms_accepted, parent_id) VALUES ('Administrador do Sistema', '1990-01-01', 'admin@nexus.com.br', '06569168007', '46999999999', '$2a$10$GRLdNijSQMUvl/au9ofL.eDwmoohzzS7.rmNSJZ.0FxO/BTk76klW', TRUE, TRUE, NULL);
+INSERT INTO tb_user (full_name, birth_date, email, cpf, phone, password, newsletter_subscription, terms_accepted, parent_id) VALUES ('Enzo da Silva Santos', '2011-05-10', 'enzo@nexus.com.br', '59341647038', '46999998888', '$2a$10$GRLdNijSQMUvl/au9ofL.eDwmoohzzS7.rmNSJZ.0FxO/BTk76klW', FALSE, TRUE, 1);
+INSERT INTO tb_user (full_name, birth_date, email, cpf, phone, password, newsletter_subscription, terms_accepted, parent_id) VALUES ('Maria Costa Ferreira', '1998-08-20', 'maria@gmail.com', '82645063004', '46988887777', '$2a$10$GRLdNijSQMUvl/au9ofL.eDwmoohzzS7.rmNSJZ.0FxO/BTk76klW', TRUE, TRUE, NULL);
+INSERT INTO tb_user (full_name, birth_date, email, cpf, phone, password, newsletter_subscription, terms_accepted, parent_id) VALUES ('Lucas Costa Ferreira', '2013-03-15', 'lucas@gmail.com', '40638513009', '46988887777', '$2a$10$GRLdNijSQMUvl/au9ofL.eDwmoohzzS7.rmNSJZ.0FxO/BTk76klW', FALSE, TRUE, 3);
 
 -- ==========================================
 -- 5. POPULANDO CUPÕES E TRANSPORTADORAS

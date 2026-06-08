@@ -24,8 +24,8 @@ public class AuthController {
 
     @GetMapping("user-info")
     public UserDTO getUserInfo(Principal principal) {
-        String username = principal.getName();
-        User user = (User) authService.loadUserByUsername(username);
+        String email = principal.getName();
+        User user = (User) authService.loadUserByUsername(email);
         return userMapper.toDto(user);
     }
 }

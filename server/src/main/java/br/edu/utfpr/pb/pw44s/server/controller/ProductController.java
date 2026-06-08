@@ -63,13 +63,15 @@ public class ProductController extends CrudController<Product, ProductDTO, Long>
             @RequestParam(required = false) List<Long> categoryIds,
             @RequestParam(required = false) List<DeliveryType> deliveryTypes,
             @RequestParam(required = false) List<Platform> platforms,
-            @RequestParam(required = false) List<ItemCondition> itemConditions) {
+            @RequestParam(required = false) List<ItemCondition> itemConditions,
+            @RequestParam(required = false) String q) {
         Page<Product> productPage = productService.findCatalog(
                 PageRequest.of(page, size),
                 categoryIds,
                 deliveryTypes,
                 platforms,
-                itemConditions
+                itemConditions,
+                q
         );
         return ResponseEntity.ok(productPage.map(productMapper::toDto));
     }

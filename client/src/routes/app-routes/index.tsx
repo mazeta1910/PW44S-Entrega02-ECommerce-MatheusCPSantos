@@ -16,6 +16,10 @@ import { NotFound } from "@/pages/not-found";
 import { ProductShow } from "@/pages/product-show";
 import { ProductCardListPage } from "@/pages/product-card-list";
 import { CartPage } from "@/pages/cart";
+import { AccountLayout } from "@/components/account-layout";
+import { AccountProfilePage } from "@/pages/account/profile";
+import { AccountOrdersPage } from "@/pages/account/orders";
+import { AccountAddressesPage } from "@/pages/account/addresses";
 
 export function AppRoutes() {
   return (
@@ -29,6 +33,15 @@ export function AppRoutes() {
         <Route path="cart" element={<CartPage />} />
         <Route path="login" element={<LoginPage />} />
         <Route path="register" element={<RegisterPage />} />
+
+        {/* rotas da conta (exigem login) */}
+        <Route element={<RequireAuth />}>
+          <Route path="account" element={<AccountLayout />}>
+            <Route index element={<AccountProfilePage />} />
+            <Route path="orders" element={<AccountOrdersPage />} />
+            <Route path="addresses" element={<AccountAddressesPage />} />
+          </Route>
+        </Route>
 
         {/* rotas administrativas (exigem login e perfil admin) */}
         <Route element={<RequireAuth />}>

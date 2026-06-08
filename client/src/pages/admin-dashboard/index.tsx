@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import { useAuth } from "@/context/hooks/use-auth";
+import { getUserDisplayName } from "@/utils/auth-utils";
 import "./styles.css";
 
 interface AdminAction {
@@ -42,17 +43,14 @@ export function AdminDashboardPage() {
   const navigate = useNavigate();
   const { authenticatedUser } = useAuth();
 
-  const displayName =
-    authenticatedUser?.displayName ??
-    authenticatedUser?.username ??
-    "Administrador";
+  const userLabel = getUserDisplayName(authenticatedUser);
 
   return (
     <div className="admin-dashboard page-container">
       <header className="admin-dashboard-header">
         <div>
           <p className="admin-dashboard-eyebrow">Painel administrativo</p>
-          <h1>Olá, {displayName}</h1>
+          <h1>Olá, {userLabel}</h1>
           <p className="admin-dashboard-subtitle">
             Central de gestão da Nexus Store. Use os atalhos abaixo para manter
             categorias e produtos; em breve você poderá acompanhar pedidos e

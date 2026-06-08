@@ -1,13 +1,14 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Menubar } from "primereact/menubar";
 import type { MenuItem } from "primereact/menuitem";
-import { Avatar } from "primereact/avatar";
 import { Button } from "primereact/button";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/hooks/use-auth";
-import { isAdmin, getUserAvatarUrl } from "@/utils/auth-utils";
+import { isAdmin, getUserDisplayName } from "@/utils/auth-utils";
 import { InputSwitch } from "primereact/inputswitch";
 import { StoreCategoriesMenu } from "@/components/store-categories-menu";
+import { ProductSearchBar } from "@/components/product-search-bar";
+import { UserAccountMenu } from "@/components/user-account-menu";
 import { Badge } from "primereact/badge";
 import { getCartItemCount } from "@/utils/cart-storage";
 import "./styles.css";
@@ -21,9 +22,7 @@ const TopMenu: React.FC = () => {
   const [cartCount, setCartCount] = useState(0);
   const { authenticated, authenticatedUser, handleLogout } = useAuth();
 
-  const displayName =
-    authenticatedUser?.displayName ?? authenticatedUser?.username ?? "Usuário";
-  const avatarUrl = getUserAvatarUrl(authenticatedUser);
+  const userLabel = getUserDisplayName(authenticatedUser);
 
   useEffect(() => {
     const themeLink = document.getElementById("theme-link") as HTMLLinkElement;
@@ -121,8 +120,7 @@ const TopMenu: React.FC = () => {
         <img
           src="/Logo.png"
           alt="Logo"
-          height={40}
-          style={{ objectFit: "contain" }}
+          className="top-menu-brand__logo"
         />
       </div>
 
@@ -163,36 +161,25 @@ const TopMenu: React.FC = () => {
 
       {authenticated ? (
         <>
-          <span className="font-semibold hidden sm:block">{displayName}</span>
-          {avatarUrl ? (
-            <Avatar
-              image={avatarUrl}
-              shape="circle"
-              className="top-menu-user-avatar"
-              aria-label={`Foto de perfil de ${displayName}`}
-            />
-          ) : (
-            <Avatar
-              label={displayName.charAt(0).toUpperCase()}
-              shape="circle"
-              className="bg-primary"
-              aria-label={`Avatar de ${displayName}`}
-            />
-          )}
+          <UserAccountMenu
+            userLabel={userLabel}
+            authenticatedUser={authenticatedUser}
+          />
           <div className="cart-button-wrapper">
             <Button
               icon="pi pi-shopping-cart"
-              className="p-button-text"
+              className="p-button-text top-menu-cart-btn"
               onClick={() => navigate("/cart")}
               tooltip="Meu Carrinho"
+              tooltipOptions={{
+                position: "bottom",
+                appendTo: typeof document !== "undefined" ? document.body : undefined,
+                className: "top-menu-cart-tooltip",
+              }}
             />
 
             {cartCount > 0 && (
-              <Badge
-                value={cartCount}
-                severity="danger"
-                className="cart-badge-prime"
-              />
+              <Badge value={cartCount} className="cart-badge-prime" />
             )}
           </div>
           
@@ -246,6 +233,9 @@ const TopMenu: React.FC = () => {
         start={start}
         end={end}
       />
+      <div className="top-menu-search-center">
+        <ProductSearchBar />
+      </div>
     </div>
   );
 };

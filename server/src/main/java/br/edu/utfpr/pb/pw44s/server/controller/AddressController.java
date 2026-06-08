@@ -44,11 +44,10 @@ public class AddressController extends CrudController<Address, AddressDTO, Long>
 
     @GetMapping("me")
     public ResponseEntity<List<AddressDTO>> findMyAddresses() {
-        // Forma manual e segura de pegar o username do Token JWT
-        String username = org.springframework.security.core.context.SecurityContextHolder
+        String email = org.springframework.security.core.context.SecurityContextHolder
                 .getContext().getAuthentication().getName();
 
-        List<Address> addresses = addressService.findByUsername(username);
+        List<Address> addresses = addressService.findByUserEmail(email);
         return ResponseEntity.ok(addresses.stream().map(this::toDto).collect(Collectors.toList()));
     }
 }

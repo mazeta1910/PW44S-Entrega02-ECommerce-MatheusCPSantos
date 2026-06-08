@@ -21,7 +21,7 @@ import {
 } from "@/constants/catalog-filters";
 import Footer from "@/components/footer";
 import { ProductCard } from "@/components/product-card";
-import { StoreBreadcrumb } from "@/components/store-breadcrumb";
+import { PageBreadcrumb } from "@/components/breadcrumb";
 import CategoryService from "@/services/category-service";
 import ProductService from "@/services/product-service";
 import "./styles.css";
@@ -71,6 +71,9 @@ export function CatalogPage() {
   const [selectedConditions, setSelectedConditions] = useState<ItemCondition[]>(
     () => parseEnumList<ItemCondition>(searchParams.get("conditions")),
   );
+  const [searchQuery, setSearchQuery] = useState(
+    () => searchParams.get("q")?.trim() ?? "",
+  );
   const [page, setPage] = useState(() =>
     Number(searchParams.get("page") ?? "0"),
   );
@@ -85,6 +88,7 @@ export function CatalogPage() {
       deliveryTypes: DeliveryType[],
       platforms: Platform[],
       itemConditions: ItemCondition[],
+      query: string,
     ) => {
       const params = new URLSearchParams();
       if (nextPage > 0) params.set("page", String(nextPage));
@@ -93,6 +97,9 @@ export function CatalogPage() {
       if (platforms.length > 0) params.set("platforms", platforms.join(","));
       if (itemConditions.length > 0) {
         params.set("conditions", itemConditions.join(","));
+      }
+      if (query.trim()) {
+        params.set("q", query.trim());
       }
       setSearchParams(params, { replace: true });
     },
@@ -106,6 +113,7 @@ export function CatalogPage() {
       deliveryTypes: DeliveryType[],
       platforms: Platform[],
       itemConditions: ItemCondition[],
+      query: string,
     ) => {
       setIsLoading(true);
       setErrorMessage(null);
@@ -117,6 +125,7 @@ export function CatalogPage() {
         deliveryTypes: deliveryTypes.length > 0 ? deliveryTypes : undefined,
         platforms: platforms.length > 0 ? platforms : undefined,
         itemConditions: itemConditions.length > 0 ? itemConditions : undefined,
+        q: query.trim() || undefined,
       });
 
       if (response.success && response.data) {
@@ -154,6 +163,7 @@ export function CatalogPage() {
     const nextConditions = parseEnumList<ItemCondition>(
       searchParams.get("conditions"),
     );
+    const nextQuery = searchParams.get("q")?.trim() ?? "";
     const urlPage = Number(searchParams.get("page") ?? "0");
     const nextPage = Number.isNaN(urlPage) || urlPage < 0 ? 0 : urlPage;
 
@@ -169,6 +179,7 @@ export function CatalogPage() {
     setSelectedConditions((prev) =>
       sameStringArray(prev, nextConditions) ? prev : nextConditions,
     );
+    setSearchQuery((prev) => (prev === nextQuery ? prev : nextQuery));
     setPage((prev) => (prev === nextPage ? prev : nextPage));
   }, [searchParams]);
 
@@ -179,6 +190,7 @@ export function CatalogPage() {
       selectedDeliveryTypes,
       selectedPlatforms,
       selectedConditions,
+      searchQuery,
     );
     syncUrl(
       page,
@@ -186,6 +198,7 @@ export function CatalogPage() {
       selectedDeliveryTypes,
       selectedPlatforms,
       selectedConditions,
+      searchQuery,
     );
   }, [
     page,
@@ -193,6 +206,7 @@ export function CatalogPage() {
     selectedDeliveryTypes,
     selectedPlatforms,
     selectedConditions,
+    searchQuery,
     loadCatalog,
     syncUrl,
   ]);
@@ -236,6 +250,7 @@ export function CatalogPage() {
     setSelectedDeliveryTypes([]);
     setSelectedPlatforms([]);
     setSelectedConditions([]);
+    setSearchQuery("");
     resetPage();
   };
 
@@ -243,7 +258,8 @@ export function CatalogPage() {
     selectedCategoryIds.length > 0 ||
     selectedDeliveryTypes.length > 0 ||
     selectedPlatforms.length > 0 ||
-    selectedConditions.length > 0;
+    selectedConditions.length > 0 ||
+    searchQuery.length > 0;
 
   const onPageChange = (event: PaginatorPageChangeEvent) => {
     setPage(event.page);
@@ -262,19 +278,31 @@ export function CatalogPage() {
     const platformLabels = selectedPlatforms.map(getPlatformLabel);
     const conditionLabels = selectedConditions.map(getConditionLabel);
 
-    return [...categoryLabels, ...deliveryLabels, ...platformLabels, ...conditionLabels];
+    const searchLabel =
+      searchQuery.length > 0 ? [`Busca: “${searchQuery}”`] : [];
+
+    return [
+      ...searchLabel,
+      ...categoryLabels,
+      ...deliveryLabels,
+      ...platformLabels,
+      ...conditionLabels,
+    ];
   }, [
     categories,
     selectedCategoryIds,
     selectedDeliveryTypes,
     selectedPlatforms,
     selectedConditions,
+    searchQuery,
   ]);
 
   return (
     <div className="page-container">
       <main className="catalog-page">
-        <StoreBreadcrumb trail={breadcrumbTrail} />
+        <PageBreadcrumb
+          segments={breadcrumbTrail.map((label) => ({ label }))}
+        />
 
         <header className="catalog-header">
           <div>

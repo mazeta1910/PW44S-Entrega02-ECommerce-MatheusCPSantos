@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface IOrderService extends ICrudService<Order, Long> {
 
-    List<Order> findByUsername(String username);
+    List<Order> findByUserEmail(String email);
 
     Order saveFromDto(OrderDTO dto, User user);
 }

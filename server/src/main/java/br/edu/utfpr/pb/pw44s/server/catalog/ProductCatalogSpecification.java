@@ -23,11 +23,20 @@ public final class ProductCatalogSpecification {
             List<Long> categoryIds,
             List<DeliveryType> deliveryTypes,
             List<Platform> platforms,
-            List<ItemCondition> itemConditions) {
+            List<ItemCondition> itemConditions,
+            String search) {
 
         return (root, query, criteriaBuilder) -> {
             boolean countQuery = isCountQuery(query);
             List<Predicate> predicates = new ArrayList<>();
+
+            if (search != null && !search.isBlank()) {
+                String pattern = "%" + search.trim().toLowerCase() + "%";
+                predicates.add(criteriaBuilder.or(
+                        criteriaBuilder.like(criteriaBuilder.lower(root.get("name")), pattern),
+                        criteriaBuilder.like(criteriaBuilder.lower(root.get("description")), pattern)
+                ));
+            }
 
             if (categoryIds != null && !categoryIds.isEmpty()) {
                 predicates.add(root.get("category").get("id").in(categoryIds));

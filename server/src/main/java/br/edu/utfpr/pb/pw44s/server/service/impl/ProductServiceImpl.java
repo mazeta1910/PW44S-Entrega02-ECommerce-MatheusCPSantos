@@ -41,19 +41,22 @@ public class ProductServiceImpl extends CrudServiceImpl<Product, Long>
             List<Long> categoryIds,
             List<DeliveryType> deliveryTypes,
             List<Platform> platforms,
-            List<ItemCondition> itemConditions) {
+            List<ItemCondition> itemConditions,
+            String search) {
         boolean hasCategoryFilter = categoryIds != null && !categoryIds.isEmpty();
         boolean hasDeliveryFilter = deliveryTypes != null && !deliveryTypes.isEmpty();
         boolean hasPlatformFilter = platforms != null && !platforms.isEmpty();
         boolean hasConditionFilter = itemConditions != null && !itemConditions.isEmpty();
+        boolean hasSearch = search != null && !search.isBlank();
 
-        if (!hasCategoryFilter && !hasDeliveryFilter && !hasPlatformFilter && !hasConditionFilter) {
+        if (!hasCategoryFilter && !hasDeliveryFilter && !hasPlatformFilter
+                && !hasConditionFilter && !hasSearch) {
             return productRepository.findAll(pageable);
         }
 
         return productRepository.findAll(
                 ProductCatalogSpecification.withFilters(
-                        categoryIds, deliveryTypes, platforms, itemConditions),
+                        categoryIds, deliveryTypes, platforms, itemConditions, search),
                 pageable
         );
     }

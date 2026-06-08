@@ -17,6 +17,7 @@ public interface IProductService extends ICrudService<Product, Long> {
             List<Long> categoryIds,
             List<DeliveryType> deliveryTypes,
             List<Platform> platforms,
-            List<ItemCondition> itemConditions
+            List<ItemCondition> itemConditions,
+            String search
     );
 }

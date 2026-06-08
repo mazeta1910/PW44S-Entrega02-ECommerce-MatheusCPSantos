@@ -1,0 +1,71 @@
+.user-account-menu {
+  position: relative;
+  display: inline-flex;
+}
+
+.user-account-menu__trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.25rem 0.35rem;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.user-account-menu__trigger:hover,
+.user-account-menu__trigger:focus-visible {
+  background: var(--surface-hover, rgba(0, 0, 0, 0.04));
+  outline: none;
+}
+
+.user-account-menu__name {
+  font-weight: 600;
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.user-account-menu__panel {
+  position: absolute;
+  top: calc(100% + 0.45rem);
+  right: 0;
+  min-width: 210px;
+  padding: 0.35rem;
+  border: 1px solid var(--surface-border, #e5e7eb);
+  border-radius: 10px;
+  background: var(--surface-card, #fff);
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.12);
+  z-index: 1100;
+}
+
+.user-account-menu__item {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  width: 100%;
+  padding: 0.7rem 0.75rem;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.user-account-menu__item:hover,
+.user-account-menu__item:focus-visible {
+  background: var(--surface-hover, rgba(0, 0, 0, 0.04));
+  outline: none;
+}
+
+.user-account-menu__item .pi {
+  color: var(--primary-color, #3b82f6);
+  font-size: 0.95rem;
+}

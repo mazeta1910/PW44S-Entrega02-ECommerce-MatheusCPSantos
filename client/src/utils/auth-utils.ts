@@ -20,16 +20,28 @@ export function getPostLoginPath(user: AuthenticatedUser | undefined): string {
   return isAdmin(user) ? "/admin" : "/";
 }
 
+export function getUserDisplayName(user: AuthenticatedUser | undefined): string {
+  if (!user) {
+    return "Usuário";
+  }
+  return user.fullName?.trim() || user.email || "Usuário";
+}
+
 const USER_AVATARS: Record<string, string> = {
-  enzo15: "/users/enzo-profile.png",
+  "enzo@nexus.com.br": "/users/enzo-profile.png",
 };
 
 export function getUserAvatarUrl(
   user: AuthenticatedUser | undefined,
 ): string | null {
-  if (!user?.username) {
+  if (!user?.email) {
     return null;
   }
 
-  return USER_AVATARS[user.username.toLowerCase()] ?? null;
+  return USER_AVATARS[user.email.toLowerCase()] ?? null;
+}
+
+export function getUserInitial(user: AuthenticatedUser | undefined): string {
+  const label = getUserDisplayName(user);
+  return label.charAt(0).toUpperCase();
 }

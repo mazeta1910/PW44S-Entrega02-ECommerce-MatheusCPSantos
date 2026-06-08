@@ -10,3 +10,9 @@
   width: 100%;
   padding-top: 4rem;
 }
+
+@media (max-width: 991px) {
+  .app-main {
+    padding-top: 7.25rem;
+  }
+}

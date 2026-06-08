@@ -45,26 +45,16 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                                 throws AuthenticationException {
 
         try {
-            //HTTP.POST {"username":"admin", "password":"P4ssword"}
-            //Obtém os dados de username e password utilizando o ObjectMapper para converter o JSON
-            //em um objeto User com esses dados.
+            // HTTP POST {"email":"admin@nexus.com.br", "password":"password"}
             AuthRequestDTO credentials = new AuthRequestDTO();
             User user = new User();
-            //Verifica se o usuário existe no banco de dados, caso não exista uma Exception será disparada
-            //e o código será parado de executar nessa parte e o usuário irá receber uma resposta
-            //com falha na autenticação (classe: EntryPointUnauthorizedHandler)
             if (request.getInputStream() != null || request.getInputStream().available() > 0) {
                 credentials = new ObjectMapper().readValue(request.getInputStream(), AuthRequestDTO.class);
-                user = (User) authService.loadUserByUsername(credentials.getUsername());
+                user = (User) authService.loadUserByUsername(credentials.getEmail());
             }
-            //Caso o usuário seja encontrado, o objeto authenticationManager encarrega-se de autenticá-lo.
-            //Como o authenticationManager foi configurado na classe WebSecurity e, foi informado o método
-            //de criptografia da senha, a senha informada durante a autenticação é criptografada e
-            //comparada com a senha armazenada no banco. Caso não esteja correta uma Exception será disparada
-            //Caso ocorra sucesso será chamado o método: successfulAuthentication dessa classe
             return authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
-                            credentials.getUsername(),
+                            credentials.getEmail(),
                             credentials.getPassword(),
                             user.getAuthorities()
                     )

@@ -43,10 +43,10 @@ public class OrderController extends CrudController<Order, OrderDTO, Long> {
 
     @GetMapping("me")
     public ResponseEntity<List<OrderResponseDTO>> findMyOrders() {
-        String username = org.springframework.security.core.context.SecurityContextHolder
+        String email = org.springframework.security.core.context.SecurityContextHolder
                 .getContext().getAuthentication().getName();
 
-        List<Order> orders = orderService.findByUsername(username);
+        List<Order> orders = orderService.findByUserEmail(email);
         return ResponseEntity.ok(orders.stream().map(orderMapper::toResponseDto).collect(Collectors.toList()));
     }
 

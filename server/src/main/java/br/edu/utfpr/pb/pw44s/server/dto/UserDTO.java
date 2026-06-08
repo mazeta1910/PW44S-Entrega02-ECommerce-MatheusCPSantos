@@ -17,14 +17,6 @@ public class UserDTO {
 
     private Long id;
 
-    @NotBlank(message = "O nome de usuário é obrigatório.")
-    @Size(min = 4, max = 50)
-    private String username;
-
-    @NotBlank(message = "O nome de exibição é obrigatório.")
-    @Size(min = 4, max = 50)
-    private String displayName;
-
     @NotBlank(message = "O nome completo não pode ser vazio.")
     @Size(min = 4, max = 100, message = "O nome completo deve ter entre 4 e 100 caracteres.")
     @Pattern(regexp = "^[A-Za-zÀ-ÿ]+( [A-Za-zÀ-ÿ]+)+$", message = "O nome completo deve conter nome e sobrenome.")
@@ -52,8 +44,6 @@ public class UserDTO {
         return password.equals(confirmPassword);
     }
 
-    // --- NOVOS CAMPOS NEXUS ---
-
     @NotNull(message = "A data de nascimento é obrigatória.")
     @Past(message = "A data de nascimento deve estar no passado.")
     private LocalDate birthDate;
@@ -70,7 +60,7 @@ public class UserDTO {
     @Pattern(regexp = "^[0-9]{10,11}$",
             message = "O telefone deve conter apenas números, com DDD (10 ou 11 dígitos).")
     private String phone;
-    
+
     private Boolean newsletterSubscription;
 
     private Long parentId;
@@ -92,6 +82,7 @@ public class UserDTO {
 
         return true;
     }
+
     @JsonIgnore
     public boolean isAdult() {
         if (birthDate == null) {

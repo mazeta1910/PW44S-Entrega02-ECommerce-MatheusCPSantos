@@ -91,7 +91,7 @@ Status alinhado ao enunciado e à avaliação da entrega final (cliente + servid
 | Página com lista de produtos (nome, valor, imagem) | ✅ | ✅ |
 | Página individual do produto (detalhes + adicionar ao carrinho) | ✅ | ✅ |
 | Carrinho de compras (quantidade, remover item, esvaziar) | ✅ | ✅ |
-| Cadastro de usuário (username único) | ✅ | ✅ |
+| Cadastro de usuário (e-mail único) | ✅ | ✅ |
 | Autenticação (login) | ✅ | ✅ |
 | Resumo da compra e finalização enviada ao servidor | ✅ | ⏳ |
 | Catálogo, produto e carrinho acessíveis sem login | ✅ | ✅ |
@@ -150,12 +150,14 @@ Rotas públicas incluem listagem de produtos, categorias, variações e imagens.
 
 Senha padrão de todos os usuários seed: **`password`**
 
-| Username | Nome | E-mail | Perfil |
-|----------|------|--------|--------|
-| `admin` | Administrador | admin@nexus.com.br | ADMIN |
-| `enzo15` | Enzo | enzo@nexus.com.br | USER |
-| `maria_gamer` | Maria | maria@gmail.com | USER |
-| `lucas_pro` | Lucas | lucas@gmail.com | USER |
+| E-mail | Nome completo | Perfil |
+|--------|---------------|--------|
+| `admin@nexus.com.br` | Administrador do Sistema | ADMIN |
+| `enzo@nexus.com.br` | Enzo da Silva Santos | USER |
+| `maria@gmail.com` | Maria Costa Ferreira | USER |
+| `lucas@gmail.com` | Lucas Costa Ferreira | USER |
+
+O login é feito com **e-mail e senha**.
 
 ---
 

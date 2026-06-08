@@ -16,7 +16,7 @@ export const LoginPage = () => {
     control,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<IUserLogin>({ defaultValues: { username: "", password: "" } });  
+  } = useForm<IUserLogin>({ defaultValues: { email: "", password: "" } });  
   const navigate = useNavigate();
   const { login } = AuthService;
   const toast = useRef<Toast>(null);
@@ -70,23 +70,30 @@ export const LoginPage = () => {
           className="flex flex-column gap-3"
         >
           <div>
-            <label htmlFor="username" className="block mb-2">
-              Usuário
+            <label htmlFor="email" className="block mb-2">
+              E-mail
             </label>
             <Controller
-              name="username"
+              name="email"
               control={control}
-              rules={{ required: "Informe o nome de usuário" }}
+              rules={{
+                required: "Informe o e-mail",
+                pattern: {
+                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                  message: "Informe um e-mail válido",
+                },
+              }}
               render={({ field }) => (
                 <InputText
-                  id="username"
+                  id="email"
                   {...field}
-                  className={errors.username ? "p-invalid w-full" : "w-full"}
+                  type="email"
+                  className={errors.email ? "p-invalid w-full" : "w-full"}
                 />
               )}
             />
-            {errors.username && (
-              <small className="p-error">{errors.username.message}</small>
+            {errors.email && (
+              <small className="p-error">{errors.email.message}</small>
             )}
           </div>
 
