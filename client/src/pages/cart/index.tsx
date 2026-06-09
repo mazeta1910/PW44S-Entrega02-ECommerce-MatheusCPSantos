@@ -1,6 +1,7 @@
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useState, useEffect, useCallback } from "react";
 import { Button } from "primereact/button";
+import { confirmDialog } from "primereact/confirmdialog";
 import { InputText } from "primereact/inputtext";
 import Footer from "@/components/footer";
 import { CheckoutStepBar } from "@/components/checkout-step-bar";
@@ -58,13 +59,15 @@ export function CartPage() {
   };
 
   const clearCart = () => {
-    if (
-      window.confirm(
-        "Tem certeza que deseja remover TODOS os itens do carrinho?"
-      )
-    ) {
-      updateCartStorage([]);
-    }
+    confirmDialog({
+      message: "Tem certeza que deseja remover todos os itens do carrinho?",
+      header: "Limpar carrinho",
+      icon: "pi pi-exclamation-triangle",
+      acceptLabel: "Limpar",
+      rejectLabel: "Cancelar",
+      acceptClassName: "p-button-danger",
+      accept: () => updateCartStorage([]),
+    });
   };
 
   const updateQuantity = (index: number, delta: number) => {

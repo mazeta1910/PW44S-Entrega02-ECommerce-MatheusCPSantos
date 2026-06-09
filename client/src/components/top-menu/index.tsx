@@ -193,9 +193,15 @@ const TopMenu: React.FC = () => {
               />
               <Button
                 icon="pi pi-sign-out"
-                className="p-button-text"
+                className="p-button-text top-menu-logout-btn"
                 onClick={handleLogoutClick}
+                aria-label="Sair"
                 tooltip="Sair"
+                tooltipOptions={{
+                  position: "bottom",
+                  appendTo: typeof document !== "undefined" ? document.body : undefined,
+                  className: "top-menu-logout-tooltip",
+                }}
               />
             </>
           ) : (

@@ -1,7 +1,7 @@
 import { useMemo, useState, useEffect } from "react";
 import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Avatar } from "primereact/avatar";
-import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
+import { confirmDialog } from "primereact/confirmdialog";
 import { useAuth } from "@/context/hooks/use-auth";
 import { PageBreadcrumb } from "@/components/breadcrumb";
 import {
@@ -77,7 +77,6 @@ export function AccountLayout() {
 
   return (
     <div className="account-page page-container">
-      <ConfirmDialog />
       <div className="account-page__container">
         <PageBreadcrumb segments={breadcrumbSegments} includeCatalog={false} />
 
