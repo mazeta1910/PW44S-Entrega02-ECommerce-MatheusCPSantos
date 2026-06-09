@@ -446,7 +446,16 @@ export const RegisterPage = () => {
                     className={classNames({ "p-invalid": errors.termsAccepted })}
                   />
                   <label htmlFor="termsAccepted">
-                    Li e aceito os termos de uso da NEXUS Store *
+                    Li e aceito os{" "}
+                    <Link
+                      to="/termos"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="register-form__terms-link"
+                    >
+                      Termos de Uso
+                    </Link>{" "}
+                    da NEXUS Store *
                   </label>
                 </div>
               )}

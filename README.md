@@ -151,6 +151,10 @@ Status alinhado ao enunciado e à avaliação da entrega final (cliente + servid
 - Login, registro e sessão JWT com `AuthContext`.
 - **Painel administrativo** e CRUD de categorias/produtos (perfil `ADMIN`).
 
+#### Documentos legais
+- **Termos de Uso** (`/termos`) com seções sobre natureza acadêmica do projeto, cadastro, produtos, pedidos, entrega, avaliações, privacidade e contato.
+- Link no rodapé (Ajuda) e no formulário de cadastro (aceite dos termos).
+
 ### Melhorias recentes de UI/UX
 
 | Área | O que foi feito |
@@ -247,6 +251,7 @@ A API possui teste de contexto Spring (`ServerApplicationTests`). Casos de teste
 | `/catalog/product/:productId` | Página de detalhes do produto | Público |
 | `/cart` | Carrinho de compras | Público |
 | `/login`, `/register` | Autenticação e cadastro | Público |
+| `/termos` | Termos de Uso da plataforma | Público |
 | `/account` | Perfil do usuário | Autenticado |
 | `/account/orders` | Histórico de pedidos | Autenticado |
 | `/account/addresses` | Endereços cadastrados | Autenticado |

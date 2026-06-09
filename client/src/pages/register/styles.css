@@ -85,6 +85,17 @@
   cursor: pointer;
 }
 
+.register-form__terms-link {
+  color: var(--primary-color, #3b82f6);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.register-form__terms-link:hover {
+  color: color-mix(in srgb, var(--primary-color, #3b82f6) 80%, #000);
+}
+
 .register-form__submit {
   margin-top: 0.5rem;
 }

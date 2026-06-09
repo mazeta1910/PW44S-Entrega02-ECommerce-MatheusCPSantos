@@ -39,6 +39,9 @@ export default function Footer() {
                 <Link to="/">Trocas e Devoluções</Link>
               </li>
               <li>
+                <Link to="/termos">Termos de Uso</Link>
+              </li>
+              <li>
                 <Link to="/">Política de Privacidade</Link>
               </li>
             </ul>

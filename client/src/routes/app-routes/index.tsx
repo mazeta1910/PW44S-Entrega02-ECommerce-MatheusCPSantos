@@ -20,6 +20,7 @@ import { AccountLayout } from "@/components/account-layout";
 import { AccountProfilePage } from "@/pages/account/profile";
 import { AccountOrdersPage } from "@/pages/account/orders";
 import { AccountAddressesPage } from "@/pages/account/addresses";
+import { TermsOfServicePage } from "@/pages/terms-of-service";
 
 export function AppRoutes() {
   return (
@@ -33,6 +34,7 @@ export function AppRoutes() {
         <Route path="cart" element={<CartPage />} />
         <Route path="login" element={<LoginPage />} />
         <Route path="register" element={<RegisterPage />} />
+        <Route path="termos" element={<TermsOfServicePage />} />
 
         {/* rotas da conta (exigem login) */}
         <Route element={<RequireAuth />}>
