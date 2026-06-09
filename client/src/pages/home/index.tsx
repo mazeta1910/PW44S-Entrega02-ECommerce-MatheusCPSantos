@@ -113,10 +113,11 @@ export function HomePage() {
           </p>
 
           <div className="filter-actions">
-            <Link to="/catalog">
+            <Link to={isPromoSection ? "/catalog?onSale=true" : "/catalog"}>
               <Button
-                label="Ver catálogo completo"
-                icon="pi pi-arrow-right"
+                label={
+                  isPromoSection ? "Ver todas as promoções" : "Ver catálogo completo"
+                }
                 size="small"
               />
             </Link>

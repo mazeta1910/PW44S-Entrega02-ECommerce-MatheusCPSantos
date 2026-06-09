@@ -1,5 +1,7 @@
 package br.edu.utfpr.pb.pw44s.server.controller;
 
+import br.edu.utfpr.pb.pw44s.server.catalog.CatalogSort;
+import br.edu.utfpr.pb.pw44s.server.dto.CatalogPriceBoundsDTO;
 import br.edu.utfpr.pb.pw44s.server.dto.ProductDTO;
 import br.edu.utfpr.pb.pw44s.server.mapper.ProductMapper;
 import br.edu.utfpr.pb.pw44s.server.model.Product;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -56,6 +59,11 @@ public class ProductController extends CrudController<Product, ProductDTO, Long>
         return ResponseEntity.ok(products);
     }
 
+    @GetMapping("catalog/price-bounds")
+    public ResponseEntity<CatalogPriceBoundsDTO> getCatalogPriceBounds() {
+        return ResponseEntity.ok(productService.getCatalogPriceBounds());
+    }
+
     @GetMapping("catalog")
     public ResponseEntity<Page<ProductDTO>> findCatalog(
             @RequestParam(defaultValue = "0") int page,
@@ -64,14 +72,22 @@ public class ProductController extends CrudController<Product, ProductDTO, Long>
             @RequestParam(required = false) List<DeliveryType> deliveryTypes,
             @RequestParam(required = false) List<Platform> platforms,
             @RequestParam(required = false) List<ItemCondition> itemConditions,
-            @RequestParam(required = false) String q) {
+            @RequestParam(required = false) String q,
+            @RequestParam(required = false) Boolean onSale,
+            @RequestParam(required = false) BigDecimal minPrice,
+            @RequestParam(required = false) BigDecimal maxPrice,
+            @RequestParam(required = false) CatalogSort sort) {
         Page<Product> productPage = productService.findCatalog(
                 PageRequest.of(page, size),
                 categoryIds,
                 deliveryTypes,
                 platforms,
                 itemConditions,
-                q
+                q,
+                onSale,
+                minPrice,
+                maxPrice,
+                sort
         );
         return ResponseEntity.ok(productPage.map(productMapper::toDto));
     }

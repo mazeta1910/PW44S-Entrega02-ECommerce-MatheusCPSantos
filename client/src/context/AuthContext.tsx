@@ -4,11 +4,20 @@ import type { AuthenticatedUser, AuthenticationResponse } from "@/commons/types"
 import { api } from "@/lib/axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getPostLoginPath } from "@/utils/auth-utils";
+import {
+  clearAuthData,
+  getStoredToken,
+  getStoredUser,
+  persistAuthData,
+} from "@/utils/auth-storage";
 
 interface AuthContextType {
   authenticated: boolean;
   authenticatedUser?: AuthenticatedUser;
-  handleLogin: (authenticationResponse: AuthenticationResponse) => Promise<any>;
+  handleLogin: (
+    authenticationResponse: AuthenticationResponse,
+    rememberMe?: boolean,
+  ) => Promise<void>;
   handleLogout: () => void;
   refreshAuthenticatedUser: () => void;
 }
@@ -19,16 +28,6 @@ interface AuthProviderProps {
 
 const AuthContext = createContext({} as AuthContextType);
 
-function getStoredToken(): string | null {
-  const stored = localStorage.getItem("token");
-  if (!stored) return null;
-  try {
-    return stored.startsWith('"') ? JSON.parse(stored) : stored;
-  } catch {
-    return stored;
-  }
-}
-
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [authenticated, setAuthenticated] = useState(false);
   const [authenticatedUser, setAuthenticatedUser] =
@@ -37,13 +36,14 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const location = useLocation();
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
     const token = getStoredToken();
-    if (storedUser && token) {
-      const user = JSON.parse(storedUser) as AuthenticatedUser;
+    const user = getStoredUser();
+
+    if (user && token) {
       setAuthenticatedUser(user);
       setAuthenticated(true);
       api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
       const authOnlyPaths = ["/login", "/register"];
       if (authOnlyPaths.includes(location.pathname)) {
         navigate(getPostLoginPath(user), { replace: true });
@@ -53,11 +53,15 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   }, []);
 
   const handleLogin = async (
-    authenticationResponse: AuthenticationResponse
+    authenticationResponse: AuthenticationResponse,
+    rememberMe = true,
   ) => {
     try {
-      localStorage.setItem("token", authenticationResponse.token);
-      localStorage.setItem("user", JSON.stringify(authenticationResponse.user));
+      persistAuthData(
+        authenticationResponse.token,
+        authenticationResponse.user,
+        rememberMe,
+      );
       api.defaults.headers.common["Authorization"] =
         `Bearer ${authenticationResponse.token}`;
 
@@ -70,16 +74,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   };
 
   const refreshAuthenticatedUser = () => {
-    const storedUser = localStorage.getItem("user");
-    if (!storedUser) {
+    const user = getStoredUser();
+    if (!user) {
       return;
     }
 
-    try {
-      setAuthenticatedUser(JSON.parse(storedUser) as AuthenticatedUser);
-    } catch {
-      setAuthenticatedUser(undefined);
-    }
+    setAuthenticatedUser(user);
   };
 
   useEffect(() => {
@@ -89,8 +89,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   }, []);
 
   const handleLogout = async () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+    clearAuthData();
     api.defaults.headers.common["Authorization"] = "";
 
     setAuthenticated(false);

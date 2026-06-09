@@ -218,9 +218,9 @@ export function TermsOfServicePage() {
               informações desnecessárias em ambiente de testes.
             </p>
             <p>
-              Detalhes adicionais sobre coleta, uso e armazenamento poderão ser
-              descritos em documento específico de Política de Privacidade,
-              quando disponibilizado.
+              Detalhes adicionais sobre coleta, uso e armazenamento estão
+              descritos na{" "}
+              <Link to="/privacidade">Política de Privacidade</Link>.
             </p>
           </section>
 
@@ -266,7 +266,7 @@ export function TermsOfServicePage() {
               <li>
                 <i className="pi pi-envelope" aria-hidden />
                 E-mail:{" "}
-                <a href="mailto:thdfm.2018@gmail.com">thdfm.2018@gmail.com</a>
+                <a href="mailto:matheuscps110@gmail.com">matheuscps110@gmail.com</a>
               </li>
               <li>
                 <i className="pi pi-whatsapp" aria-hidden />
@@ -281,6 +281,10 @@ export function TermsOfServicePage() {
         </article>
 
         <footer className="terms-page__actions">
+          <Link to="/privacidade" className="terms-page__link">
+            <i className="pi pi-shield" aria-hidden />
+            Ver Política de Privacidade
+          </Link>
           <Link to="/register" className="terms-page__link">
             <i className="pi pi-user-plus" aria-hidden />
             Voltar ao cadastro

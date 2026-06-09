@@ -1,14 +1,15 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { Menubar } from "primereact/menubar";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import type { MenuItem } from "primereact/menuitem";
 import { Button } from "primereact/button";
-import { useLocation, useNavigate } from "react-router-dom";
+import { TieredMenu } from "primereact/tieredmenu";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import { useAuth } from "@/context/hooks/use-auth";
 import { isAdmin, getUserDisplayName } from "@/utils/auth-utils";
 import { performLogout } from "@/utils/logout-utils";
 import { StoreCategoriesMenu } from "@/components/store-categories-menu";
 import { ProductSearchBar } from "@/components/product-search-bar";
 import { UserAccountMenu } from "@/components/user-account-menu";
+import { LoginPopover } from "@/components/login-popover";
 import { Badge } from "primereact/badge";
 import { getCartItemCount } from "@/utils/cart-storage";
 import "./styles.css";
@@ -16,6 +17,7 @@ import "./styles.css";
 const TopMenu: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const adminMenuRef = useRef<TieredMenu>(null);
   const [cartCount, setCartCount] = useState(0);
   const { authenticated, authenticatedUser, handleLogout } = useAuth();
 
@@ -99,113 +101,119 @@ const TopMenu: React.FC = () => {
     navigate("/");
   };
 
-  const start = (
-    <div className="top-menu-start">
-      <div
-        className="top-menu-brand flex align-items-center gap-2 cursor-pointer"
-        onClick={handleLogoClick}
-      >
-        <img
-          src="/Logo.png"
-          alt="Logo"
-          className="top-menu-brand__logo"
-        />
-      </div>
-
-      <nav className="top-menu-store-nav" aria-label="Navegação da loja">
-        <button
-          type="button"
-          className="top-menu-nav-link"
-          onClick={() => navigate("/")}
-        >
-          <span className="pi pi-home top-menu-nav-icon" aria-hidden />
-          <span>Início</span>
-        </button>
-        <StoreCategoriesMenu />
-      </nav>
-    </div>
-  );
-
-  const end = (
-    <div className="flex align-items-center gap-3">
-      {authenticated ? (
-        <>
-          <UserAccountMenu
-            userLabel={userLabel}
-            authenticatedUser={authenticatedUser}
-          />
-          <div className="cart-button-wrapper">
-            <Button
-              icon="pi pi-shopping-cart"
-              className="p-button-text top-menu-cart-btn"
-              onClick={() => navigate("/cart")}
-              tooltip="Meu Carrinho"
-              tooltipOptions={{
-                position: "bottom",
-                appendTo: typeof document !== "undefined" ? document.body : undefined,
-                className: "top-menu-cart-tooltip",
-              }}
-            />
-
-            {cartCount > 0 && (
-              <Badge value={cartCount} className="cart-badge-prime" />
-            )}
-          </div>
-          
-          <Button
-            icon="pi pi-sign-out"
-            className="p-button-text"
-            onClick={handleLogoutClick}
-            tooltip="Sair"
-          />
-        </>
-      ) : (
-        <>
-          {location.pathname !== "/login" && (
-            <Button
-              label="Entrar"
-              icon="pi pi-sign-in"
-              className="p-button-text"
-              onClick={() => navigate("/login")}
-            />
-          )}
-          {location.pathname !== "/register" && (
-            <Button
-              label="Criar conta"
-              icon="pi pi-user-plus"
-              className="p-button-outlined"
-              onClick={() => navigate("/register")}
-            />
-          )}
-        </>
+  const cartButton = (
+    <div className="cart-button-wrapper">
+      <Button
+        icon="pi pi-shopping-cart"
+        className="p-button-text top-menu-cart-btn"
+        onClick={() => navigate("/cart")}
+        tooltip="Meu Carrinho"
+        tooltipOptions={{
+          position: "bottom",
+          appendTo: typeof document !== "undefined" ? document.body : undefined,
+          className: "top-menu-cart-tooltip",
+        }}
+      />
+      {cartCount > 0 && (
+        <Badge value={cartCount} className="cart-badge-prime" />
       )}
     </div>
   );
 
   return (
-    <div
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        right: 0,
-        width: "100%",
-        zIndex: 1000,
-        backgroundColor: "var(--surface-ground)",
-        boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
-      }}
-      className="fixed top-0 left-0 w-full z-50 top-menu-shell"
-    >
-      <Menubar
-        key={authenticated ? "auth" : "guest"}
-        model={adminMenuItems}
-        start={start}
-        end={end}
-      />
-      <div className="top-menu-search-center">
-        <ProductSearchBar />
+    <header className="top-menu-shell">
+      <div className="top-menu-bar">
+        <div className="top-menu-bar__left">
+          <button
+            type="button"
+            className="top-menu-brand"
+            onClick={handleLogoClick}
+            aria-label="Ir para a página inicial"
+          >
+            <img
+              src="/Logo.png"
+              alt="NEXUS Store"
+              className="top-menu-brand__logo"
+            />
+          </button>
+
+          <nav className="top-menu-store-nav" aria-label="Navegação da loja">
+            <button
+              type="button"
+              className="top-menu-nav-link"
+              onClick={() => navigate("/")}
+            >
+              <span className="pi pi-home top-menu-nav-icon" aria-hidden />
+              <span>Início</span>
+            </button>
+            <Link to="/catalog" className="top-menu-nav-link">
+              <span className="pi pi-th-large top-menu-nav-icon" aria-hidden />
+              <span>Catálogo</span>
+            </Link>
+            <Link to="/catalog?onSale=true" className="top-menu-nav-link">
+              <span className="pi pi-percentage top-menu-nav-icon" aria-hidden />
+              <span>Promoções</span>
+            </Link>
+            <StoreCategoriesMenu />
+          </nav>
+        </div>
+
+        <div className="top-menu-bar__search">
+          <ProductSearchBar />
+        </div>
+
+        <div className="top-menu-bar__actions">
+          {authenticated && isAdmin(authenticatedUser) && (
+            <>
+              <Button
+                type="button"
+                label="Admin"
+                icon="pi pi-cog"
+                className="p-button-text top-menu-admin-btn"
+                onClick={(event) => adminMenuRef.current?.toggle(event)}
+                aria-haspopup
+                aria-controls="top-menu-admin-menu"
+              />
+              <TieredMenu
+                id="top-menu-admin-menu"
+                model={adminMenuItems}
+                popup
+                ref={adminMenuRef}
+              />
+            </>
+          )}
+
+          {cartButton}
+
+          {authenticated ? (
+            <>
+              <UserAccountMenu
+                userLabel={userLabel}
+                authenticatedUser={authenticatedUser}
+              />
+              <Button
+                icon="pi pi-sign-out"
+                className="p-button-text"
+                onClick={handleLogoutClick}
+                tooltip="Sair"
+              />
+            </>
+          ) : (
+            <>
+              {location.pathname !== "/login" && <LoginPopover />}
+              {location.pathname !== "/register" && (
+                <Button
+                  label="Criar conta"
+                  icon="pi pi-user-plus"
+                  className="p-button-outlined top-menu-register-btn"
+                  onClick={() => navigate("/register")}
+                />
+              )}
+            </>
+          )}
+        </div>
       </div>
-    </div>
+    </header>
   );
 };
 

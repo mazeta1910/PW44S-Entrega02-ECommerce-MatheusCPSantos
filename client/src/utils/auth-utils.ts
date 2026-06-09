@@ -90,7 +90,17 @@ export function getUserInitial(user: AuthenticatedUser | undefined): string {
 }
 
 export function syncAuthenticatedUserName(fullName: string): void {
-  const stored = localStorage.getItem("user");
+  const storage = localStorage.getItem("user")
+    ? localStorage
+    : sessionStorage.getItem("user")
+      ? sessionStorage
+      : null;
+
+  if (!storage) {
+    return;
+  }
+
+  const stored = storage.getItem("user");
   if (!stored) {
     return;
   }
@@ -98,7 +108,7 @@ export function syncAuthenticatedUserName(fullName: string): void {
   try {
     const user = JSON.parse(stored) as AuthenticatedUser;
     user.fullName = fullName;
-    localStorage.setItem("user", JSON.stringify(user));
+    storage.setItem("user", JSON.stringify(user));
     window.dispatchEvent(new CustomEvent("authUserUpdated"));
   } catch {
     // ignore invalid storage

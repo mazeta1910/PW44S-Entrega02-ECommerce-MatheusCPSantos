@@ -1,8 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { Checkbox } from "primereact/checkbox";
 import { Paginator, type PaginatorPageChangeEvent } from "primereact/paginator";
-import { Button } from "primereact/button";
+import { Dropdown } from "primereact/dropdown";
 import type {
   DeliveryType,
   ICategory,
@@ -12,16 +11,31 @@ import type {
   Platform,
 } from "@/commons/types";
 import {
-  CATALOG_CONDITION_FILTERS,
-  CATALOG_DELIVERY_FILTERS,
-  CATALOG_PLATFORM_FILTERS,
   getConditionLabel,
   getDeliveryLabel,
   getPlatformLabel,
 } from "@/constants/catalog-filters";
+import {
+  CATALOG_SORT_OPTIONS,
+  DEFAULT_CATALOG_SORT,
+  getCatalogSortLabel,
+  parseCatalogSort,
+  type CatalogSort,
+} from "@/constants/catalog-sort";
+import {
+  buildPriceRangeFromUrl,
+  FALLBACK_PRICE_BOUNDS,
+  isPriceFilterActive,
+  normalizePriceRange,
+  parseCatalogPriceBounds,
+  type CatalogPriceBounds,
+  type PriceRange,
+} from "@/constants/catalog-price";
+import { formatCurrency } from "@/utils/product-utils";
 import Footer from "@/components/footer";
 import { ProductCard } from "@/components/product-card";
 import { PageBreadcrumb } from "@/components/breadcrumb";
+import { CatalogFilters } from "@/components/catalog-filters";
 import CategoryService from "@/services/category-service";
 import ProductService from "@/services/product-service";
 import "./styles.css";
@@ -39,6 +53,10 @@ function parseIds(param: string | null): number[] {
 function parseEnumList<T extends string>(param: string | null): T[] {
   if (!param) return [];
   return param.split(",").map((value) => value.trim()) as T[];
+}
+
+function parseOnSale(param: string | null): boolean {
+  return param === "true" || param === "1";
 }
 
 function sameNumberArray(a: number[], b: number[]): boolean {
@@ -71,6 +89,12 @@ export function CatalogPage() {
   const [selectedConditions, setSelectedConditions] = useState<ItemCondition[]>(
     () => parseEnumList<ItemCondition>(searchParams.get("conditions")),
   );
+  const [onSaleOnly, setOnSaleOnly] = useState(() =>
+    parseOnSale(searchParams.get("onSale")),
+  );
+  const [sort, setSort] = useState<CatalogSort>(() =>
+    parseCatalogSort(searchParams.get("sort")),
+  );
   const [searchQuery, setSearchQuery] = useState(
     () => searchParams.get("q")?.trim() ?? "",
   );
@@ -80,6 +104,21 @@ export function CatalogPage() {
   const [totalRecords, setTotalRecords] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [priceBounds, setPriceBounds] = useState<CatalogPriceBounds | null>(null);
+  const [selectedPriceRange, setSelectedPriceRange] = useState<PriceRange | null>(
+    null,
+  );
+  const [boundsReady, setBoundsReady] = useState(false);
+
+  const isPromoView = onSaleOnly && !searchQuery;
+
+  const priceFilterActive = useMemo(
+    () =>
+      priceBounds != null && selectedPriceRange != null
+        ? isPriceFilterActive(selectedPriceRange, priceBounds)
+        : false,
+    [priceBounds, selectedPriceRange],
+  );
 
   const syncUrl = useCallback(
     (
@@ -89,6 +128,10 @@ export function CatalogPage() {
       platforms: Platform[],
       itemConditions: ItemCondition[],
       query: string,
+      onSale: boolean,
+      priceRange: PriceRange | null,
+      bounds: CatalogPriceBounds | null,
+      nextSort: CatalogSort,
     ) => {
       const params = new URLSearchParams();
       if (nextPage > 0) params.set("page", String(nextPage));
@@ -97,6 +140,20 @@ export function CatalogPage() {
       if (platforms.length > 0) params.set("platforms", platforms.join(","));
       if (itemConditions.length > 0) {
         params.set("conditions", itemConditions.join(","));
+      }
+      if (onSale) {
+        params.set("onSale", "true");
+      }
+      if (
+        priceRange != null &&
+        bounds != null &&
+        isPriceFilterActive(priceRange, bounds)
+      ) {
+        params.set("minPrice", String(priceRange[0]));
+        params.set("maxPrice", String(priceRange[1]));
+      }
+      if (nextSort !== DEFAULT_CATALOG_SORT) {
+        params.set("sort", nextSort);
       }
       if (query.trim()) {
         params.set("q", query.trim());
@@ -114,9 +171,18 @@ export function CatalogPage() {
       platforms: Platform[],
       itemConditions: ItemCondition[],
       query: string,
+      onSale: boolean,
+      priceRange: PriceRange | null,
+      bounds: CatalogPriceBounds | null,
+      nextSort: CatalogSort,
     ) => {
       setIsLoading(true);
       setErrorMessage(null);
+
+      const applyPriceFilter =
+        priceRange != null &&
+        bounds != null &&
+        isPriceFilterActive(priceRange, bounds);
 
       const response = await ProductService.findCatalog({
         page: pageIndex,
@@ -126,6 +192,10 @@ export function CatalogPage() {
         platforms: platforms.length > 0 ? platforms : undefined,
         itemConditions: itemConditions.length > 0 ? itemConditions : undefined,
         q: query.trim() || undefined,
+        onSale: onSale || undefined,
+        minPrice: applyPriceFilter ? priceRange[0] : undefined,
+        maxPrice: applyPriceFilter ? priceRange[1] : undefined,
+        sort: nextSort,
       });
 
       if (response.success && response.data) {
@@ -157,12 +227,39 @@ export function CatalogPage() {
   }, []);
 
   useEffect(() => {
+    const loadPriceBounds = async () => {
+      const response = await ProductService.getCatalogPriceBounds();
+      const bounds = response.success
+        ? parseCatalogPriceBounds(response.data)
+        : FALLBACK_PRICE_BOUNDS;
+
+      setPriceBounds(bounds);
+      setSelectedPriceRange(
+        buildPriceRangeFromUrl(
+          searchParams.get("minPrice"),
+          searchParams.get("maxPrice"),
+          bounds,
+        ),
+      );
+      setBoundsReady(true);
+    };
+
+    loadPriceBounds();
+  }, []);
+
+  useEffect(() => {
     const nextCategories = parseIds(searchParams.get("categories"));
     const nextDelivery = parseEnumList<DeliveryType>(searchParams.get("delivery"));
     const nextPlatforms = parseEnumList<Platform>(searchParams.get("platforms"));
     const nextConditions = parseEnumList<ItemCondition>(
       searchParams.get("conditions"),
     );
+    const nextOnSale = parseOnSale(searchParams.get("onSale"));
+    const nextSort = searchParams.get("sort")
+      ? parseCatalogSort(searchParams.get("sort"))
+      : nextOnSale
+        ? "DISCOUNT_DESC"
+        : DEFAULT_CATALOG_SORT;
     const nextQuery = searchParams.get("q")?.trim() ?? "";
     const urlPage = Number(searchParams.get("page") ?? "0");
     const nextPage = Number.isNaN(urlPage) || urlPage < 0 ? 0 : urlPage;
@@ -179,11 +276,32 @@ export function CatalogPage() {
     setSelectedConditions((prev) =>
       sameStringArray(prev, nextConditions) ? prev : nextConditions,
     );
+    setOnSaleOnly((prev) => (prev === nextOnSale ? prev : nextOnSale));
+    setSort((prev) => (prev === nextSort ? prev : nextSort));
     setSearchQuery((prev) => (prev === nextQuery ? prev : nextQuery));
     setPage((prev) => (prev === nextPage ? prev : nextPage));
-  }, [searchParams]);
+
+    if (priceBounds != null) {
+      const nextPriceRange = buildPriceRangeFromUrl(
+        searchParams.get("minPrice"),
+        searchParams.get("maxPrice"),
+        priceBounds,
+      );
+      setSelectedPriceRange((prev) =>
+        prev != null &&
+        prev[0] === nextPriceRange[0] &&
+        prev[1] === nextPriceRange[1]
+          ? prev
+          : nextPriceRange,
+      );
+    }
+  }, [searchParams, priceBounds]);
 
   useEffect(() => {
+    if (!boundsReady || selectedPriceRange == null) {
+      return;
+    }
+
     loadCatalog(
       page,
       selectedCategoryIds,
@@ -191,6 +309,10 @@ export function CatalogPage() {
       selectedPlatforms,
       selectedConditions,
       searchQuery,
+      onSaleOnly,
+      selectedPriceRange,
+      priceBounds,
+      sort,
     );
     syncUrl(
       page,
@@ -199,14 +321,23 @@ export function CatalogPage() {
       selectedPlatforms,
       selectedConditions,
       searchQuery,
+      onSaleOnly,
+      selectedPriceRange,
+      priceBounds,
+      sort,
     );
   }, [
+    boundsReady,
     page,
     selectedCategoryIds,
     selectedDeliveryTypes,
     selectedPlatforms,
     selectedConditions,
     searchQuery,
+    onSaleOnly,
+    selectedPriceRange,
+    priceBounds,
+    sort,
     loadCatalog,
     syncUrl,
   ]);
@@ -245,12 +376,33 @@ export function CatalogPage() {
     resetPage();
   };
 
+  const toggleOnSale = (checked: boolean) => {
+    setOnSaleOnly(checked);
+    if (checked && sort === DEFAULT_CATALOG_SORT) {
+      setSort("DISCOUNT_DESC");
+    }
+    resetPage();
+  };
+
+  const onPriceRangeChange = (range: PriceRange) => {
+    if (priceBounds == null) {
+      return;
+    }
+    setSelectedPriceRange(normalizePriceRange(range, priceBounds));
+    resetPage();
+  };
+
   const clearFilters = () => {
     setSelectedCategoryIds([]);
     setSelectedDeliveryTypes([]);
     setSelectedPlatforms([]);
     setSelectedConditions([]);
+    setOnSaleOnly(false);
+    setSort(DEFAULT_CATALOG_SORT);
     setSearchQuery("");
+    if (priceBounds != null) {
+      setSelectedPriceRange([priceBounds.min, priceBounds.max]);
+    }
     resetPage();
   };
 
@@ -259,11 +411,18 @@ export function CatalogPage() {
     selectedDeliveryTypes.length > 0 ||
     selectedPlatforms.length > 0 ||
     selectedConditions.length > 0 ||
+    onSaleOnly ||
+    priceFilterActive ||
     searchQuery.length > 0;
 
   const onPageChange = (event: PaginatorPageChangeEvent) => {
     setPage(event.page);
     window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const onSortChange = (nextSort: CatalogSort) => {
+    setSort(nextSort);
+    resetPage();
   };
 
   const breadcrumbTrail = useMemo(() => {
@@ -281,12 +440,27 @@ export function CatalogPage() {
     const searchLabel =
       searchQuery.length > 0 ? [`Busca: “${searchQuery}”`] : [];
 
+    const promoLabel = onSaleOnly ? ["Promoções"] : [];
+    const priceLabel =
+      priceFilterActive && selectedPriceRange
+        ? [
+            `Preço: ${formatCurrency(selectedPriceRange[0])} – ${formatCurrency(selectedPriceRange[1])}`,
+          ]
+        : [];
+    const sortLabel =
+      sort !== DEFAULT_CATALOG_SORT
+        ? [`Ordenação: ${getCatalogSortLabel(sort)}`]
+        : [];
+
     return [
+      ...promoLabel,
       ...searchLabel,
+      ...priceLabel,
       ...categoryLabels,
       ...deliveryLabels,
       ...platformLabels,
       ...conditionLabels,
+      ...sortLabel,
     ];
   }, [
     categories,
@@ -295,6 +469,10 @@ export function CatalogPage() {
     selectedPlatforms,
     selectedConditions,
     searchQuery,
+    onSaleOnly,
+    priceFilterActive,
+    selectedPriceRange,
+    sort,
   ]);
 
   return (
@@ -306,117 +484,35 @@ export function CatalogPage() {
 
         <header className="catalog-header">
           <div>
-            <h1>Catálogo de produtos</h1>
+            <h1>{isPromoView ? "Promoções" : "Catálogo de produtos"}</h1>
             <p className="catalog-subtitle">
-              Filtre por departamento, entrega, plataforma e estado do item.
-              Combine livremente — só aparecem produtos com oferta compatível.
+              {isPromoView
+                ? "Ofertas com desconto ativo — combine com departamento, plataforma e ordenação."
+                : "Filtre por departamento, faixa de preço, ofertas, entrega e plataforma. Combine livremente — só aparecem produtos com oferta compatível."}
             </p>
           </div>
         </header>
 
         <div className="catalog-layout">
-          <aside className="catalog-filters">
-            <h2>Filtros</h2>
-
-            <div className="filter-group">
-              <h3 className="filter-group-title">Departamento</h3>
-              <p className="filters-hint">Área da loja (categoria do produto)</p>
-              <div className="category-checkboxes">
-                {categories.map((category) => (
-                  <label key={category.id} className="category-checkbox">
-                    <Checkbox
-                      inputId={`category-${category.id}`}
-                      checked={
-                        category.id != null &&
-                        selectedCategoryIds.includes(category.id)
-                      }
-                      onChange={(e) =>
-                        category.id != null &&
-                        toggleCategory(category.id, e.checked ?? false)
-                      }
-                    />
-                    <span>{category.name}</span>
-                  </label>
-                ))}
-              </div>
-            </div>
-
-            <div className="filter-group">
-              <h3 className="filter-group-title">Tipo de entrega</h3>
-              <p className="filters-hint">Como o item é entregue (variação)</p>
-              <div className="category-checkboxes">
-                {CATALOG_DELIVERY_FILTERS.map((filter) => (
-                  <label key={filter.value} className="category-checkbox">
-                    <Checkbox
-                      inputId={`delivery-${filter.value}`}
-                      checked={selectedDeliveryTypes.includes(filter.value)}
-                      onChange={(e) =>
-                        toggleDelivery(filter.value, e.checked ?? false)
-                      }
-                    />
-                    <span className="filter-label-block">
-                      <span>{filter.label}</span>
-                      {filter.hint && (
-                        <small className="filter-option-hint">{filter.hint}</small>
-                      )}
-                    </span>
-                  </label>
-                ))}
-              </div>
-            </div>
-
-            <div className="filter-group">
-              <h3 className="filter-group-title">Plataforma</h3>
-              <p className="filters-hint">Onde o jogo ou serviço é ativado</p>
-              <div className="category-checkboxes">
-                {CATALOG_PLATFORM_FILTERS.map((filter) => (
-                  <label key={filter.value} className="category-checkbox">
-                    <Checkbox
-                      inputId={`platform-${filter.value}`}
-                      checked={selectedPlatforms.includes(filter.value)}
-                      onChange={(e) =>
-                        togglePlatform(filter.value, e.checked ?? false)
-                      }
-                    />
-                    <span>{filter.label}</span>
-                  </label>
-                ))}
-              </div>
-            </div>
-
-            <div className="filter-group">
-              <h3 className="filter-group-title">Estado do item</h3>
-              <p className="filters-hint">Novo, semi-novo ou usado (revenda)</p>
-              <div className="category-checkboxes">
-                {CATALOG_CONDITION_FILTERS.map((filter) => (
-                  <label key={filter.value} className="category-checkbox">
-                    <Checkbox
-                      inputId={`condition-${filter.value}`}
-                      checked={selectedConditions.includes(filter.value)}
-                      onChange={(e) =>
-                        toggleCondition(filter.value, e.checked ?? false)
-                      }
-                    />
-                    <span className="filter-label-block">
-                      <span>{filter.label}</span>
-                      {filter.hint && (
-                        <small className="filter-option-hint">{filter.hint}</small>
-                      )}
-                    </span>
-                  </label>
-                ))}
-              </div>
-            </div>
-
-            {hasActiveFilters && (
-              <Button
-                type="button"
-                label="Limpar todos os filtros"
-                className="p-button-text p-button-sm"
-                onClick={clearFilters}
-              />
-            )}
-          </aside>
+          <CatalogFilters
+            categories={categories}
+            selectedCategoryIds={selectedCategoryIds}
+            selectedDeliveryTypes={selectedDeliveryTypes}
+            selectedPlatforms={selectedPlatforms}
+            selectedConditions={selectedConditions}
+            onSaleOnly={onSaleOnly}
+            priceBounds={priceBounds}
+            selectedPriceRange={selectedPriceRange}
+            isPriceFilterActive={priceFilterActive}
+            hasActiveFilters={hasActiveFilters}
+            onToggleCategory={toggleCategory}
+            onToggleDelivery={toggleDelivery}
+            onTogglePlatform={togglePlatform}
+            onToggleCondition={toggleCondition}
+            onToggleOnSale={toggleOnSale}
+            onPriceRangeChange={onPriceRangeChange}
+            onClearFilters={clearFilters}
+          />
 
           <section className="catalog-results">
             <div className="catalog-results-header">
@@ -424,6 +520,22 @@ export function CatalogPage() {
                 {totalRecords}{" "}
                 {totalRecords === 1 ? "produto encontrado" : "produtos encontrados"}
               </span>
+
+              <div className="catalog-sort">
+                <label htmlFor="catalog-sort" className="catalog-sort__label">
+                  Ordenar por
+                </label>
+                <Dropdown
+                  inputId="catalog-sort"
+                  value={sort}
+                  options={CATALOG_SORT_OPTIONS}
+                  optionLabel="label"
+                  optionValue="value"
+                  onChange={(event) => onSortChange(event.value as CatalogSort)}
+                  className="catalog-sort__dropdown"
+                  panelClassName="catalog-sort__panel"
+                />
+              </div>
             </div>
 
             {isLoading ? (

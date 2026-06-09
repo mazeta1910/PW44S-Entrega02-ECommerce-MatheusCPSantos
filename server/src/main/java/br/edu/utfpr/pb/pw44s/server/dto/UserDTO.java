@@ -65,8 +65,8 @@ public class UserDTO {
 
     private Long parentId;
 
-    @NotNull(message = "O aceite dos termos é obrigatório.")
-    @AssertTrue(message = "Você deve aceitar os termos de uso para prosseguir com o cadastro.")
+    @NotNull(message = "O aceite dos termos e da política de privacidade é obrigatório.")
+    @AssertTrue(message = "Você deve aceitar os Termos de Uso e a Política de Privacidade para prosseguir com o cadastro.")
     private Boolean termsAccepted;
 
     @JsonIgnore

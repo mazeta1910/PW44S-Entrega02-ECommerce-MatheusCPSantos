@@ -89,6 +89,7 @@ export const registerValidation = {
   },
   termsAccepted: {
     validate: (value: boolean) =>
-      value === true || "Você deve aceitar os termos de uso.",
+      value === true ||
+      "Você deve aceitar os Termos de Uso e a Política de Privacidade.",
   },
 };

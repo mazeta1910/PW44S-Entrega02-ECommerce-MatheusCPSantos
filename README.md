@@ -2,7 +2,9 @@
 
 **Desenvolvedores:** Matheus C. P. Santos e Isacar Freitas  
 **Instituição:** UTFPR — Câmpus Pato Branco  
-**Branch:** `Entrega02`
+**Branch:** `Entrega02`  
+**Repositório:** [github.com/mazeta1910/Entrega01-ECommerce-MatheusCPSantos](https://github.com/mazeta1910/Entrega01-ECommerce-MatheusCPSantos)  
+**Contato:** matheuscps110@gmail.com
 
 ---
 
@@ -153,7 +155,9 @@ Status alinhado ao enunciado e à avaliação da entrega final (cliente + servid
 
 #### Documentos legais
 - **Termos de Uso** (`/termos`) com seções sobre natureza acadêmica do projeto, cadastro, produtos, pedidos, entrega, avaliações, privacidade e contato.
-- Link no rodapé (Ajuda) e no formulário de cadastro (aceite dos termos).
+- **Política de Privacidade** (`/privacidade`) com detalhes sobre dados coletados, armazenamento local, cookies e direitos do usuário.
+- **Aviso de privacidade** no primeiro acesso (aceitar ou recusar; recusa oculta até nova sessão do navegador).
+- Links no rodapé (Ajuda) e no formulário de cadastro (aceite dos Termos de Uso e Política de Privacidade).
 
 ### Melhorias recentes de UI/UX
 
@@ -252,6 +256,7 @@ A API possui teste de contexto Spring (`ServerApplicationTests`). Casos de teste
 | `/cart` | Carrinho de compras | Público |
 | `/login`, `/register` | Autenticação e cadastro | Público |
 | `/termos` | Termos de Uso da plataforma | Público |
+| `/privacidade` | Política de Privacidade | Público |
 | `/account` | Perfil do usuário | Autenticado |
 | `/account/orders` | Histórico de pedidos | Autenticado |
 | `/account/addresses` | Endereços cadastrados | Autenticado |

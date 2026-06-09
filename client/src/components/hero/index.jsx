@@ -92,11 +92,21 @@ export default function Hero() {
       ))}
 
       {/* Setas de Navegação */}
-      <button className="hero-arrow prev" onClick={prevSlide}>
-        &lt;
+      <button
+        type="button"
+        className="hero-arrow prev surface-icon-button"
+        onClick={prevSlide}
+        aria-label="Slide anterior"
+      >
+        <i className="pi pi-chevron-left" aria-hidden />
       </button>
-      <button className="hero-arrow next" onClick={nextSlide}>
-        &gt;
+      <button
+        type="button"
+        className="hero-arrow next surface-icon-button"
+        onClick={nextSlide}
+        aria-label="Próximo slide"
+      >
+        <i className="pi pi-chevron-right" aria-hidden />
       </button>
 
       {/* Paginação (Bolinhas) */}

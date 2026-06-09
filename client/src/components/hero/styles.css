@@ -106,26 +106,19 @@
   top: 50%;
   transform: translateY(-50%);
   z-index: 10;
-  background-color: rgba(0, 0, 0, 0.3);
-  color: white;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: none;
-  font-size: 1.1rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.3s;
 }
 
-.hero-arrow:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+.hero-arrow.surface-icon-button:hover {
+  transform: translateY(-50%) scale(1.02);
 }
 
-.hero-arrow.prev { left: 20px; }
-.hero-arrow.next { right: 20px; }
+.hero-arrow.prev {
+  left: 20px;
+}
+
+.hero-arrow.next {
+  right: 20px;
+}
 
 .hero-pagination {
   position: absolute;
@@ -138,20 +131,23 @@
 }
 
 .hero-dot {
-  width: 12px;
-  height: 12px;
-  background-color: rgba(255, 255, 255, 0.5);
+  width: 0.55rem;
+  height: 0.55rem;
+  background: color-mix(in srgb, var(--surface-card, #fff) 45%, transparent);
+  border: 1px solid color-mix(in srgb, var(--surface-border, #e5e7eb) 70%, transparent);
   border-radius: 50%;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: background-color 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
 }
 
 .hero-dot.active {
-  background-color: #2563eb; /* Cor ativa */
-  transform: scale(1.2);
+  background: var(--primary-color, #3b82f6);
+  border-color: var(--primary-color, #3b82f6);
+  transform: scale(1.15);
 }
+
 .hero-dot:hover {
-  background-color: white;
+  background: color-mix(in srgb, var(--surface-card, #fff) 70%, transparent);
 }
 
 /* Responsivo */
@@ -159,5 +155,12 @@
   .hero-carousel-component { height: 240px; }
   .hero-content h1 { font-size: 1.25rem; }
   .hero-content p { font-size: 0.85rem; }
-  .hero-arrow { width: 30px; height: 30px; font-size: 0.9rem; }
+  .hero-arrow.surface-icon-button {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .hero-arrow.surface-icon-button .pi {
+    font-size: 0.9rem;
+  }
 }

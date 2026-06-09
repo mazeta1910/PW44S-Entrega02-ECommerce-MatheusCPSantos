@@ -1,11 +1,11 @@
 import type {
   DeliveryType,
-  IPage,
   IProduct,
   IResponse,
   ItemCondition,
   Platform,
 } from "@/commons/types";
+import type { CatalogSort } from "@/constants/catalog-sort";
 import { api } from "@/lib/axios";
 
 const productsURL = "/products";
@@ -147,7 +147,32 @@ export interface CatalogParams {
   platforms?: Platform[];
   itemConditions?: ItemCondition[];
   q?: string;
+  onSale?: boolean;
+  minPrice?: number;
+  maxPrice?: number;
+  sort?: CatalogSort;
 }
+
+const getCatalogPriceBounds = async (): Promise<IResponse> => {
+  let response = {} as IResponse;
+  try {
+    const { status, data } = await api.get(`${productsURL}/catalog/price-bounds`);
+    response = {
+      status,
+      success: true,
+      message: "Faixa de preço carregada com sucesso!",
+      data,
+    };
+  } catch (err: any) {
+    response = {
+      status: err.response?.status ?? 0,
+      success: false,
+      message: "Falha ao carregar faixa de preço do catálogo",
+      data: err.response?.data,
+    };
+  }
+  return response;
+};
 
 const findCatalog = async ({
   page = 0,
@@ -157,6 +182,10 @@ const findCatalog = async ({
   platforms,
   itemConditions,
   q,
+  onSale,
+  minPrice,
+  maxPrice,
+  sort,
 }: CatalogParams): Promise<IResponse> => {
   let response = {} as IResponse;
   try {
@@ -172,6 +201,18 @@ const findCatalog = async ({
     );
     if (q?.trim()) {
       params.set("q", q.trim());
+    }
+    if (onSale) {
+      params.set("onSale", "true");
+    }
+    if (minPrice != null) {
+      params.set("minPrice", String(minPrice));
+    }
+    if (maxPrice != null) {
+      params.set("maxPrice", String(maxPrice));
+    }
+    if (sort && sort !== "RELEVANCE") {
+      params.set("sort", sort);
     }
 
     const { status, data } = await api.get(`${productsURL}/catalog?${params}`);
@@ -197,6 +238,7 @@ const ProductService = {
   save,
   findAll,
   findCatalog,
+  getCatalogPriceBounds,
   findByCategory,
   remove,
   findById,

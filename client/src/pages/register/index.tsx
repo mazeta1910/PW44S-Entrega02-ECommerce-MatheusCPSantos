@@ -455,6 +455,15 @@ export const RegisterPage = () => {
                     >
                       Termos de Uso
                     </Link>{" "}
+                    e a{" "}
+                    <Link
+                      to="/privacidade"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="register-form__terms-link"
+                    >
+                      Política de Privacidade
+                    </Link>{" "}
                     da NEXUS Store *
                   </label>
                 </div>

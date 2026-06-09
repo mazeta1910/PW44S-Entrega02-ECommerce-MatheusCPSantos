@@ -21,6 +21,7 @@ import { AccountProfilePage } from "@/pages/account/profile";
 import { AccountOrdersPage } from "@/pages/account/orders";
 import { AccountAddressesPage } from "@/pages/account/addresses";
 import { TermsOfServicePage } from "@/pages/terms-of-service";
+import { PrivacyPolicyPage } from "@/pages/privacy-policy";
 
 export function AppRoutes() {
   return (
@@ -35,6 +36,7 @@ export function AppRoutes() {
         <Route path="login" element={<LoginPage />} />
         <Route path="register" element={<RegisterPage />} />
         <Route path="termos" element={<TermsOfServicePage />} />
+        <Route path="privacidade" element={<PrivacyPolicyPage />} />
 
         {/* rotas da conta (exigem login) */}
         <Route element={<RequireAuth />}>

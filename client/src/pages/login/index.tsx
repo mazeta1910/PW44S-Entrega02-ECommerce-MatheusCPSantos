@@ -4,6 +4,7 @@ import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
 import { Button } from "primereact/button";
 import { Card } from "primereact/card";
+import { Checkbox } from "primereact/checkbox";
 import { Link, useNavigate } from "react-router-dom";
 import type { AuthenticationResponse, IUserLogin } from "@/commons/types";
 import { useAuth } from "@/context/hooks/use-auth";
@@ -16,7 +17,9 @@ export const LoginPage = () => {
     control,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<IUserLogin>({ defaultValues: { email: "", password: "" } });  
+  } = useForm<IUserLogin & { rememberMe: boolean }>({
+    defaultValues: { email: "", password: "", rememberMe: true },
+  });
   const navigate = useNavigate();
   const { login } = AuthService;
   const toast = useRef<Toast>(null);
@@ -24,13 +27,16 @@ export const LoginPage = () => {
   
   const { handleLogin } = useAuth();
 
-  const onSubmit = async (userLogin: IUserLogin) => {
+  const onSubmit = async (data: IUserLogin & { rememberMe: boolean }) => {
     setLoading(true);
     try {
-      const response = await login(userLogin);
+      const response = await login({
+        email: data.email,
+        password: data.password,
+      });
       if (response.status === 200) {
         const authenticationResponse = response.data as AuthenticationResponse;
-        handleLogin(authenticationResponse);
+        handleLogin(authenticationResponse, data.rememberMe);
         toast.current?.show({
           severity: "success",
           summary: "Sucesso",
@@ -120,6 +126,23 @@ export const LoginPage = () => {
               <small className="p-error">{errors.password.message}</small>
             )}
           </div>
+
+          <Controller
+            name="rememberMe"
+            control={control}
+            render={({ field }) => (
+              <div className="flex align-items-center gap-2">
+                <Checkbox
+                  inputId="rememberMe"
+                  checked={field.value}
+                  onChange={(event) => field.onChange(event.checked ?? false)}
+                />
+                <label htmlFor="rememberMe" className="text-sm cursor-pointer">
+                  Ficar sempre conectado
+                </label>
+              </div>
+            )}
+          />
 
           <Button
             type="submit"

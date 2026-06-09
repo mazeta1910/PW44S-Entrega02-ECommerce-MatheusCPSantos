@@ -9,7 +9,7 @@ export function ThemeToggle() {
     <Button
       type="button"
       icon={darkMode ? "pi pi-sun" : "pi pi-moon"}
-      className="theme-toggle"
+      className="theme-toggle surface-icon-button"
       rounded
       text
       aria-label={darkMode ? "Ativar modo claro" : "Ativar modo escuro"}
