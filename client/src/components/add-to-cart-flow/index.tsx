@@ -7,6 +7,7 @@ import {
   getPlatformLabel,
 } from "@/constants/catalog-filters";
 import { addVariantToCart } from "@/utils/cart-storage";
+import { showAppToast } from "@/utils/app-toast";
 import { formatCurrency, getActiveVariants } from "@/utils/product-utils";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
@@ -19,11 +20,19 @@ interface AddToCartFlowProps {
   product: IProduct;
   /** Botões menores para uso no card da vitrine. */
   compact?: boolean;
+  /** Variação já escolhida na página (evita modal de seleção). */
+  selectedVariant?: IProductVariant | null;
+  /** Exibe toast em vez do modal de sucesso (página de produto). */
+  notifyWithToast?: boolean;
+  disabled?: boolean;
 }
 
 export function AddToCartFlow({
   product,
   compact = false,
+  selectedVariant = null,
+  notifyWithToast = false,
+  disabled = false,
 }: AddToCartFlowProps) {
   const navigate = useNavigate();
   const activeVariants = useMemo(
@@ -70,11 +79,27 @@ export function AddToCartFlow({
     if (!addVariantToCart(product, variant)) {
       return;
     }
+
+    if (notifyWithToast) {
+      showAppToast({
+        severity: "success",
+        summary: "Adicionado ao carrinho",
+        detail: `${product.name} — ${variant.label}`,
+        life: 3500,
+      });
+      return;
+    }
+
     openSuccessDialog(variant.label);
   };
 
   const handleAddClick = () => {
     if (activeVariants.length === 0) {
+      return;
+    }
+
+    if (selectedVariant) {
+      commitAdd(selectedVariant);
       return;
     }
 
@@ -109,9 +134,9 @@ export function AddToCartFlow({
           label="Adicionar ao carrinho"
           icon="pi pi-cart-plus"
           size={buttonSize}
-          className={`${buttonClass ?? ""} add-to-cart-flow__cart-btn`.trim()}
+          className={`${buttonClass ?? ""} add-to-cart-flow__cart-btn w-full`.trim()}
           onClick={handleAddClick}
-          disabled={activeVariants.length === 0}
+          disabled={disabled || activeVariants.length === 0}
         />
       </div>
 

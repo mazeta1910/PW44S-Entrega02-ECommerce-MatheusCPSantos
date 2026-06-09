@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { useState, useEffect, useCallback } from "react";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
@@ -20,14 +20,23 @@ const FIXED_DISCOUNT = 0.0;
 const PIX_DISCOUNT_PERCENT = 0.05;
 
 export function CartPage() {
+  const [searchParams] = useSearchParams();
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [cepInput, setCepInput] = useState("");
   const [couponInput, setCouponInput] = useState("");
 
-  // Load cart items from storage
   useEffect(() => {
     setCartItems(readCartItems());
   }, []);
+
+  useEffect(() => {
+    if (searchParams.get("checkout") !== "1") {
+      return;
+    }
+
+    const checkoutSection = document.getElementById("checkout-section");
+    checkoutSection?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [searchParams, cartItems.length]);
 
   // Sync cart with other tabs/windows
   useEffect(() => {
@@ -241,7 +250,7 @@ export function CartPage() {
 
                     <div className="summary-divider-new"></div>
 
-                    <div className="summary-total-block">
+                    <div id="checkout-section" className="summary-total-block">
                       <div className="summary-row-new total-row">
                         <span>Total da compra</span>
                         <span>{formatCurrency(totalPix)}</span>

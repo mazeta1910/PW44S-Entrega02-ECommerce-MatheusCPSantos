@@ -30,6 +30,13 @@ public class ProductDTO {
     @Builder.Default
     private Boolean adultOnly = false;
 
+    private Double averageRating;
+
+    @Builder.Default
+    private Integer reviewCount = 0;
+
+    private String specifications;
+
     @Builder.Default
     private List<ProductVariantDTO> variants = new ArrayList<>();
 

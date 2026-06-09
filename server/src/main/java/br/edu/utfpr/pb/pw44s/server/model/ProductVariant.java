@@ -73,6 +73,10 @@ public class ProductVariant {
     @Column(name = "is_active")
     private Boolean active = true;
 
+    @Builder.Default
+    @Column(name = "stock_quantity", nullable = false, columnDefinition = "integer default 20")
+    private Integer stockQuantity = 20;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

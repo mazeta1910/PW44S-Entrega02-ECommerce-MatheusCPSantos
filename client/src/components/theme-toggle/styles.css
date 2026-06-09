@@ -1,0 +1,25 @@
+.theme-toggle {
+  position: fixed;
+  top: calc(var(--app-header-height, 4.5rem) + 1rem);
+  right: 0.85rem;
+  z-index: 950;
+  width: 2.35rem !important;
+  height: 2.35rem !important;
+  border: 1px solid var(--surface-border, #e5e7eb) !important;
+  background: var(--surface-card, #fff) !important;
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.08);
+}
+
+.theme-toggle .pi {
+  font-size: 1rem;
+}
+
+.theme-toggle:hover {
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.12);
+}
+
+@media (max-width: 991px) {
+  .theme-toggle {
+    top: calc(var(--app-header-height, 7.25rem) + 0.85rem);
+  }
+}

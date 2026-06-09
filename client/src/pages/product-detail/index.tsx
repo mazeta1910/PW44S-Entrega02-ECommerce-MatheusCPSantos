@@ -1,33 +1,55 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Button } from "primereact/button";
-import { Tag } from "primereact/tag";
 import type { IProduct } from "@/commons/types";
 import Footer from "@/components/footer";
 import { AddToCartFlow } from "@/components/add-to-cart-flow";
 import { BuyNowFlow } from "@/components/buy-now-flow";
 import { PageBreadcrumb } from "@/components/breadcrumb";
-import {
-  getConditionLabel,
-  getDeliveryLabel,
-  getPlatformLabel,
-} from "@/constants/catalog-filters";
+import { ProductCard } from "@/components/product-card";
+import { ProductRating } from "@/components/product-rating";
+import { ProductReviewsPanel } from "@/components/product-reviews-panel";
+import { ProductVariantPicker } from "@/components/product-variant-picker";
 import ProductService from "@/services/product-service";
 import { getProductImageUrl } from "@/utils/image-utils";
 import {
   formatCurrency,
+  getActiveVariants,
   getProductDiscountPercent,
   getProductDisplayPrice,
   getProductListPrice,
+  getSimilarProducts,
 } from "@/utils/product-utils";
+import {
+  buildDeliveryInfo,
+  getBestDefaultVariant,
+  getVariantKey,
+  isVariantInStock,
+} from "@/utils/variant-utils";
 import "./styles.css";
+
+type ProductDetailTab = "about" | "reviews";
+
+const PRODUCT_DETAIL_TABS: {
+  id: ProductDetailTab;
+  label: string;
+  icon: string;
+}[] = [
+  { id: "about", label: "Sobre", icon: "pi-info-circle" },
+  { id: "reviews", label: "Avaliações", icon: "pi-star" },
+];
 
 export function ProductDetailPage() {
   const { productId } = useParams<{ productId: string }>();
   const navigate = useNavigate();
   const [product, setProduct] = useState<IProduct | null>(null);
+  const [similarProducts, setSimilarProducts] = useState<IProduct[]>([]);
+  const [selectedVariantKey, setSelectedVariantKey] = useState<string | null>(
+    null,
+  );
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<ProductDetailTab>("about");
 
   useEffect(() => {
     const loadProduct = async () => {
@@ -43,25 +65,81 @@ export function ProductDetailPage() {
 
       const response = await ProductService.findById(id);
       if (response.success && response.data) {
-        setProduct(response.data as IProduct);
+        const loaded = response.data as IProduct;
+        setProduct(loaded);
+
+        const variants = getActiveVariants(loaded);
+        const defaultVariant = getBestDefaultVariant(variants);
+        setSelectedVariantKey(
+          defaultVariant ? getVariantKey(defaultVariant) : null,
+        );
+
+        if (loaded.category?.id) {
+          const categoryResponse = await ProductService.findByCategory(
+            loaded.category.id,
+          );
+          if (categoryResponse.success && Array.isArray(categoryResponse.data)) {
+            setSimilarProducts(
+              getSimilarProducts(categoryResponse.data as IProduct[], loaded, 4),
+            );
+          } else {
+            setSimilarProducts([]);
+          }
+        } else {
+          setSimilarProducts([]);
+        }
       } else {
         setProduct(null);
+        setSimilarProducts([]);
         setErrorMessage(response.message ?? "Produto não encontrado.");
       }
 
       setIsLoading(false);
     };
 
+    setActiveTab("about");
     loadProduct();
   }, [productId]);
 
-  const activeVariants =
-    product?.variants?.filter((variant) => variant.active !== false) ?? [];
-  const displayPrice = product ? getProductDisplayPrice(product) : 0;
+  const activeVariants = useMemo(
+    () => (product ? getActiveVariants(product) : []),
+    [product],
+  );
+
+  const selectedVariant = useMemo(
+    () =>
+      activeVariants.find(
+        (variant) => getVariantKey(variant) === selectedVariantKey,
+      ) ?? null,
+    [activeVariants, selectedVariantKey],
+  );
+
+  const selectedInStock = selectedVariant
+    ? isVariantInStock(selectedVariant)
+    : false;
+
+  const displayPrice = selectedVariant
+    ? Number(selectedVariant.price)
+    : product
+      ? getProductDisplayPrice(product)
+      : 0;
+
+  const selectedListPrice =
+    selectedVariant?.listPrice != null
+      ? Number(selectedVariant.listPrice)
+      : null;
+
+  const hasSelectedDiscount =
+    selectedListPrice != null && selectedListPrice > displayPrice;
+
   const listPrice = product ? getProductListPrice(product) : null;
   const discountPercent = product ? getProductDiscountPercent(product) : null;
   const hasMultipleVariants = activeVariants.length > 1;
-  const productUrl = product ? `/catalog/product/${product.id}` : "/catalog";
+  const deliveryInfo = buildDeliveryInfo(activeVariants);
+
+  const specificationsText =
+    product?.specifications?.trim() ||
+    "Especificações detalhadas conforme fabricante. Selecione uma opção para ver plataforma, condição e tipo de entrega.";
 
   return (
     <div className="page-container">
@@ -93,98 +171,187 @@ export function ProductDetailPage() {
             />
           </div>
         ) : (
-          <article className="product-detail">
-            <div className="product-detail__gallery">
-              <img
-                src={getProductImageUrl(product.image)}
-                alt={product.name}
-                className="product-detail__image"
-              />
-              {discountPercent != null && (
-                <span className="product-detail__discount-badge">
-                  -{discountPercent}%
-                </span>
-              )}
-            </div>
-
-            <div className="product-detail__info">
-              {product.category?.name && product.category.id && (
-                <Link
-                  to={`/catalog?categories=${product.category.id}`}
-                  className="product-detail__category"
-                >
-                  {product.category.name}
-                </Link>
-              )}
-
-              <h1>{product.name}</h1>
-
-              <div className="product-detail__pricing">
-                {listPrice != null && (
-                  <span className="product-detail__list-price">
-                    {formatCurrency(listPrice)}
+          <>
+            <article className="product-detail">
+              <div className="product-detail__gallery">
+                <img
+                  src={getProductImageUrl(product.image)}
+                  alt={product.name}
+                  className="product-detail__image"
+                />
+                {product.adultOnly && (
+                  <span className="product-detail__adult-badge">+18</span>
+                )}
+                {discountPercent != null && (
+                  <span className="product-detail__discount-badge">
+                    -{discountPercent}%
                   </span>
                 )}
-                <span className="product-detail__price">
-                  {hasMultipleVariants ? "A partir de " : ""}
-                  {formatCurrency(displayPrice)}
-                </span>
               </div>
 
-              <p className="product-detail__description">{product.description}</p>
+              <div className="product-detail__info product-detail__info--sticky">
+                {product.category?.name && product.category.id && (
+                  <Link
+                    to={`/catalog?categories=${product.category.id}`}
+                    className="product-detail__category"
+                  >
+                    {product.category.name}
+                  </Link>
+                )}
 
-              {product.adultOnly && (
-                <Tag severity="danger" value="+18" className="product-detail__tag" />
-              )}
+                <h1>{product.name}</h1>
 
-              <div className="product-detail__actions">
-                {product && <AddToCartFlow product={product} />}
-                <Button
-                  label="Voltar ao catálogo"
-                  icon="pi pi-arrow-left"
-                  outlined
-                  onClick={() => navigate("/catalog")}
+                <ProductRating
+                  averageRating={product.averageRating}
+                  reviewCount={product.reviewCount}
+                  compact
                 />
-                <BuyNowFlow product={product} />
+
+                <div className="product-detail__pricing">
+                  {hasSelectedDiscount && (
+                    <span className="product-detail__list-price">
+                      {formatCurrency(selectedListPrice)}
+                    </span>
+                  )}
+                  {!hasSelectedDiscount && listPrice != null && !selectedVariant && (
+                    <span className="product-detail__list-price">
+                      {formatCurrency(listPrice)}
+                    </span>
+                  )}
+                  <span className="product-detail__price">
+                    {hasMultipleVariants && !selectedVariant ? "A partir de " : ""}
+                    {formatCurrency(displayPrice)}
+                  </span>
+                </div>
+
+                <ProductVariantPicker
+                  variants={activeVariants}
+                  selectedVariantKey={selectedVariantKey}
+                  onSelect={setSelectedVariantKey}
+                  hasMultipleVariants={hasMultipleVariants}
+                />
+
+                <div className="product-detail__actions">
+                  <AddToCartFlow
+                    product={product}
+                    selectedVariant={selectedVariant}
+                    notifyWithToast
+                    disabled={!selectedVariant || !selectedInStock}
+                  />
+                  <BuyNowFlow
+                    product={product}
+                    selectedVariant={
+                      selectedInStock ? selectedVariant : null
+                    }
+                  />
+                  <Button
+                    label="Voltar ao catálogo"
+                    icon="pi pi-arrow-left"
+                    outlined
+                    className="product-detail__back-btn"
+                    onClick={() => navigate("/catalog")}
+                  />
+                </div>
+
+                {!selectedInStock && selectedVariant && (
+                  <p className="product-detail__stock-warning" role="alert">
+                    Esta opção está esgotada. Escolha outra variação disponível.
+                  </p>
+                )}
               </div>
+            </article>
 
-              {activeVariants.length > 0 && (
-                <section className="product-detail__variants">
-                  <h2>Opções disponíveis</h2>
-                  <ul className="product-detail__variant-list">
-                    {activeVariants.map((variant) => {
-                      const price = Number(variant.price);
-                      const listPrice =
-                        variant.listPrice != null
-                          ? Number(variant.listPrice)
-                          : null;
-                      const hasDiscount =
-                        listPrice != null && listPrice > price;
+            <section
+              className="product-detail__tabs-section"
+              aria-label="Detalhes do produto"
+            >
+              <div className="product-detail__tabs-card">
+                <div
+                  className="product-detail__tabs"
+                  role="tablist"
+                  aria-label="Informações do produto"
+                >
+                  {PRODUCT_DETAIL_TABS.map((tab) => (
+                    <button
+                      key={tab.id}
+                      type="button"
+                      role="tab"
+                      id={`product-tab-${tab.id}`}
+                      aria-selected={activeTab === tab.id}
+                      aria-controls={`product-tabpanel-${tab.id}`}
+                      className={`product-detail__tab-btn${
+                        activeTab === tab.id
+                          ? " product-detail__tab-btn--active"
+                          : ""
+                      }`}
+                      onClick={() => setActiveTab(tab.id)}
+                    >
+                      <i className={`pi ${tab.icon}`} aria-hidden />
+                      <span>{tab.label}</span>
+                      {tab.id === "reviews" &&
+                        (product.reviewCount ?? 0) > 0 && (
+                          <span className="product-detail__tab-badge">
+                            {product.reviewCount}
+                          </span>
+                        )}
+                    </button>
+                  ))}
+                </div>
 
-                      return (
-                        <li key={variant.id ?? variant.sku}>
-                          <strong>{variant.label}</strong>
-                          <span className="product-detail__variant-price">
-                            {hasDiscount && (
-                              <span className="product-detail__list-price">
-                                {formatCurrency(listPrice)}
-                              </span>
-                            )}
-                            {formatCurrency(price)}
-                          </span>
-                          <span>
-                            {getPlatformLabel(variant.platform)} ·{" "}
-                            {getConditionLabel(variant.itemCondition)} ·{" "}
-                            {getDeliveryLabel(variant.deliveryType)}
-                          </span>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </section>
-              )}
-            </div>
-          </article>
+                <div
+                  className="product-detail__tab-panel"
+                  role="tabpanel"
+                  id={`product-tabpanel-${activeTab}`}
+                  aria-labelledby={`product-tab-${activeTab}`}
+                >
+                  {activeTab === "about" && (
+                    <div className="product-detail__about">
+                      <p className="product-detail__tab-text">
+                        {product.description}
+                      </p>
+
+                      <div className="product-detail__about-grid">
+                        <article className="product-detail__about-card">
+                          <h3>
+                            <i className="pi pi-list" aria-hidden />
+                            Especificações
+                          </h3>
+                          <p>{specificationsText}</p>
+                        </article>
+                        <article className="product-detail__about-card">
+                          <h3>
+                            <i className="pi pi-truck" aria-hidden />
+                            Entrega
+                          </h3>
+                          <p className="product-detail__tab-text--pre">
+                            {deliveryInfo}
+                          </p>
+                        </article>
+                      </div>
+                    </div>
+                  )}
+
+                  {activeTab === "reviews" && (
+                    <ProductReviewsPanel product={product} />
+                  )}
+                </div>
+              </div>
+            </section>
+
+            {similarProducts.length > 0 && (
+              <section className="product-detail__similar">
+                <h2>Itens semelhantes</h2>
+                <p className="product-detail__similar-subtitle">
+                  Outros produtos em {product.category?.name ?? "esta categoria"}
+                </p>
+                <div className="product-detail__similar-grid">
+                  {similarProducts.map((item) => (
+                    <ProductCard key={item.id} product={item} />
+                  ))}
+                </div>
+              </section>
+            )}
+          </>
         )}
       </main>
 

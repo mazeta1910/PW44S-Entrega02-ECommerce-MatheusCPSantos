@@ -158,159 +158,159 @@ INSERT INTO tb_product (name, description, category_id, is_adult_only, image) VA
 -- item_condition: NEW | SEMI_NEW | USED
 -- ==========================================
 -- Periféricos (produtos 1–8)
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (1, 'Unidade — novo', 'TEC-REDRAGON-01', 350.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (2, 'Unidade — novo', 'MOU-G203-01', 150.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (3, 'Unidade — novo', 'HEA-HYPERX-01', 499.90, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (4, 'Unidade — novo', 'PAD-XLRGB-01', 89.90, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (5, 'Unidade — novo', 'WEB-C920-01', 429.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (6, 'Unidade — novo', 'CTL-XBOX-01', 399.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (6, 'Revenda — usado', 'CTL-XBOX-USED', 249.00, 'PHYSICAL', 'UNIVERSAL', 'USED', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (7, 'Unidade — novo', 'TEC-GPRO-01', 649.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (8, 'Unidade — novo', 'FON-KRAKEN-01', 279.90, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (1, 'Unidade — novo', 'TEC-REDRAGON-01', 350.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (2, 'Unidade — novo', 'MOU-G203-01', 150.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (3, 'Unidade — novo', 'HEA-HYPERX-01', 499.90, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (4, 'Unidade — novo', 'PAD-XLRGB-01', 89.90, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (5, 'Unidade — novo', 'WEB-C920-01', 429.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (6, 'Unidade — novo', 'CTL-XBOX-01', 399.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (6, 'Revenda — usado', 'CTL-XBOX-USED', 249.00, 'PHYSICAL', 'UNIVERSAL', 'USED', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (7, 'Unidade — novo', 'TEC-GPRO-01', 649.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (8, 'Unidade — novo', 'FON-KRAKEN-01', 279.90, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
 
 -- Jogos digitais (produtos 9–20)
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (9, 'Chave Steam', 'JOGO-ZOMBOID-STEAM', 100.00, 'DIGITAL', 'STEAM', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (10, 'Chave PS5', 'JOGO-GTAV-PS5-DIG', 89.90, 'DIGITAL', 'PS5', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (10, 'Chave Xbox Series', 'JOGO-GTAV-XBOX-DIG', 89.90, 'DIGITAL', 'XBOX_SERIES', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (10, 'Chave Steam', 'JOGO-GTAV-STEAM', 79.90, 'DIGITAL', 'STEAM', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (11, 'Chave Steam', 'JOGO-CYBER-STEAM', 149.90, 'DIGITAL', 'STEAM', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (11, 'Chave PS5', 'JOGO-CYBER-PS5-DIG', 159.90, 'DIGITAL', 'PS5', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (12, 'Chave Steam', 'JOGO-ELDEN-STEAM', 199.90, 'DIGITAL', 'STEAM', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (12, 'Chave PS5', 'JOGO-ELDEN-PS5-DIG', 209.90, 'DIGITAL', 'PS5', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (12, 'Chave Xbox Series', 'JOGO-ELDEN-XBOX-DIG', 209.90, 'DIGITAL', 'XBOX_SERIES', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (13, 'Chave Steam', 'JOGO-HOGW-STEAM', 179.90, 'DIGITAL', 'STEAM', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (14, 'Chave Steam', 'JOGO-RDR2-STEAM', 99.90, 'DIGITAL', 'STEAM', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (14, 'Chave PS5', 'JOGO-RDR2-PS5-DIG', 109.90, 'DIGITAL', 'PS5', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (15, 'Chave PS5', 'JOGO-FC24-PS5-DIG', 249.90, 'DIGITAL', 'PS5', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (15, 'Chave Xbox Series', 'JOGO-FC24-XBOX-DIG', 249.90, 'DIGITAL', 'XBOX_SERIES', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (16, 'Chave Java', 'JOGO-MINE-JAVA', 119.90, 'DIGITAL', 'STEAM', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (17, 'Chave Steam', 'JOGO-CS2-STEAM', 29.90, 'DIGITAL', 'STEAM', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (18, 'Chave Steam', 'JOGO-WITCH3-STEAM', 59.90, 'DIGITAL', 'STEAM', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (18, 'Chave PS5', 'JOGO-WITCH3-PS5-DIG', 69.90, 'DIGITAL', 'PS5', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (19, 'Chave Steam', 'JOGO-BG3-STEAM', 159.90, 'DIGITAL', 'STEAM', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (20, 'Chave Steam', 'JOGO-STARDEW-STEAM', 39.90, 'DIGITAL', 'STEAM', 'NEW', TRUE);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (9, 'Chave Steam', 'JOGO-ZOMBOID-STEAM', 100.00, 'DIGITAL', 'STEAM', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (10, 'Chave PS5', 'JOGO-GTAV-PS5-DIG', 89.90, 'DIGITAL', 'PS5', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (10, 'Chave Xbox Series', 'JOGO-GTAV-XBOX-DIG', 89.90, 'DIGITAL', 'XBOX_SERIES', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (10, 'Chave Steam', 'JOGO-GTAV-STEAM', 79.90, 'DIGITAL', 'STEAM', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (11, 'Chave Steam', 'JOGO-CYBER-STEAM', 149.90, 'DIGITAL', 'STEAM', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (11, 'Chave PS5', 'JOGO-CYBER-PS5-DIG', 159.90, 'DIGITAL', 'PS5', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (12, 'Chave Steam', 'JOGO-ELDEN-STEAM', 199.90, 'DIGITAL', 'STEAM', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (12, 'Chave PS5', 'JOGO-ELDEN-PS5-DIG', 209.90, 'DIGITAL', 'PS5', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (12, 'Chave Xbox Series', 'JOGO-ELDEN-XBOX-DIG', 209.90, 'DIGITAL', 'XBOX_SERIES', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (13, 'Chave Steam', 'JOGO-HOGW-STEAM', 179.90, 'DIGITAL', 'STEAM', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (14, 'Chave Steam', 'JOGO-RDR2-STEAM', 99.90, 'DIGITAL', 'STEAM', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (14, 'Chave PS5', 'JOGO-RDR2-PS5-DIG', 109.90, 'DIGITAL', 'PS5', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (15, 'Chave PS5', 'JOGO-FC24-PS5-DIG', 249.90, 'DIGITAL', 'PS5', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (15, 'Chave Xbox Series', 'JOGO-FC24-XBOX-DIG', 249.90, 'DIGITAL', 'XBOX_SERIES', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (16, 'Chave Java', 'JOGO-MINE-JAVA', 119.90, 'DIGITAL', 'STEAM', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (17, 'Chave Steam', 'JOGO-CS2-STEAM', 29.90, 'DIGITAL', 'STEAM', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (18, 'Chave Steam', 'JOGO-WITCH3-STEAM', 59.90, 'DIGITAL', 'STEAM', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (18, 'Chave PS5', 'JOGO-WITCH3-PS5-DIG', 69.90, 'DIGITAL', 'PS5', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (19, 'Chave Steam', 'JOGO-BG3-STEAM', 159.90, 'DIGITAL', 'STEAM', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (20, 'Chave Steam', 'JOGO-STARDEW-STEAM', 39.90, 'DIGITAL', 'STEAM', 'NEW', TRUE, 20);
 
 -- Jogos — mídia física (discos enviados)
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (10, 'Mídia física PS5 — lacrado', 'JOGO-GTAV-PS5-PHY-NEW', 199.90, 'PHYSICAL', 'PS5', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (10, 'Mídia física PS5 — usado', 'JOGO-GTAV-PS5-PHY-USED', 89.90, 'PHYSICAL', 'PS5', 'USED', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (10, 'Mídia física Xbox — lacrado', 'JOGO-GTAV-XBOX-PHY-NEW', 189.90, 'PHYSICAL', 'XBOX_SERIES', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (11, 'Mídia física PS5 — lacrado', 'JOGO-CYBER-PS5-PHY-NEW', 229.90, 'PHYSICAL', 'PS5', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (11, 'Mídia física PS5 — semi-novo', 'JOGO-CYBER-PS5-PHY-SEMI', 169.90, 'PHYSICAL', 'PS5', 'SEMI_NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (12, 'Mídia física PS5 — lacrado', 'JOGO-ELDEN-PS5-PHY-NEW', 279.90, 'PHYSICAL', 'PS5', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (12, 'Mídia física Xbox — usado', 'JOGO-ELDEN-XBOX-PHY-USED', 149.90, 'PHYSICAL', 'XBOX_SERIES', 'USED', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (14, 'Mídia física PS5 — lacrado', 'JOGO-RDR2-PS5-PHY-NEW', 179.90, 'PHYSICAL', 'PS5', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (14, 'Mídia física PS5 — usado', 'JOGO-RDR2-PS5-PHY-USED', 79.90, 'PHYSICAL', 'PS5', 'USED', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (15, 'Mídia física PS5 — lacrado', 'JOGO-FC24-PS5-PHY-NEW', 299.90, 'PHYSICAL', 'PS5', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (18, 'Mídia física PS5 — lacrado', 'JOGO-WITCH3-PS5-PHY-NEW', 129.90, 'PHYSICAL', 'PS5', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (18, 'Mídia física PS5 — usado', 'JOGO-WITCH3-PS5-PHY-USED', 59.90, 'PHYSICAL', 'PS5', 'USED', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (20, 'Cartucho Switch — lacrado', 'JOGO-STARDEW-SW-PHY-NEW', 179.90, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (10, 'Mídia física PS5 — lacrado', 'JOGO-GTAV-PS5-PHY-NEW', 199.90, 'PHYSICAL', 'PS5', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (10, 'Mídia física PS5 — usado', 'JOGO-GTAV-PS5-PHY-USED', 89.90, 'PHYSICAL', 'PS5', 'USED', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (10, 'Mídia física Xbox — lacrado', 'JOGO-GTAV-XBOX-PHY-NEW', 189.90, 'PHYSICAL', 'XBOX_SERIES', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (11, 'Mídia física PS5 — lacrado', 'JOGO-CYBER-PS5-PHY-NEW', 229.90, 'PHYSICAL', 'PS5', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (11, 'Mídia física PS5 — semi-novo', 'JOGO-CYBER-PS5-PHY-SEMI', 169.90, 'PHYSICAL', 'PS5', 'SEMI_NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (12, 'Mídia física PS5 — lacrado', 'JOGO-ELDEN-PS5-PHY-NEW', 279.90, 'PHYSICAL', 'PS5', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (12, 'Mídia física Xbox — usado', 'JOGO-ELDEN-XBOX-PHY-USED', 149.90, 'PHYSICAL', 'XBOX_SERIES', 'USED', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (14, 'Mídia física PS5 — lacrado', 'JOGO-RDR2-PS5-PHY-NEW', 179.90, 'PHYSICAL', 'PS5', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (14, 'Mídia física PS5 — usado', 'JOGO-RDR2-PS5-PHY-USED', 79.90, 'PHYSICAL', 'PS5', 'USED', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (15, 'Mídia física PS5 — lacrado', 'JOGO-FC24-PS5-PHY-NEW', 299.90, 'PHYSICAL', 'PS5', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (18, 'Mídia física PS5 — lacrado', 'JOGO-WITCH3-PS5-PHY-NEW', 129.90, 'PHYSICAL', 'PS5', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (18, 'Mídia física PS5 — usado', 'JOGO-WITCH3-PS5-PHY-USED', 59.90, 'PHYSICAL', 'PS5', 'USED', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (20, 'Cartucho Switch — lacrado', 'JOGO-STARDEW-SW-PHY-NEW', 179.90, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
 
 -- Hardware (produtos 21–27)
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (21, 'Unidade — novo', 'HW-RTX4060-01', 2500.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (21, 'Revenda — semi-novo', 'HW-RTX4060-SEMI', 1899.00, 'PHYSICAL', 'UNIVERSAL', 'SEMI_NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (22, 'Unidade — novo', 'HW-RTX4070S-01', 3899.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (23, 'Unidade — novo', 'HW-RYZEN7-01', 1299.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (24, 'Unidade — novo', 'HW-SSD990-01', 549.90, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (25, 'Unidade — novo', 'HW-RAM16-01', 329.90, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (26, 'Unidade — novo', 'HW-GABINETE-01', 459.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (27, 'Unidade — novo', 'HW-FONTE750-01', 699.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (21, 'Unidade — novo', 'HW-RTX4060-01', 2500.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (21, 'Revenda — semi-novo', 'HW-RTX4060-SEMI', 1899.00, 'PHYSICAL', 'UNIVERSAL', 'SEMI_NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (22, 'Unidade — novo', 'HW-RTX4070S-01', 3899.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (23, 'Unidade — novo', 'HW-RYZEN7-01', 1299.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (24, 'Unidade — novo', 'HW-SSD990-01', 549.90, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (25, 'Unidade — novo', 'HW-RAM16-01', 329.90, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (26, 'Unidade — novo', 'HW-GABINETE-01', 459.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (27, 'Unidade — novo', 'HW-FONTE750-01', 699.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
 
 -- Monitores (produtos 28–32)
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (28, 'Unidade — novo', 'MON-LG29-01', 1200.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (29, 'Unidade — novo', 'MON-SAMSUNG-01', 1899.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (30, 'Unidade — novo', 'MON-AOC24-01', 1099.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (31, 'Unidade — novo', 'MON-DELL32-01', 3299.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (32, 'Unidade — novo', 'MON-ASUS27-01', 1599.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (32, 'Revenda — usado', 'MON-ASUS27-USED', 999.00, 'PHYSICAL', 'UNIVERSAL', 'USED', TRUE);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (28, 'Unidade — novo', 'MON-LG29-01', 1200.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (29, 'Unidade — novo', 'MON-SAMSUNG-01', 1899.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (30, 'Unidade — novo', 'MON-AOC24-01', 1099.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (31, 'Unidade — novo', 'MON-DELL32-01', 3299.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (32, 'Unidade — novo', 'MON-ASUS27-01', 1599.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (32, 'Revenda — usado', 'MON-ASUS27-USED', 999.00, 'PHYSICAL', 'UNIVERSAL', 'USED', TRUE, 20);
 
 -- Cadeiras (produtos 33–36)
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (33, 'Unidade — novo', 'CAD-DXRACER-01', 1500.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (34, 'Unidade — novo', 'CAD-THUNDER-01', 1299.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (35, 'Unidade — novo', 'CAD-FLEX-01', 999.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (36, 'Unidade — novo', 'CAD-NITRO-01', 1799.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (33, 'Unidade — novo', 'CAD-DXRACER-01', 1500.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (34, 'Unidade — novo', 'CAD-THUNDER-01', 1299.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (35, 'Unidade — novo', 'CAD-FLEX-01', 999.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (36, 'Unidade — novo', 'CAD-NITRO-01', 1799.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
 
 -- Consoles (37–39)
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (37, 'Unidade — novo', 'CON-XSS-01', 2199.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (37, 'Revenda — usado', 'CON-XSS-USED', 1599.00, 'PHYSICAL', 'UNIVERSAL', 'USED', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (38, 'Unidade — novo', 'CON-PS5-01', 3999.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (38, 'Revenda — semi-novo', 'CON-PS5-SEMI', 3299.00, 'PHYSICAL', 'UNIVERSAL', 'SEMI_NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (39, 'Unidade — novo', 'CON-SWITCH-01', 2499.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (37, 'Unidade — novo', 'CON-XSS-01', 2199.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (37, 'Revenda — usado', 'CON-XSS-USED', 1599.00, 'PHYSICAL', 'UNIVERSAL', 'USED', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (38, 'Unidade — novo', 'CON-PS5-01', 3999.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (38, 'Revenda — semi-novo', 'CON-PS5-SEMI', 3299.00, 'PHYSICAL', 'UNIVERSAL', 'SEMI_NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (39, 'Unidade — novo', 'CON-SWITCH-01', 2499.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
 
 -- Armazenamento (40–42)
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (40, 'Unidade — novo', 'STO-WD2TB-01', 899.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (41, 'Unidade — novo', 'STO-SEA4TB-01', 699.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (42, 'Unidade — novo', 'STO-SD512-01', 349.90, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (40, 'Unidade — novo', 'STO-WD2TB-01', 899.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (41, 'Unidade — novo', 'STO-SEA4TB-01', 699.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (42, 'Unidade — novo', 'STO-SD512-01', 349.90, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
 
 -- Redes (43–44)
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (43, 'Unidade — novo', 'NET-TPLINK-01', 499.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (44, 'Unidade — novo', 'NET-MESH-01', 899.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (43, 'Unidade — novo', 'NET-TPLINK-01', 499.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (44, 'Unidade — novo', 'NET-MESH-01', 899.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
 
 -- Gift Cards e Assinaturas (59–62) — códigos digitais
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (59, 'Código digital Xbox', 'SUB-GPU-3M', 89.90, 'DIGITAL', 'XBOX_SERIES', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (60, 'Código digital PSN', 'SUB-PSPLUS-12', 399.90, 'DIGITAL', 'PS5', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (61, 'Código digital Steam', 'GC-STEAM-100', 100.00, 'DIGITAL', 'STEAM', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (62, 'Código digital eShop', 'GC-ESHOP-150', 150.00, 'DIGITAL', 'UNIVERSAL', 'NEW', TRUE);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (59, 'Código digital Xbox', 'SUB-GPU-3M', 89.90, 'DIGITAL', 'XBOX_SERIES', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (60, 'Código digital PSN', 'SUB-PSPLUS-12', 399.90, 'DIGITAL', 'PS5', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (61, 'Código digital Steam', 'GC-STEAM-100', 100.00, 'DIGITAL', 'STEAM', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (62, 'Código digital eShop', 'GC-ESHOP-150', 150.00, 'DIGITAL', 'UNIVERSAL', 'NEW', TRUE, 20);
 
 -- Notebooks Gamer (45–47)
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (45, 'Unidade — novo', 'NB-ACER-NITRO5', 5499.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (46, 'Unidade — novo', 'NB-LENOVO-LEG5', 7299.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (46, 'Revenda — semi-novo', 'NB-LENOVO-LEG5-SEMI', 6299.00, 'PHYSICAL', 'UNIVERSAL', 'SEMI_NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (47, 'Unidade — novo', 'NB-ASUS-TUF15', 8999.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (45, 'Unidade — novo', 'NB-ACER-NITRO5', 5499.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (46, 'Unidade — novo', 'NB-LENOVO-LEG5', 7299.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (46, 'Revenda — semi-novo', 'NB-LENOVO-LEG5-SEMI', 6299.00, 'PHYSICAL', 'UNIVERSAL', 'SEMI_NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (47, 'Unidade — novo', 'NB-ASUS-TUF15', 8999.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
 
 -- Áudio e Streaming (48–50)
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (48, 'Unidade — novo', 'AUD-YETI-01', 899.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (49, 'Unidade — novo', 'AUD-ELGATO-HD60', 1299.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (50, 'Unidade — novo', 'AUD-BEHRINGER-01', 649.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (48, 'Unidade — novo', 'AUD-YETI-01', 899.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (49, 'Unidade — novo', 'AUD-ELGATO-HD60', 1299.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (50, 'Unidade — novo', 'AUD-BEHRINGER-01', 649.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
 
 -- Realidade Virtual (51–52)
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (51, 'Unidade — novo', 'VR-QUEST3-128', 4299.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (52, 'Unidade — novo', 'VR-PSVR2-01', 3999.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (52, 'Revenda — usado', 'VR-PSVR2-USED', 2999.00, 'PHYSICAL', 'UNIVERSAL', 'USED', TRUE);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (51, 'Unidade — novo', 'VR-QUEST3-128', 4299.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (52, 'Unidade — novo', 'VR-PSVR2-01', 3999.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (52, 'Revenda — usado', 'VR-PSVR2-USED', 2999.00, 'PHYSICAL', 'UNIVERSAL', 'USED', TRUE, 20);
 
 -- Mesa e Setup (53–55)
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (53, 'Unidade — novo', 'SET-MESA-140', 1899.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (54, 'Unidade — novo', 'SET-BRACO-MON', 349.90, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (55, 'Unidade — novo', 'SET-RING-18', 279.90, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (53, 'Unidade — novo', 'SET-MESA-140', 1899.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (54, 'Unidade — novo', 'SET-BRACO-MON', 349.90, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (55, 'Unidade — novo', 'SET-RING-18', 279.90, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
 
 -- Acessórios e Cabos (56–58)
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (56, 'Unidade — novo', 'ACC-HDMI-3M', 89.90, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (57, 'Unidade — novo', 'ACC-HUB-USBC', 199.90, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (58, 'Unidade — novo', 'ACC-COOLER-NB', 159.90, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (56, 'Unidade — novo', 'ACC-HDMI-3M', 89.90, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (57, 'Unidade — novo', 'ACC-HUB-USBC', 199.90, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (58, 'Unidade — novo', 'ACC-COOLER-NB', 159.90, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
 
 -- Computadores (63–64)
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (63, 'Unidade — novo', 'PC-INTEL-4070', 8999.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (64, 'Unidade — novo', 'PC-RYZEN-4060', 5499.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (63, 'Unidade — novo', 'PC-INTEL-4070', 8999.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (64, 'Unidade — novo', 'PC-RYZEN-4060', 5499.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
 
 -- Celular e Smartphone (65–66)
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (65, 'Unidade — novo', 'CEL-GAMER-256', 3299.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (66, 'Unidade — novo', 'ACC-BACKBONE', 399.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (65, 'Unidade — novo', 'CEL-GAMER-256', 3299.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (66, 'Unidade — novo', 'ACC-BACKBONE', 399.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
 
 -- TV Gamer (67–68)
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (67, 'Unidade — novo', 'TV-55-4K120', 3999.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (68, 'Unidade — novo', 'TV-43-4K', 2499.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (67, 'Unidade — novo', 'TV-55-4K120', 3999.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (68, 'Unidade — novo', 'TV-43-4K', 2499.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
 
 -- Tablets e Handhelds (69–70)
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (69, 'Unidade — novo', 'HAND-STEAMDECK', 4999.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (70, 'Unidade — novo', 'TAB-S9-11', 4299.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (69, 'Unidade — novo', 'HAND-STEAMDECK', 4999.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (70, 'Unidade — novo', 'TAB-S9-11', 4299.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
 
 -- Espaço Gamer (71–72)
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (71, 'Unidade — novo', 'ESP-KIT-SETUP', 899.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (72, 'Unidade — novo', 'ESP-TAPETE-XL', 199.90, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (71, 'Unidade — novo', 'ESP-KIT-SETUP', 899.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (72, 'Unidade — novo', 'ESP-TAPETE-XL', 199.90, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
 
 -- Energia (73–74)
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (73, 'Unidade — novo', 'ENG-NOBREAK-12', 899.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (74, 'Unidade — novo', 'ENG-ESTAB-15', 349.90, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (73, 'Unidade — novo', 'ENG-NOBREAK-12', 899.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (74, 'Unidade — novo', 'ENG-ESTAB-15', 349.90, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
 
 -- Geek e Colecionáveis (75–76)
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (75, 'Unidade — novo', 'GEEK-FIGURE-01', 299.90, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (76, 'Unidade — novo', 'GEEK-CAMISETA', 89.90, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (75, 'Unidade — novo', 'GEEK-FIGURE-01', 299.90, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (76, 'Unidade — novo', 'GEEK-CAMISETA', 89.90, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
 
 -- Casa Inteligente (77–78)
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (77, 'Unidade — novo', 'SMART-LAMP-RGB', 129.90, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (78, 'Unidade — novo', 'SMART-TOMADA-2', 159.90, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (77, 'Unidade — novo', 'SMART-LAMP-RGB', 129.90, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (78, 'Unidade — novo', 'SMART-TOMADA-2', 159.90, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
 
 -- Projetores (79)
-INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active) VALUES (79, 'Unidade — novo', 'PROJ-GAME-1080', 3499.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE);
+INSERT INTO tb_product_variant (product_id, label, sku, price, delivery_type, platform, item_condition, is_active, stock_quantity) VALUES (79, 'Unidade — novo', 'PROJ-GAME-1080', 3499.00, 'PHYSICAL', 'UNIVERSAL', 'NEW', TRUE, 20);
 
 -- Promoções (list_price = preço de tabela; price = preço promocional)
 UPDATE tb_product_variant SET list_price = 449.00 WHERE sku = 'TEC-REDRAGON-01';
@@ -371,3 +371,15 @@ INSERT INTO tb_order_item (order_id, variant_id, quantity, unit_price) VALUES (1
 INSERT INTO tb_order_item (order_id, variant_id, quantity, unit_price) VALUES (2, 28, 1, 1200.00);
 INSERT INTO tb_order_item (order_id, variant_id, quantity, unit_price) VALUES (2, 2, 1, 150.00);
 INSERT INTO tb_order_item (order_id, variant_id, quantity, unit_price) VALUES (3, 12, 1, 79.90);
+
+-- ==========================================
+-- 8. AVALIAÇÕES, ESPECIFICAÇÕES E ESTOQUE
+-- ==========================================
+UPDATE tb_product
+SET average_rating = 3.8 + MOD(id * 7, 13) * 0.1,
+    review_count = 12 + id * 5,
+    specifications = 'Especificações oficiais do fabricante. Consulte as opções disponíveis para plataforma, condição e tipo de entrega.';
+
+UPDATE tb_product_variant SET stock_quantity = 0 WHERE sku IN ('JOGO-GTAV-PS5-PHY-USED', 'CTL-XBOX-USED');
+UPDATE tb_product_variant SET stock_quantity = 2 WHERE sku = 'JOGO-GTAV-STEAM';
+UPDATE tb_product_variant SET stock_quantity = 5 WHERE sku = 'JOGO-ELDEN-PS5-PHY-NEW';

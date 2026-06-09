@@ -22,19 +22,18 @@
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
   --product-card-title-font-size: 0.95rem;
   --product-card-title-line-height: 1.3;
-  --product-card-title-lines: 2;
 }
 
 .product-card .p-card-body {
   display: flex;
   flex-direction: column;
   flex: 1;
-  padding: 0.75rem;
+  padding: 0.55rem;
   min-height: 0;
 }
 
 .product-card .p-card-content {
-  flex: 1 1 auto;
+  flex: 0 1 auto;
   display: flex;
   flex-direction: column;
   padding: 0;
@@ -43,8 +42,8 @@
 
 .product-card .p-card-footer {
   flex-shrink: 0;
-  margin-top: auto;
-  padding: 0.65rem 0.75rem 0.75rem;
+  margin-top: 0.35rem;
+  padding: 0 0.55rem 0.55rem;
   position: relative;
   z-index: 2;
 }
@@ -55,7 +54,6 @@
   outline: none;
   display: flex;
   flex-direction: column;
-  flex: 1;
   min-height: 0;
 }
 
@@ -72,12 +70,12 @@
   position: relative;
   overflow: hidden;
   border-radius: 6px;
-  margin: -0.75rem -0.75rem 0.65rem;
+  margin: -0.55rem -0.55rem 0.4rem;
 }
 
 .product-card__image {
   width: 100%;
-  height: 260px;
+  height: 200px;
   object-fit: cover;
   display: block;
   transition: transform 0.25s ease;
@@ -114,15 +112,40 @@
   opacity: 1;
 }
 
+.product-card__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  line-height: 1.25;
+  margin-top: 0.15rem;
+}
+
+.product-card .product-rating {
+  flex-shrink: 0;
+  margin: 0;
+  padding: 0;
+  line-height: 1.15;
+}
+
+.product-card .product-rating .p-rating {
+  margin: 0 0.35rem 0 0;
+  height: auto;
+}
+
+.product-card .product-rating--compact .p-rating .p-rating-item .p-rating-icon {
+  font-size: 0.72rem;
+}
+
+.product-card .product-rating__count {
+  font-size: 0.72rem;
+  line-height: 1.1;
+}
+
 .product-card__title {
   flex-shrink: 0;
-  margin: 0 0 0.2rem;
+  margin: 0;
   font-size: var(--product-card-title-font-size);
   line-height: var(--product-card-title-line-height);
-  min-height: calc(
-    var(--product-card-title-font-size) * var(--product-card-title-line-height) *
-      var(--product-card-title-lines)
-  );
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -193,8 +216,8 @@
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: 0.25rem 0.45rem;
-  margin-bottom: 0;
+  gap: 0.15rem 0.35rem;
+  margin: 0.4rem 0 0;
 }
 
 .product-card__list-price {
@@ -218,7 +241,7 @@
   width: 100%;
   justify-content: center;
   font-size: 0.75rem;
-  padding: 0.45rem 0.5rem;
+  padding: 0.38rem 0.45rem;
 }
 
 .product-card__actions .p-button .p-button-label {

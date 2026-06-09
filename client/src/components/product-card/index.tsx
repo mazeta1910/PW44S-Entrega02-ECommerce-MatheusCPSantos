@@ -10,6 +10,7 @@ import {
   getProductDisplayPrice,
   getProductListPrice,
 } from "@/utils/product-utils";
+import { ProductRating } from "@/components/product-rating";
 import { Card } from "primereact/card";
 import "./styles.css";
 
@@ -90,7 +91,15 @@ export const ProductCard = ({ product }: ProductCardProps) => {
             )}
           </div>
 
-          <h3 className="product-card__title">{product.name}</h3>
+          <div className="product-card__meta">
+            <h3 className="product-card__title">{product.name}</h3>
+
+            <ProductRating
+              averageRating={product.averageRating}
+              reviewCount={product.reviewCount}
+              compact
+            />
+          </div>
 
           <div className="product-card__pricing">
             {listPrice != null && (

@@ -39,7 +39,7 @@ export function AccountAddressesPage() {
 
   return (
     <>
-      <h1 className="account-section-title">endereços</h1>
+      <h2 className="account-section-title">Meus endereços</h2>
 
       {errorMessage && addresses.length === 0 ? (
         <div className="account-empty">

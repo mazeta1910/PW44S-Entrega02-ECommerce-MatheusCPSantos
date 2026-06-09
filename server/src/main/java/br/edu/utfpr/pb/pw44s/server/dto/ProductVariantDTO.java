@@ -41,4 +41,7 @@ public class ProductVariantDTO {
 
     @Builder.Default
     private Boolean active = true;
+
+    @Builder.Default
+    private Integer stockQuantity = 20;
 }

@@ -1,8 +1,12 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Avatar } from "primereact/avatar";
 import type { AuthenticatedUser } from "@/commons/types";
-import { getUserAvatarUrl, getUserInitial } from "@/utils/auth-utils";
+import {
+  getUserAvatarUrl,
+  getUserInitial,
+  USER_AVATAR_UPDATED_EVENT,
+} from "@/utils/auth-utils";
 import "./styles.css";
 
 const HOVER_CLOSE_DELAY_MS = 200;
@@ -18,8 +22,16 @@ export function UserAccountMenu({
 }: UserAccountMenuProps) {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const [avatarVersion, setAvatarVersion] = useState(0);
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const avatarUrl = getUserAvatarUrl(authenticatedUser);
+
+  useEffect(() => {
+    const refreshAvatar = () => setAvatarVersion((value) => value + 1);
+    window.addEventListener(USER_AVATAR_UPDATED_EVENT, refreshAvatar);
+    return () =>
+      window.removeEventListener(USER_AVATAR_UPDATED_EVENT, refreshAvatar);
+  }, []);
 
   const clearCloseTimer = () => {
     if (closeTimerRef.current) {
@@ -62,6 +74,7 @@ export function UserAccountMenu({
         <span className="user-account-menu__name hidden sm:block">{userLabel}</span>
         {avatarUrl ? (
           <Avatar
+            key={avatarVersion}
             image={avatarUrl}
             shape="circle"
             className="top-menu-user-avatar"

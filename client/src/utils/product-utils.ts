@@ -163,3 +163,15 @@ export function getPromoProducts(products: IProduct[], limit?: number): IProduct
 
   return limit != null ? promos.slice(0, limit) : promos;
 }
+
+export function getSimilarProducts(
+  products: IProduct[],
+  current: IProduct,
+  limit = 4,
+): IProduct[] {
+  const currentId = current.id;
+
+  return products
+    .filter((product) => product.id != null && product.id !== currentId)
+    .slice(0, limit);
+}

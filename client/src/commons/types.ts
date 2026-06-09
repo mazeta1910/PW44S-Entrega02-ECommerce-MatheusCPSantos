@@ -78,6 +78,12 @@ export interface IUserProfile {
   termsAccepted?: boolean;
 }
 
+export interface IUserProfileUpdate {
+  fullName: string;
+  phone: string;
+  newsletterSubscription?: boolean;
+}
+
 export interface IAddress {
   id?: number;
   zipCode: string;
@@ -136,6 +142,7 @@ export interface IProductVariant {
   platform: Platform;
   itemCondition: ItemCondition;
   active?: boolean;
+  stockQuantity?: number;
 }
 
 export interface IProduct {
@@ -147,6 +154,9 @@ export interface IProduct {
   imageName?: string;
   contentType?: string;
   adultOnly?: boolean;
+  averageRating?: number;
+  reviewCount?: number;
+  specifications?: string;
   variants?: IProductVariant[];
   startingPrice?: number;
 }

@@ -40,6 +40,16 @@ public class Product {
     @Column(name = "is_adult_only")
     private Boolean adultOnly = false;
 
+    @Column(name = "average_rating")
+    private Double averageRating;
+
+    @Builder.Default
+    @Column(name = "review_count")
+    private Integer reviewCount = 0;
+
+    @Column(length = 2048)
+    private String specifications;
+
     @Builder.Default
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductVariant> variants = new ArrayList<>();

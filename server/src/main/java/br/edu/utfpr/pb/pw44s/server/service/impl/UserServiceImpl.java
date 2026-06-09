@@ -1,5 +1,6 @@
 package br.edu.utfpr.pb.pw44s.server.service.impl;
 
+import br.edu.utfpr.pb.pw44s.server.dto.UserProfileUpdateDTO;
 import br.edu.utfpr.pb.pw44s.server.model.User;
 import br.edu.utfpr.pb.pw44s.server.repository.UserRepository;
 import br.edu.utfpr.pb.pw44s.server.service.IUserService;
@@ -47,5 +48,17 @@ public class UserServiceImpl extends CrudServiceImpl<User, Long> implements IUse
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         return super.save(user);
+    }
+
+    @Override
+    public User updateProfile(String email, UserProfileUpdateDTO updateDTO) {
+        User user = userRepository.findByEmailIgnoreCase(email)
+                .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado."));
+
+        user.setFullName(updateDTO.getFullName().trim());
+        user.setPhone(updateDTO.getPhone());
+        user.setNewsletterSubscription(updateDTO.getNewsletterSubscription());
+
+        return userRepository.save(user);
     }
 }

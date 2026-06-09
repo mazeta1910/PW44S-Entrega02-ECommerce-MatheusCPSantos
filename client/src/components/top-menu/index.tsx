@@ -5,7 +5,7 @@ import { Button } from "primereact/button";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/hooks/use-auth";
 import { isAdmin, getUserDisplayName } from "@/utils/auth-utils";
-import { InputSwitch } from "primereact/inputswitch";
+import { performLogout } from "@/utils/logout-utils";
 import { StoreCategoriesMenu } from "@/components/store-categories-menu";
 import { ProductSearchBar } from "@/components/product-search-bar";
 import { UserAccountMenu } from "@/components/user-account-menu";
@@ -16,21 +16,10 @@ import "./styles.css";
 const TopMenu: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [darkMode, setDarkMode] = useState<boolean>(() => {
-    return localStorage.getItem("theme") === "dark";
-  });
   const [cartCount, setCartCount] = useState(0);
   const { authenticated, authenticatedUser, handleLogout } = useAuth();
 
   const userLabel = getUserDisplayName(authenticatedUser);
-
-  useEffect(() => {
-    const themeLink = document.getElementById("theme-link") as HTMLLinkElement;
-    themeLink.href = darkMode
-      ? "https://unpkg.com/primereact/resources/themes/lara-dark-blue/theme.css"
-      : "https://unpkg.com/primereact/resources/themes/lara-light-blue/theme.css";
-    localStorage.setItem("theme", darkMode ? "dark" : "light");
-  }, [darkMode]);
 
   useEffect(() => {
     const updateCartCount = () => {
@@ -47,8 +36,7 @@ const TopMenu: React.FC = () => {
   }, []);
 
   const handleLogoutClick = () => {
-    handleLogout();
-    navigate("/");
+    performLogout(handleLogout, navigate);
   };
 
   const adminMenuItems = useMemo<MenuItem[]>(() => {
@@ -140,25 +128,6 @@ const TopMenu: React.FC = () => {
 
   const end = (
     <div className="flex align-items-center gap-3">
-      <div className="flex items-center gap-2">
-        <i
-          className={`pi pi-sun ${
-            darkMode ? "text-gray-400" : "text-yellow-500"
-          }`}
-          style={{ marginTop: "5px" }}
-        />
-        <InputSwitch
-          checked={darkMode}
-          onChange={(e) => setDarkMode(e.value ?? false)}
-        />
-        <i
-          className={`pi pi-moon ${
-            darkMode ? "text-blue-300" : "text-gray-400"
-          }`}
-          style={{ marginTop: "5px" }}
-        />
-      </div>
-
       {authenticated ? (
         <>
           <UserAccountMenu

@@ -40,7 +40,7 @@ export function AccountOrdersPage() {
 
   return (
     <>
-      <h1 className="account-section-title">pedidos</h1>
+      <h2 className="account-section-title">Meus pedidos</h2>
 
       {errorMessage && orders.length === 0 ? (
         <div className="account-empty">

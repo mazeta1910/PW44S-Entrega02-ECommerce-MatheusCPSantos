@@ -1,12 +1,18 @@
 .account-page {
-  min-height: calc(100vh - 4rem);
-  background: var(--surface-100, #f3f4f6);
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface-ground);
 }
 
 .account-page__container {
+  flex: 1;
+  width: 100%;
   max-width: 1180px;
   margin: 0 auto;
-  padding: 1.75rem 1.25rem 2.5rem;
+  padding: 1.5rem 1.25rem 2.5rem;
+  box-sizing: border-box;
 }
 
 .account-page__header {
@@ -17,16 +23,16 @@
 }
 
 .account-page__header-avatar {
-  width: 2.5rem !important;
-  height: 2.5rem !important;
+  width: 2.75rem !important;
+  height: 2.75rem !important;
   flex-shrink: 0;
 }
 
 .account-page__header-greeting {
   margin: 0;
-  font-size: 1.35rem;
-  font-weight: 600;
-  color: var(--text-color, #111827);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-color, #1e293b);
 }
 
 .account-page__layout {
@@ -38,7 +44,7 @@
 
 .account-page__sidebar {
   position: sticky;
-  top: 5rem;
+  top: calc(var(--app-header-height, 4.5rem) + 0.75rem);
 }
 
 .account-page__nav {
@@ -82,9 +88,8 @@
 
 .account-page__nav-title {
   display: block;
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 700;
-  text-transform: lowercase;
   margin-bottom: 0.25rem;
 }
 
@@ -92,7 +97,7 @@
   display: block;
   font-size: 0.82rem;
   line-height: 1.35;
-  color: var(--text-color-secondary, #6b7280);
+  color: var(--text-color-secondary, #64748b);
 }
 
 .account-page__content {
@@ -101,10 +106,9 @@
 
 .account-section-title {
   margin: 0 0 1.25rem;
-  font-size: 1.75rem;
+  font-size: 1.35rem;
   font-weight: 700;
-  text-transform: lowercase;
-  color: var(--text-color, #111827);
+  color: var(--text-color, #1e293b);
 }
 
 .account-card {
@@ -118,8 +122,16 @@
   margin-top: 1rem;
 }
 
+.account-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
 .account-card__title {
-  margin: 0 0 1rem;
+  margin: 0;
   font-size: 1rem;
   font-weight: 700;
 }
@@ -139,20 +151,19 @@
 .account-field__label {
   font-size: 0.78rem;
   font-weight: 600;
-  text-transform: lowercase;
-  color: var(--text-color-secondary, #6b7280);
+  color: var(--text-color-secondary, #64748b);
 }
 
 .account-field__value {
   font-size: 0.95rem;
-  color: var(--text-color, #111827);
+  color: var(--text-color, #1e293b);
   word-break: break-word;
 }
 
 .account-empty {
   text-align: center;
   padding: 2.5rem 1rem;
-  color: var(--text-color-secondary, #6b7280);
+  color: var(--text-color-secondary, #64748b);
 }
 
 .account-empty__icon {
@@ -190,13 +201,13 @@
 
 .account-list-item__meta {
   font-size: 0.85rem;
-  color: var(--text-color-secondary, #6b7280);
+  color: var(--text-color-secondary, #64748b);
 }
 
 .account-list-item__body {
   font-size: 0.9rem;
   line-height: 1.45;
-  color: var(--text-color, #111827);
+  color: var(--text-color, #1e293b);
 }
 
 .account-preference {
@@ -218,11 +229,5 @@
 
   .account-field-grid {
     grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 991px) {
-  .account-page {
-    min-height: calc(100vh - 7.25rem);
   }
 }

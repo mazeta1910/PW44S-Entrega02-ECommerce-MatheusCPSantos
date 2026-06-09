@@ -76,14 +76,20 @@ export function HomePage() {
     (c) => c.id === selectedCategoryId,
   )?.name;
 
+  const promoProducts = useMemo(
+    () => getPromoProducts(products),
+    [products],
+  );
+
   const featuredProducts = useMemo(() => {
     if (selectedCategoryId !== null) {
       return products.slice(0, 8);
     }
-    return getPromoProducts(products);
-  }, [products, selectedCategoryId]);
+    return promoProducts.length > 0 ? promoProducts : products.slice(0, 8);
+  }, [products, selectedCategoryId, promoProducts]);
 
-  const isPromoSection = selectedCategoryId === null;
+  const isPromoSection =
+    selectedCategoryId === null && promoProducts.length > 0;
 
   return (
     <div className="page-container">
@@ -94,12 +100,16 @@ export function HomePage() {
           <h2>
             {selectedCategoryName
               ? `Produtos — ${selectedCategoryName}`
-              : "Promoções"}
+              : isPromoSection
+                ? "Promoções"
+                : "Produtos em destaque"}
           </h2>
           <p className="section-subtitle">
             {selectedCategoryName
               ? "Produtos filtrados pela categoria selecionada"
-              : "Ofertas com desconto — preços promocionais por tempo limitado"}
+              : isPromoSection
+                ? "Ofertas com desconto — preços promocionais por tempo limitado"
+                : "Confira alguns itens do nosso catálogo"}
           </p>
 
           <div className="filter-actions">
@@ -134,9 +144,7 @@ export function HomePage() {
             </div>
           ) : featuredProducts.length === 0 ? (
             <div className="loading-message">
-              {isPromoSection
-                ? "Nenhuma promoção ativa no momento."
-                : "Nenhum produto encontrado nesta categoria."}
+              Nenhum produto encontrado nesta categoria.
             </div>
           ) : isPromoSection ? (
             <PromoCarousel products={featuredProducts} />

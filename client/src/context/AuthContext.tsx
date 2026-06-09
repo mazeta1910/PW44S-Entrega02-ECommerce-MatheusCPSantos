@@ -10,6 +10,7 @@ interface AuthContextType {
   authenticatedUser?: AuthenticatedUser;
   handleLogin: (authenticationResponse: AuthenticationResponse) => Promise<any>;
   handleLogout: () => void;
+  refreshAuthenticatedUser: () => void;
 }
 
 interface AuthProviderProps {
@@ -68,6 +69,25 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
+  const refreshAuthenticatedUser = () => {
+    const storedUser = localStorage.getItem("user");
+    if (!storedUser) {
+      return;
+    }
+
+    try {
+      setAuthenticatedUser(JSON.parse(storedUser) as AuthenticatedUser);
+    } catch {
+      setAuthenticatedUser(undefined);
+    }
+  };
+
+  useEffect(() => {
+    const handleUserUpdated = () => refreshAuthenticatedUser();
+    window.addEventListener("authUserUpdated", handleUserUpdated);
+    return () => window.removeEventListener("authUserUpdated", handleUserUpdated);
+  }, []);
+
   const handleLogout = async () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
@@ -79,7 +99,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   return (
     <AuthContext.Provider
-      value={{ authenticated, authenticatedUser, handleLogin, handleLogout }}
+      value={{
+        authenticated,
+        authenticatedUser,
+        handleLogin,
+        handleLogout,
+        refreshAuthenticatedUser,
+      }}
     >
       {children}
     </AuthContext.Provider>
