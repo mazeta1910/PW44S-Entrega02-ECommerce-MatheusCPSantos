@@ -69,6 +69,7 @@ public class WebSecurity {
                 .requestMatchers(HttpMethod.GET, "/categories/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/images/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/freights/calculate").permitAll()
+                .requestMatchers(HttpMethod.GET, "/cep/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/categories/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.PUT, "/categories/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.DELETE, "/categories/**").hasRole("ADMIN")
@@ -109,7 +110,7 @@ public class WebSecurity {
         // por: http://localhost:porta, em que :porta será a porta em que a aplicação cliente será executada
         configuration.setAllowedOrigins(List.of("*"));
         // Lista dos métodos HTTP autorizados
-        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "TRACE", "CONNECT"));
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "HEAD", "TRACE", "CONNECT"));
         // Lista dos Headers autorizados, o Authorization será o header que iremos utilizar para transferir o Token
         configuration.setAllowedHeaders(List.of("Authorization", "x-xsrf-token",
                 "Access-Control-Allow-Headers", "Origin",

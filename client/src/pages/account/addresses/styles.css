@@ -1,0 +1,65 @@
+.account-addresses__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+}
+
+.account-addresses__header .account-section-title {
+  margin-bottom: 0.35rem;
+}
+
+.account-addresses__subtitle {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--text-color-secondary, #64748b);
+}
+
+.account-addresses__title-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.account-addresses__badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--primary-color, #3b82f6);
+  background: color-mix(in srgb, var(--primary-color, #3b82f6) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--primary-color, #3b82f6) 28%, transparent);
+}
+
+.account-addresses__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.account-list-item--primary {
+  border-color: color-mix(in srgb, var(--primary-color, #3b82f6) 35%, #e5e7eb);
+  box-shadow: 0 2px 10px rgba(59, 130, 246, 0.08);
+}
+
+@media (max-width: 575px) {
+  .account-list-item__header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .account-addresses__actions {
+    width: 100%;
+  }
+
+  .account-addresses__actions .p-button {
+    flex: 1 1 calc(50% - 0.25rem);
+  }
+}

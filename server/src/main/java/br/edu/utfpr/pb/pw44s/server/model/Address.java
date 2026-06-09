@@ -51,6 +51,10 @@ public class Address {
     @Column(name = "is_active")
     private Boolean isActive = true;
 
+    @Builder.Default
+    @Column(name = "is_primary")
+    private Boolean isPrimary = false;
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;

@@ -9,4 +9,6 @@ public interface IAddressService extends ICrudService<Address, Long> {
     List<Address> findByUserEmail(String email);
 
     List<Address> findActiveByUserId(Long userId);
+
+    Address setPrimaryAddress(Long id);
 }

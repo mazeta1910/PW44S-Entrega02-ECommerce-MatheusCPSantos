@@ -1,8 +1,9 @@
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useState, useEffect, useCallback } from "react";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import Footer from "@/components/footer";
+import { CheckoutStepBar } from "@/components/checkout-step-bar";
 import { readCartItems, writeCartItems } from "@/utils/cart-storage";
 import { formatCurrency } from "@/utils/product-utils";
 import "./styles.css";
@@ -20,6 +21,7 @@ const FIXED_DISCOUNT = 0.0;
 const PIX_DISCOUNT_PERCENT = 0.05;
 
 export function CartPage() {
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [cepInput, setCepInput] = useState("");
@@ -110,24 +112,7 @@ export function CartPage() {
             </div>
           ) : (
             <div className="cart-content-new">
-              <div className="cart-status-header">
-                <div className="status-bar">
-                  <div className="status-step active">
-                    <div className="step-circle">1</div>
-                    <span>Carrinho</span>
-                  </div>
-                  <div className="status-separator"></div>
-                  <div className="status-step">
-                    <div className="step-circle">2</div>
-                    <span>Identificação</span>
-                  </div>
-                  <div className="status-separator"></div>
-                  <div className="status-step">
-                    <div className="step-circle">3</div>
-                    <span>Pagamento</span>
-                  </div>
-                </div>
-              </div>
+              <CheckoutStepBar currentStep={1} />
 
               <div className="cart-grid-layout">
                 {/* Left Column: Product List */}
@@ -263,7 +248,7 @@ export function CartPage() {
                     <Button
                       label="Continuar"
                       className="btn-continue-checkout"
-                      onClick={() => console.log("Proceed to checkout")}
+                      onClick={() => navigate("/checkout/identification")}
                     />
                   </div>
 

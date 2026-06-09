@@ -28,6 +28,7 @@ public class AddressMapper {
                 .neighborhood(entity.getNeighborhood())
                 .city(entity.getCity())
                 .state(entity.getState())
+                .isPrimary(entity.getIsPrimary())
                 .build();
     }
 
@@ -45,6 +46,7 @@ public class AddressMapper {
                 .neighborhood(dto.getNeighborhood())
                 .city(dto.getCity())
                 .state(dto.getState())
+                .isPrimary(dto.getIsPrimary())
                 .build();
     }
 }

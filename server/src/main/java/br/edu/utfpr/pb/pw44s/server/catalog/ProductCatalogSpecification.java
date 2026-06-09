@@ -5,9 +5,8 @@ import br.edu.utfpr.pb.pw44s.server.model.ProductVariant;
 import br.edu.utfpr.pb.pw44s.server.model.enums.DeliveryType;
 import br.edu.utfpr.pb.pw44s.server.model.enums.ItemCondition;
 import br.edu.utfpr.pb.pw44s.server.model.enums.Platform;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Join;
-import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Order;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
@@ -50,25 +49,15 @@ public final class ProductCatalogSpecification {
                 predicates.add(root.get("category").get("id").in(categoryIds));
             }
 
-            boolean filterByVariant =
-                    (deliveryTypes != null && !deliveryTypes.isEmpty())
-                            || (platforms != null && !platforms.isEmpty())
-                            || (itemConditions != null && !itemConditions.isEmpty());
-
-            if (filterByVariant) {
-                Join<Product, ProductVariant> variants = root.join("variants", JoinType.INNER);
-                predicates.add(criteriaBuilder.isTrue(variants.get("active")));
-
-                if (deliveryTypes != null && !deliveryTypes.isEmpty()) {
-                    predicates.add(variants.get("deliveryType").in(deliveryTypes));
-                }
-                if (platforms != null && !platforms.isEmpty()) {
-                    predicates.add(variants.get("platform").in(platforms));
-                }
-                if (itemConditions != null && !itemConditions.isEmpty()) {
-                    predicates.add(variants.get("itemCondition").in(itemConditions));
-                }
-            }
+            addVariantFilterExists(
+                    root,
+                    query,
+                    criteriaBuilder,
+                    predicates,
+                    deliveryTypes,
+                    platforms,
+                    itemConditions
+            );
 
             if (Boolean.TRUE.equals(onSale)) {
                 Subquery<Long> promoSubquery = query.subquery(Long.class);
@@ -104,11 +93,6 @@ public final class ProductCatalogSpecification {
             }
 
             if (!countQuery && query != null) {
-                query.distinct(true);
-                root.fetch("category", JoinType.LEFT);
-                if (!filterByVariant) {
-                    root.fetch("variants", JoinType.LEFT);
-                }
                 applySort(root, query, criteriaBuilder, sort);
             }
 
@@ -120,10 +104,47 @@ public final class ProductCatalogSpecification {
         };
     }
 
+    private static void addVariantFilterExists(
+            Root<Product> root,
+            CriteriaQuery<?> query,
+            CriteriaBuilder criteriaBuilder,
+            List<Predicate> predicates,
+            List<DeliveryType> deliveryTypes,
+            List<Platform> platforms,
+            List<ItemCondition> itemConditions) {
+        boolean hasDeliveryFilter = deliveryTypes != null && !deliveryTypes.isEmpty();
+        boolean hasPlatformFilter = platforms != null && !platforms.isEmpty();
+        boolean hasConditionFilter = itemConditions != null && !itemConditions.isEmpty();
+
+        if (!hasDeliveryFilter && !hasPlatformFilter && !hasConditionFilter) {
+            return;
+        }
+
+        Subquery<Long> variantSubquery = query.subquery(Long.class);
+        Root<ProductVariant> variant = variantSubquery.from(ProductVariant.class);
+        List<Predicate> variantPredicates = new ArrayList<>();
+        variantPredicates.add(criteriaBuilder.equal(variant.get("product"), root));
+        variantPredicates.add(criteriaBuilder.isTrue(variant.get("active")));
+
+        if (hasDeliveryFilter) {
+            variantPredicates.add(variant.get("deliveryType").in(deliveryTypes));
+        }
+        if (hasPlatformFilter) {
+            variantPredicates.add(variant.get("platform").in(platforms));
+        }
+        if (hasConditionFilter) {
+            variantPredicates.add(variant.get("itemCondition").in(itemConditions));
+        }
+
+        variantSubquery.select(variant.get("id"))
+                .where(variantPredicates.toArray(new Predicate[0]));
+        predicates.add(criteriaBuilder.exists(variantSubquery));
+    }
+
     private static void applySort(
             Root<Product> root,
             CriteriaQuery<?> query,
-            jakarta.persistence.criteria.CriteriaBuilder criteriaBuilder,
+            CriteriaBuilder criteriaBuilder,
             CatalogSort sort) {
         if (sort == null || sort == CatalogSort.RELEVANCE) {
             query.orderBy(criteriaBuilder.desc(root.get("id")));
@@ -133,8 +154,14 @@ public final class ProductCatalogSpecification {
         List<Order> orders = new ArrayList<>();
 
         switch (sort) {
-            case PRICE_ASC -> orders.add(criteriaBuilder.asc(minActiveVariantPrice(root, query, criteriaBuilder)));
-            case PRICE_DESC -> orders.add(criteriaBuilder.desc(minActiveVariantPrice(root, query, criteriaBuilder)));
+            case PRICE_ASC -> {
+                orders.add(criteriaBuilder.asc(minActiveVariantPrice(root, query, criteriaBuilder)));
+                orders.add(criteriaBuilder.desc(root.get("id")));
+            }
+            case PRICE_DESC -> {
+                orders.add(criteriaBuilder.desc(minActiveVariantPrice(root, query, criteriaBuilder)));
+                orders.add(criteriaBuilder.desc(root.get("id")));
+            }
             case RATING_DESC -> {
                 orders.add(criteriaBuilder.desc(
                         criteriaBuilder.coalesce(root.get("averageRating"), 0.0)
@@ -142,6 +169,7 @@ public final class ProductCatalogSpecification {
                 orders.add(criteriaBuilder.desc(
                         criteriaBuilder.coalesce(root.get("reviewCount"), 0)
                 ));
+                orders.add(criteriaBuilder.desc(root.get("id")));
             }
             case POPULARITY_DESC -> {
                 orders.add(criteriaBuilder.desc(
@@ -150,12 +178,22 @@ public final class ProductCatalogSpecification {
                 orders.add(criteriaBuilder.desc(
                         criteriaBuilder.coalesce(root.get("averageRating"), 0.0)
                 ));
+                orders.add(criteriaBuilder.desc(root.get("id")));
             }
-            case DISCOUNT_DESC -> orders.add(criteriaBuilder.desc(
-                    maxActiveVariantDiscount(root, query, criteriaBuilder)
-            ));
-            case NAME_ASC -> orders.add(criteriaBuilder.asc(criteriaBuilder.lower(root.get("name"))));
-            case NAME_DESC -> orders.add(criteriaBuilder.desc(criteriaBuilder.lower(root.get("name"))));
+            case DISCOUNT_DESC -> {
+                orders.add(criteriaBuilder.desc(
+                        maxActiveVariantDiscount(root, query, criteriaBuilder)
+                ));
+                orders.add(criteriaBuilder.desc(root.get("id")));
+            }
+            case NAME_ASC -> {
+                orders.add(criteriaBuilder.asc(criteriaBuilder.lower(root.get("name"))));
+                orders.add(criteriaBuilder.desc(root.get("id")));
+            }
+            case NAME_DESC -> {
+                orders.add(criteriaBuilder.desc(criteriaBuilder.lower(root.get("name"))));
+                orders.add(criteriaBuilder.desc(root.get("id")));
+            }
             default -> orders.add(criteriaBuilder.desc(root.get("id")));
         }
 
@@ -165,7 +203,7 @@ public final class ProductCatalogSpecification {
     private static Subquery<BigDecimal> minActiveVariantPrice(
             Root<Product> root,
             CriteriaQuery<?> query,
-            jakarta.persistence.criteria.CriteriaBuilder criteriaBuilder) {
+            CriteriaBuilder criteriaBuilder) {
         Subquery<BigDecimal> subquery = query.subquery(BigDecimal.class);
         Root<ProductVariant> variant = subquery.from(ProductVariant.class);
         subquery.select(criteriaBuilder.min(variant.get("price")))
@@ -179,7 +217,7 @@ public final class ProductCatalogSpecification {
     private static Subquery<BigDecimal> maxActiveVariantDiscount(
             Root<Product> root,
             CriteriaQuery<?> query,
-            jakarta.persistence.criteria.CriteriaBuilder criteriaBuilder) {
+            CriteriaBuilder criteriaBuilder) {
         Subquery<BigDecimal> subquery = query.subquery(BigDecimal.class);
         Root<ProductVariant> variant = subquery.from(ProductVariant.class);
         subquery.select(criteriaBuilder.max(

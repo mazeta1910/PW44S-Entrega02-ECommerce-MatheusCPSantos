@@ -16,6 +16,8 @@ import { NotFound } from "@/pages/not-found";
 import { ProductShow } from "@/pages/product-show";
 import { ProductCardListPage } from "@/pages/product-card-list";
 import { CartPage } from "@/pages/cart";
+import { CheckoutIdentificationPage } from "@/pages/checkout/identification";
+import { CheckoutPaymentPage } from "@/pages/checkout/payment";
 import { AccountLayout } from "@/components/account-layout";
 import { AccountProfilePage } from "@/pages/account/profile";
 import { AccountOrdersPage } from "@/pages/account/orders";
@@ -33,6 +35,8 @@ export function AppRoutes() {
         <Route path="catalog" element={<CatalogPage />} />
         <Route path="catalog/product/:productId" element={<ProductDetailPage />} />
         <Route path="cart" element={<CartPage />} />
+        <Route path="checkout/identification" element={<CheckoutIdentificationPage />} />
+        <Route path="checkout/payment" element={<CheckoutPaymentPage />} />
         <Route path="login" element={<LoginPage />} />
         <Route path="register" element={<RegisterPage />} />
         <Route path="termos" element={<TermsOfServicePage />} />

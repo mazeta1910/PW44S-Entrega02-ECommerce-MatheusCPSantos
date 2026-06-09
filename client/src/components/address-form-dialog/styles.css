@@ -1,0 +1,155 @@
+.address-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.address-form__intro {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--text-color-secondary, #6b7280);
+}
+
+.address-form__section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.address-form__section-title {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-color, #1f2937);
+}
+
+.address-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.address-form__field label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-color, #1f2937);
+}
+
+.address-form__required {
+  color: #ef4444;
+  font-weight: 700;
+}
+
+.address-form__optional {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--text-color-secondary, #6b7280);
+}
+
+.address-form__cep-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.address-form__cep-input {
+  flex: 1;
+  min-width: 0;
+}
+
+.address-form__hint,
+.address-form__error,
+.address-form__warn,
+.address-form__status {
+  font-size: 0.8rem;
+}
+
+.address-form__status {
+  color: var(--primary-color, #2563eb);
+}
+
+.address-form__warn {
+  color: #d97706;
+}
+
+.address-form__hint {
+  color: var(--text-color-secondary, #6b7280);
+}
+
+.address-form__error {
+  color: #dc2626;
+}
+
+.address-form__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+.address-form__field--wide {
+  grid-column: 1 / -1;
+}
+
+.address-form__field--state {
+  max-width: 7.5rem;
+}
+
+.address-form__freight {
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--surface-border, #e5e7eb);
+  border-radius: 8px;
+  background: var(--surface-50, rgba(0, 0, 0, 0.02));
+}
+
+.address-form__freight h3 {
+  margin: 0 0 0.65rem;
+  font-size: 0.95rem;
+}
+
+.address-form__freight ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.address-form__freight li {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  font-size: 0.85rem;
+  color: var(--text-color-secondary, #6b7280);
+}
+
+.address-form__freight li span:first-child {
+  color: var(--text-color, #1f2937);
+  font-weight: 600;
+}
+
+.address-form__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--surface-border, #e5e7eb);
+}
+
+@media (max-width: 575px) {
+  .address-form__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .address-form__field--state {
+    max-width: none;
+  }
+
+  .address-form__cep-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+

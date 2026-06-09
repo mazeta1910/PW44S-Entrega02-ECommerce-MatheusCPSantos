@@ -5,7 +5,7 @@ import { Password } from "primereact/password";
 import { Button } from "primereact/button";
 import { Card } from "primereact/card";
 import { Checkbox } from "primereact/checkbox";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import type { AuthenticationResponse, IUserLogin } from "@/commons/types";
 import { useAuth } from "@/context/hooks/use-auth";
 import AuthService from "@/services/auth-service";
@@ -21,6 +21,10 @@ export const LoginPage = () => {
     defaultValues: { email: "", password: "", rememberMe: true },
   });
   const navigate = useNavigate();
+  const location = useLocation();
+  const redirectPath =
+    (location.state as { from?: { pathname?: string } } | null)?.from
+      ?.pathname ?? null;
   const { login } = AuthService;
   const toast = useRef<Toast>(null);
   const [loading, setLoading] = useState(false);
@@ -44,7 +48,10 @@ export const LoginPage = () => {
           life: 3000,
         });
         setTimeout(() => {
-          navigate(getPostLoginPath(authenticationResponse.user));
+          navigate(
+            redirectPath ?? getPostLoginPath(authenticationResponse.user),
+            { replace: true },
+          );
         }, 1000);
       } else {
         toast.current?.show({

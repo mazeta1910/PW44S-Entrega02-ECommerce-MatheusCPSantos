@@ -354,11 +354,11 @@ INSERT INTO tb_carrier(name, base_rate, estimated_delivery_days, is_active) VALU
 -- ==========================================
 -- 6. POPULANDO ENDEREÇOS (tb_address)
 -- ==========================================
-INSERT INTO tb_address (city, neighborhood, number, state, street, zip_code, user_id, is_active) VALUES ('Pato Branco', 'Centro', '123', 'PR', 'Rua Guarani', '85501-000', 1, TRUE);
-INSERT INTO tb_address (city, neighborhood, number, state, street, zip_code, user_id, is_active) VALUES ('Pato Branco', 'La Salle', '456', 'PR', 'Rua Tapajós', '85501-100', 2, TRUE);
-INSERT INTO tb_address (city, neighborhood, number, state, street, zip_code, user_id, is_active) VALUES ('Curitiba', 'Batel', '10', 'PR', 'Avenida do Batel', '80420-090', 3, TRUE);
-INSERT INTO tb_address (city, neighborhood, number, state, street, zip_code, user_id, is_active) VALUES ('Curitiba', 'Água Verde', '55A', 'PR', 'Rua Bento Viana', '80240-110', 3, TRUE);
-INSERT INTO tb_address (city, neighborhood, number, state, street, zip_code, user_id, is_active) VALUES ('Curitiba', 'Batel', '10', 'PR', 'Avenida do Batel', '80420-090', 4, TRUE);
+INSERT INTO tb_address (city, neighborhood, number, state, street, zip_code, user_id, is_active, is_primary) VALUES ('Pato Branco', 'Centro', '123', 'PR', 'Rua Guarani', '85501-000', 1, TRUE, TRUE);
+INSERT INTO tb_address (city, neighborhood, number, state, street, zip_code, user_id, is_active, is_primary) VALUES ('Pato Branco', 'La Salle', '456', 'PR', 'Rua Tapajós', '85501-100', 2, TRUE, TRUE);
+INSERT INTO tb_address (city, neighborhood, number, state, street, zip_code, user_id, is_active, is_primary) VALUES ('Curitiba', 'Batel', '10', 'PR', 'Avenida do Batel', '80420-090', 3, TRUE, TRUE);
+INSERT INTO tb_address (city, neighborhood, number, state, street, zip_code, user_id, is_active, is_primary) VALUES ('Curitiba', 'Água Verde', '55A', 'PR', 'Rua Bento Viana', '80240-110', 3, TRUE, FALSE);
+INSERT INTO tb_address (city, neighborhood, number, state, street, zip_code, user_id, is_active, is_primary) VALUES ('Curitiba', 'Batel', '10', 'PR', 'Avenida do Batel', '80420-090', 4, TRUE, TRUE);
 
 -- ==========================================
 -- 7. PEDIDOS (tb_order) E ITENS (tb_order_item)

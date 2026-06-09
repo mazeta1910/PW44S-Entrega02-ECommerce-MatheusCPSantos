@@ -93,6 +93,24 @@ export interface IAddress {
   neighborhood: string;
   city: string;
   state: string;
+  isPrimary?: boolean;
+}
+
+export interface ICepLookup {
+  zipCode: string;
+  street: string;
+  complement?: string;
+  neighborhood: string;
+  city: string;
+  state: string;
+  found?: boolean;
+}
+
+export interface IFreightOption {
+  carrierId: number;
+  carrierName: string;
+  price: number;
+  estimatedDays: number;
 }
 
 export interface IOrderItem {
