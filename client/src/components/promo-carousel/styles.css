@@ -1,0 +1,155 @@
+.promo-carousel {
+  padding: 0 2.25rem;
+  overflow: hidden;
+}
+
+.promo-carousel .p-carousel-content {
+  overflow: hidden;
+}
+
+.promo-carousel .p-carousel-items-content {
+  overflow: hidden;
+}
+
+.promo-carousel .p-carousel-items-container {
+  display: flex;
+  align-items: center;
+}
+
+/* Corrige flex injetado pelo PrimeReact (media queries sobrepostas → 1 item gigante) */
+.promo-carousel .p-carousel-item {
+  flex: 0 0 20% !important;
+  max-width: 20%;
+  box-sizing: border-box;
+  padding: 0 0.35rem;
+  display: flex;
+  align-items: center;
+  align-self: center;
+}
+
+.promo-carousel__item {
+  width: 100%;
+}
+
+.promo-carousel .product-card-wrapper {
+  width: 100%;
+  height: auto;
+}
+
+.promo-carousel .product-card {
+  height: auto;
+  width: 100%;
+}
+
+/* Cards mais compactos na vitrine de promoções */
+.promo-carousel .product-card__image {
+  height: 190px;
+}
+
+.promo-carousel .product-card .p-card-body {
+  padding: 0.55rem 0.65rem;
+}
+
+.promo-carousel .product-card .p-card-footer {
+  padding: 0.55rem 0.65rem 0.65rem;
+}
+
+.promo-carousel .product-card__title {
+  --product-card-title-font-size: 0.85rem;
+  min-height: calc(
+    var(--product-card-title-font-size) * var(--product-card-title-line-height) *
+      var(--product-card-title-lines)
+  );
+}
+
+.promo-carousel .product-card__media {
+  margin: -0.55rem -0.65rem 0.5rem;
+}
+
+.promo-carousel .product-card__price {
+  font-size: 0.9rem;
+}
+
+.promo-carousel .p-carousel-prev-button,
+.promo-carousel .p-carousel-next-button {
+  width: 2.35rem !important;
+  height: 2.35rem !important;
+  border-radius: 50% !important;
+  border: 1px solid var(--surface-border, #e5e7eb) !important;
+  background: var(--surface-card, #fff) !important;
+  color: var(--text-color-secondary, #64748b) !important;
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.08) !important;
+  transition:
+    box-shadow 0.2s ease,
+    background-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease !important;
+}
+
+.promo-carousel .p-carousel-prev-button .p-button-icon,
+.promo-carousel .p-carousel-next-button .p-button-icon {
+  font-size: 1rem;
+}
+
+.promo-carousel .p-carousel-prev-button:hover,
+.promo-carousel .p-carousel-next-button:hover {
+  background: var(--surface-card, #fff) !important;
+  border-color: var(--surface-border, #e5e7eb) !important;
+  color: var(--text-color, #334155) !important;
+  transform: scale(1.02);
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.12) !important;
+}
+
+.promo-carousel .p-carousel-indicator-list {
+  margin-top: 0.75rem;
+  gap: 0.35rem;
+}
+
+.promo-carousel .p-carousel-indicator-button {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--text-color-secondary, #64748b) 35%, transparent);
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.promo-carousel .p-carousel-indicator-button:hover {
+  background: color-mix(in srgb, var(--text-color-secondary, #64748b) 55%, transparent);
+}
+
+.promo-carousel .p-carousel-indicator-active .p-carousel-indicator-button {
+  background: var(--primary-color, #3b82f6);
+  transform: scale(1.15);
+}
+
+@media (max-width: 1199px) {
+  .promo-carousel .p-carousel-item {
+    flex: 0 0 25% !important;
+    max-width: 25%;
+  }
+}
+
+@media (max-width: 991px) {
+  .promo-carousel .p-carousel-item {
+    flex: 0 0 33.3333% !important;
+    max-width: 33.3333%;
+  }
+}
+
+@media (max-width: 767px) {
+  .promo-carousel .p-carousel-item {
+    flex: 0 0 50% !important;
+    max-width: 50%;
+  }
+
+  .promo-carousel {
+    padding: 0 1.75rem;
+  }
+}
+
+@media (max-width: 575px) {
+  .promo-carousel .p-carousel-item {
+    flex: 0 0 100% !important;
+    max-width: 100%;
+  }
+}

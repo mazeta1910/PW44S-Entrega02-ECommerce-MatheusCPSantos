@@ -21,22 +21,14 @@ import java.util.Collection;
 @Setter
 public class User implements UserDetails {
 
+    private static final String ADMIN_EMAIL = "admin@nexus.com.br";
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
-    @Column(length = 50, unique = true)
-    private String username;
-
-    @NotNull
-    @Column(length = 50, name = "display_name")
-    private String displayName;
-
-    @NotNull
     private String password;
-
-    // --- NOVOS CAMPOS ---
 
     @NotNull
     @Column(name = "full_name", length = 150)
@@ -70,12 +62,19 @@ public class User implements UserDetails {
     @Builder.Default
     private Boolean termsAccepted = false;
 
-    // DEMAIS CAMPOS //
+    @Override
+    @JsonIgnore
+    public String getUsername() {
+        return email;
+    }
 
     @Override
     @Transient
     @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        if (email != null && ADMIN_EMAIL.equalsIgnoreCase(email)) {
+            return AuthorityUtils.createAuthorityList("ROLE_ADMIN", "ROLE_USER");
+        }
         return AuthorityUtils.createAuthorityList("ROLE_USER");
     }
 

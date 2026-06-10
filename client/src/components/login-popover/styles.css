@@ -1,0 +1,88 @@
+.login-popover {
+  position: relative;
+  display: inline-flex;
+}
+
+.login-popover__panel {
+  position: absolute;
+  top: calc(100% + 0.55rem);
+  right: 0;
+  width: min(92vw, 300px);
+  padding: 1rem;
+  border: 1px solid var(--surface-border, #e5e7eb);
+  border-radius: 12px;
+  background: var(--surface-card, #fff);
+  box-shadow: 0 14px 36px rgba(15, 23, 42, 0.16);
+  z-index: 1200;
+}
+
+.login-popover__title {
+  margin: 0 0 0.85rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-color, #1e293b);
+}
+
+.login-popover__form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.login-popover__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.login-popover__field label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-color-secondary, #64748b);
+}
+
+.login-popover__field .p-inputtext,
+.login-popover__field .p-password {
+  width: 100%;
+}
+
+.login-popover__field .p-password {
+  display: block;
+}
+
+.login-popover__field .p-inputtext,
+.login-popover__field .p-password .p-inputtext {
+  width: 100%;
+  min-height: 2.5rem;
+  padding: 0.5rem 0.75rem;
+  box-sizing: border-box;
+}
+
+.login-popover__remember {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.login-popover__remember label {
+  font-size: 0.82rem;
+  color: var(--text-color, #334155);
+  cursor: pointer;
+}
+
+.login-popover__footer {
+  margin: 0.85rem 0 0;
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--text-color-secondary, #64748b);
+}
+
+.login-popover__link {
+  color: var(--primary-color, #3b82f6);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.login-popover__link:hover {
+  text-decoration: underline;
+}

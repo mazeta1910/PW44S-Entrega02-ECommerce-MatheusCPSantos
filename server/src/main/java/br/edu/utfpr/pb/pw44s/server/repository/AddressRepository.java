@@ -7,6 +7,6 @@ import java.util.List;
 public interface AddressRepository extends JpaRepository<Address, Long> {
 
     List<Address> findByUserIdAndIsActiveTrue(Long userId);
-    List<Address> findByUserUsername(String username);
+    List<Address> findByUser_EmailAndIsActiveTrue(String email);
 
 }

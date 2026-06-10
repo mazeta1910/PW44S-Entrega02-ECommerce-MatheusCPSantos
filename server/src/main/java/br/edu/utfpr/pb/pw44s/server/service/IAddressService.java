@@ -6,10 +6,9 @@ import java.util.List;
 
 public interface IAddressService extends ICrudService<Address, Long> {
 
-    // Método para a rota segura com JWT
-    List<Address> findByUsername(String username);
+    List<Address> findByUserEmail(String email);
 
-    // Método para buscar os endereços ativos
     List<Address> findActiveByUserId(Long userId);
 
+    Address setPrimaryAddress(Long id);
 }

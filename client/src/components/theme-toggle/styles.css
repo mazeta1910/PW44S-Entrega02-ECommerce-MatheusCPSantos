@@ -1,0 +1,10 @@
+.theme-toggle {
+  position: static;
+}
+
+.theme-toggle.surface-icon-button {
+  width: 2.35rem !important;
+  height: 2.35rem !important;
+  border: 1px solid var(--surface-border, #e5e7eb) !important;
+  background: var(--surface-card, #fff) !important;
+}

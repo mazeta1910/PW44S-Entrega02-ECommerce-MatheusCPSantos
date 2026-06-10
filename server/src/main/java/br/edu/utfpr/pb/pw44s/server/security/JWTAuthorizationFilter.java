@@ -37,11 +37,15 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
             chain.doFilter(request, response);
             return;
         }
-        //Chama o método getAuthentication e retorna o usuário autenticado para dar sequência na requisição
-        UsernamePasswordAuthenticationToken authenticationToken =
-                getAuthentication(request);
-        //Adiciona o usuário autenticado no contexto do spring security
-        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+        try {
+            UsernamePasswordAuthenticationToken authenticationToken =
+                    getAuthentication(request);
+            if (authenticationToken != null) {
+                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+            }
+        } catch (RuntimeException ignored) {
+            // Token inválido ou expirado: segue sem autenticação (rotas públicas continuam funcionando)
+        }
         chain.doFilter(request, response);
     }
 

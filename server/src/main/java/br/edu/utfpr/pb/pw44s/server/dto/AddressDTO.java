@@ -40,4 +40,6 @@ public class AddressDTO {
     @Size(min = 2, max = 2, message = "O estado deve ser representado pela sigla (ex: PR).")
     private String state;
 
+    private Boolean isPrimary;
+
 }

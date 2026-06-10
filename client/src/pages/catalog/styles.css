@@ -1,0 +1,150 @@
+.catalog-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+  width: 100%;
+  flex: 1;
+}
+
+.catalog-header {
+  margin-bottom: 2rem;
+}
+
+.catalog-header h1 {
+  margin: 0 0 0.5rem;
+  font-size: 2rem;
+  color: var(--text-color, #1e293b);
+}
+
+.catalog-subtitle {
+  margin: 0;
+  color: var(--text-color-secondary, #64748b);
+}
+
+.catalog-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+.catalog-filters {
+  position: sticky;
+  top: 6rem;
+  padding: 1.25rem;
+  border-radius: 8px;
+  background: var(--surface-card, #fff);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.filter-group {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.filter-group:last-of-type {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.filter-group-title {
+  margin: 0 0 0.25rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-color, #1e293b);
+}
+
+.filters-hint {
+  margin: 0 0 0.75rem;
+  font-size: 0.8rem;
+  color: var(--text-color-secondary, #64748b);
+}
+
+.category-checkboxes {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.category-checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.filter-label-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.filter-option-hint {
+  font-size: 0.75rem;
+  color: var(--text-color-secondary, #64748b);
+  font-weight: normal;
+}
+
+.catalog-results-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+  color: var(--text-color-secondary, #64748b);
+  font-size: 0.95rem;
+}
+
+.catalog-sort {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.catalog-sort__label {
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.catalog-sort__dropdown {
+  min-width: 200px;
+}
+
+.catalog-results .products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 2rem;
+  justify-items: center;
+}
+
+.catalog-paginator {
+  margin-top: 2rem;
+}
+
+.loading-message {
+  text-align: center;
+  padding: 3rem 0;
+  color: var(--text-color-secondary, #64748b);
+}
+
+.error-message {
+  color: #dc2626;
+}
+
+@media (max-width: 900px) {
+  .catalog-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .catalog-filters {
+    position: static;
+  }
+
+  .catalog-sort__dropdown {
+    min-width: 170px;
+  }
+}

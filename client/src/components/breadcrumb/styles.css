@@ -1,0 +1,57 @@
+.page-breadcrumb {
+  margin-bottom: 1.25rem;
+}
+
+.page-breadcrumb .p-breadcrumb {
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+.page-breadcrumb .p-menuitem-link {
+  font-size: 0.9rem;
+  gap: 0.5rem;
+  border-radius: 4px;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.page-breadcrumb .p-menuitem-link:hover,
+.page-breadcrumb .p-menuitem-link:focus-visible {
+  color: var(--primary-color, #3b82f6);
+  background: var(--surface-hover, rgba(59, 130, 246, 0.08));
+  text-decoration: none;
+}
+
+.page-breadcrumb .p-breadcrumb-home .p-menuitem-link {
+  gap: 0.5rem;
+}
+
+.page-breadcrumb .p-breadcrumb-home .p-menuitem-icon {
+  margin-right: 0.35rem;
+  transition: color 0.15s ease;
+}
+
+.page-breadcrumb .p-breadcrumb-home .p-menuitem-link:hover .p-menuitem-icon,
+.page-breadcrumb .p-breadcrumb-home .p-menuitem-link:focus-visible .p-menuitem-icon {
+  color: var(--primary-color, #3b82f6);
+}
+
+.page-breadcrumb .p-breadcrumb-chevron {
+  font-size: 0.75rem;
+  color: var(--text-color-secondary, #64748b);
+}
+
+.page-breadcrumb .p-menuitem-text {
+  color: var(--text-color-secondary, #64748b);
+  font-weight: 500;
+}
+
+.page-breadcrumb .p-menuitem-link:hover .p-menuitem-text,
+.page-breadcrumb .p-menuitem-link:focus-visible .p-menuitem-text {
+  color: var(--primary-color, #3b82f6);
+}
+
+.page-breadcrumb li:last-child .p-menuitem-text {
+  color: var(--text-color, #1e293b);
+  font-weight: 600;
+}

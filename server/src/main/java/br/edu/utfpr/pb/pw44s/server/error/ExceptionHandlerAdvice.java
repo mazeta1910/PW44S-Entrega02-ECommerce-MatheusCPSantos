@@ -30,6 +30,14 @@ public class ExceptionHandlerAdvice {
                 request.getServletPath(), validationErrors);
     }
 
+    @ExceptionHandler({IllegalArgumentException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiError handlerIllegalArgumentException(IllegalArgumentException exception,
+                                                    HttpServletRequest request) {
+        return new ApiError(HttpStatus.BAD_REQUEST.value(), exception.getMessage(),
+                request.getServletPath(), null);
+    }
+
     @ExceptionHandler({IllegalStateException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiError handlerValidationException(IllegalStateException exception,

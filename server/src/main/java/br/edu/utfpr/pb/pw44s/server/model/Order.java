@@ -1,5 +1,6 @@
 package br.edu.utfpr.pb.pw44s.server.model;
 
+import br.edu.utfpr.pb.pw44s.server.model.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -7,6 +8,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -33,28 +35,42 @@ public class Order {
     @JsonIgnoreProperties({"password", "authorities"})
     private User user;
 
-    @ManyToMany
-    @JoinTable(
-            name = "tb_order_product",
-            joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id")
-    )
-    private List<Product> products;
+    @Builder.Default
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderItem> items = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "address_id", nullable = false)
     private Address deliveryAddress;
 
+    @Column(name = "freight_price", precision = 10, scale = 2)
+    private BigDecimal freightPrice;
+
+    @Column(name = "coupon_discount", precision = 10, scale = 2)
+    private BigDecimal couponDiscount;
+
+    @Column(name = "coupon_code", length = 50)
+    private String couponCode;
+
+    @Column(name = "carrier_name")
+    private String carrierName;
+
+    @Column(name = "estimated_delivery_days")
+    private Integer estimatedDeliveryDays;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    @Builder.Default
+    private OrderStatus status = OrderStatus.CONFIRMED;
+
+    @Column(name = "support_request_message", length = 500)
+    private String supportRequestMessage;
+
     @PrePersist
     public void prePersist() {
         this.orderDate = LocalDateTime.now();
-    }
-
-    public void calculateTotal() {
-        if (products != null) {
-            this.total = products.stream()
-                    .map(Product::getPrice)
-                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+        if (this.status == null) {
+            this.status = OrderStatus.CONFIRMED;
         }
     }
 }

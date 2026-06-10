@@ -1,0 +1,37 @@
+.surface-icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.35rem;
+  height: 2.35rem;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid var(--surface-border, #e5e7eb);
+  background: var(--surface-card, #fff);
+  color: var(--text-color-secondary, #64748b);
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.08);
+  cursor: pointer;
+  transition:
+    box-shadow 0.2s ease,
+    background-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.surface-icon-button:hover {
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.12);
+  color: var(--text-color, #334155);
+}
+
+.surface-icon-button .pi {
+  font-size: 1rem;
+}
+
+.surface-icon-button--sm {
+  width: 2rem;
+  height: 2rem;
+}
+
+.surface-icon-button--sm .pi {
+  font-size: 0.9rem;
+}

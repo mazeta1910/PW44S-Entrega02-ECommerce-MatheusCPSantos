@@ -1,0 +1,118 @@
+.add-to-cart-flow {
+  display: flex;
+  gap: 0.4rem;
+  width: 100%;
+}
+
+.add-to-cart-flow--compact {
+  align-items: stretch;
+}
+
+.add-to-cart-flow--compact .p-button {
+  font-size: 0.7rem;
+  padding: 0.45rem 0.5rem;
+}
+
+.add-to-cart-flow--compact .p-button .p-button-label {
+  white-space: normal;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.add-to-cart-flow__cart-btn {
+  flex: 1;
+  justify-content: center;
+  min-width: 0;
+  width: 100%;
+}
+
+.add-to-cart-dialog__hint {
+  margin: 0 0 0.75rem;
+  font-size: 0.9rem;
+  color: var(--text-color-secondary, #64748b);
+}
+
+.add-to-cart-dialog__variant-list {
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.add-to-cart-dialog__variant-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  padding: 0.65rem;
+  border: 1px solid var(--surface-border, rgba(0, 0, 0, 0.12));
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.add-to-cart-dialog__variant-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  flex: 1;
+}
+
+.add-to-cart-dialog__variant-meta {
+  font-size: 0.75rem;
+  color: var(--text-color-secondary, #64748b);
+}
+
+.add-to-cart-dialog__variant-price {
+  font-weight: 600;
+  color: var(--primary-color, #3b82f6);
+  display: flex;
+  gap: 0.35rem;
+  align-items: baseline;
+}
+
+.add-to-cart-dialog__list-price {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--text-color-secondary, #94a3b8);
+  text-decoration: line-through;
+}
+
+.add-to-cart-dialog__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+
+.add-to-cart-dialog__success {
+  text-align: center;
+  padding: 0.25rem 0;
+}
+
+.add-to-cart-dialog__success-icon {
+  font-size: 2.5rem;
+  color: #22c55e;
+  margin-bottom: 0.75rem;
+}
+
+.add-to-cart-dialog__success p {
+  margin: 0 0 0.5rem;
+}
+
+.add-to-cart-dialog__variant-name {
+  font-size: 0.9rem;
+  color: var(--text-color-secondary, #64748b);
+}
+
+.add-to-cart-dialog__success-hint {
+  font-size: 0.9rem;
+  color: var(--text-color-secondary, #64748b);
+  margin-bottom: 1rem !important;
+}
+
+.add-to-cart-dialog__success .add-to-cart-dialog__actions {
+  justify-content: center;
+}
