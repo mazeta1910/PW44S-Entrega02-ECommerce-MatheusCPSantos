@@ -132,3 +132,120 @@
   gap: 0.75rem;
   margin-top: 1rem;
 }
+
+.checkout-payment-alert {
+  margin-bottom: 1.25rem;
+  color: var(--red-500, #dc2626);
+}
+
+.checkout-payment-address {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.checkout-freight-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.checkout-freight-option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--surface-border, #e5e7eb);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.checkout-freight-option--selected {
+  border-color: var(--primary-color, #3b82f6);
+  background: color-mix(in srgb, var(--primary-color, #3b82f6) 8%, transparent);
+}
+
+.checkout-freight-option__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  flex: 1;
+}
+
+.checkout-freight-option__price {
+  font-weight: 700;
+  color: var(--text-color, #1f2937);
+}
+
+.checkout-coupon-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.checkout-coupon-row .p-inputtext {
+  flex: 1;
+  min-width: 180px;
+}
+
+.checkout-coupon-applied {
+  margin: 0.75rem 0 0;
+  color: var(--green-600, #059669);
+  font-size: 0.9rem;
+}
+
+.checkout-order-items {
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.checkout-order-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--surface-border, #f3f4f6);
+}
+
+.checkout-order-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.checkout-order-item__variant,
+.checkout-order-item__qty {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--text-color-secondary, #6b7280);
+}
+
+.checkout-summary-rows {
+  border-top: 1px solid var(--surface-border, #e5e7eb);
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.checkout-summary-row {
+  display: flex;
+  justify-content: space-between;
+  color: var(--text-color, #374151);
+}
+
+.checkout-summary-row--discount span:last-child {
+  color: var(--red-500, #dc2626);
+  font-weight: 600;
+}
+
+.checkout-summary-row--total {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-color, #1f2937);
+  margin-top: 0.35rem;
+}

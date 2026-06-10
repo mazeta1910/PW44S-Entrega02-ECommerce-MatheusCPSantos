@@ -18,9 +18,11 @@ import { ProductCardListPage } from "@/pages/product-card-list";
 import { CartPage } from "@/pages/cart";
 import { CheckoutIdentificationPage } from "@/pages/checkout/identification";
 import { CheckoutPaymentPage } from "@/pages/checkout/payment";
+import { CheckoutConfirmationPage } from "@/pages/checkout/confirmation";
 import { AccountLayout } from "@/components/account-layout";
 import { AccountProfilePage } from "@/pages/account/profile";
 import { AccountOrdersPage } from "@/pages/account/orders";
+import { AccountOrderDetailPage } from "@/pages/account/orders/detail";
 import { AccountAddressesPage } from "@/pages/account/addresses";
 import { TermsOfServicePage } from "@/pages/terms-of-service";
 import { PrivacyPolicyPage } from "@/pages/privacy-policy";
@@ -37,19 +39,22 @@ export function AppRoutes() {
         <Route path="cart" element={<CartPage />} />
         <Route path="checkout/identification" element={<CheckoutIdentificationPage />} />
         <Route path="checkout/payment" element={<CheckoutPaymentPage />} />
-        <Route path="login" element={<LoginPage />} />
-        <Route path="register" element={<RegisterPage />} />
-        <Route path="termos" element={<TermsOfServicePage />} />
-        <Route path="privacidade" element={<PrivacyPolicyPage />} />
+        <Route path="checkout/confirmation/:orderId" element={<CheckoutConfirmationPage />} />
 
         {/* rotas da conta (exigem login) */}
         <Route element={<RequireAuth />}>
           <Route path="account" element={<AccountLayout />}>
             <Route index element={<AccountProfilePage />} />
             <Route path="orders" element={<AccountOrdersPage />} />
+            <Route path="orders/:orderId" element={<AccountOrderDetailPage />} />
             <Route path="addresses" element={<AccountAddressesPage />} />
           </Route>
         </Route>
+
+        <Route path="login" element={<LoginPage />} />
+        <Route path="register" element={<RegisterPage />} />
+        <Route path="termos" element={<TermsOfServicePage />} />
+        <Route path="privacidade" element={<PrivacyPolicyPage />} />
 
         {/* rotas administrativas (exigem login e perfil admin) */}
         <Route element={<RequireAuth />}>

@@ -12,6 +12,7 @@ import AddressService from "@/services/address-service";
 import UserService from "@/services/user-service";
 import { readCartItems } from "@/utils/cart-storage";
 import { sortAddressesByPrimary } from "@/utils/address-utils";
+import { readCheckoutAddressId, writeCheckoutAddressId } from "@/utils/checkout-storage";
 import { getUserDisplayName } from "@/utils/auth-utils";
 import {
   formatAddressLine,
@@ -19,8 +20,6 @@ import {
   formatPhone,
 } from "@/utils/user-utils";
 import "../styles.css";
-
-const CHECKOUT_ADDRESS_KEY = "checkout_delivery_address_id";
 
 export function CheckoutIdentificationPage() {
   const navigate = useNavigate();
@@ -43,7 +42,7 @@ export function CheckoutIdentificationPage() {
       const loadedAddresses = sortAddressesByPrimary(response.data as IAddress[]);
       setAddresses(loadedAddresses);
 
-      const storedId = Number(sessionStorage.getItem(CHECKOUT_ADDRESS_KEY));
+      const storedId = readCheckoutAddressId();
       const storedAddress = loadedAddresses.find(
         (address) => address.id === storedId,
       );
@@ -97,7 +96,7 @@ export function CheckoutIdentificationPage() {
       return;
     }
 
-    sessionStorage.setItem(CHECKOUT_ADDRESS_KEY, String(selectedAddressId));
+    writeCheckoutAddressId(selectedAddressId);
     navigate("/checkout/payment");
   };
 

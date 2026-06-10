@@ -2,8 +2,6 @@ import { createContext, useEffect, useState } from "react";
 import type { ReactNode } from "react";
 import type { AuthenticatedUser, AuthenticationResponse } from "@/commons/types";
 import { api } from "@/lib/axios";
-import { useLocation, useNavigate } from "react-router-dom";
-import { getPostLoginPath } from "@/utils/auth-utils";
 import {
   clearAuthData,
   getStoredToken,
@@ -32,8 +30,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [authenticated, setAuthenticated] = useState(false);
   const [authenticatedUser, setAuthenticatedUser] =
     useState<AuthenticatedUser>();
-  const navigate = useNavigate();
-  const location = useLocation();
 
   useEffect(() => {
     const token = getStoredToken();
@@ -43,13 +39,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       setAuthenticatedUser(user);
       setAuthenticated(true);
       api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-
-      const authOnlyPaths = ["/login", "/register"];
-      if (authOnlyPaths.includes(location.pathname)) {
-        navigate(getPostLoginPath(user), { replace: true });
-      }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleLogin = async (

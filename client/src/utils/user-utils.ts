@@ -68,6 +68,29 @@ export function formatOrderDate(value?: string | null): string {
   return formatBirthDate(value);
 }
 
+export function formatEstimatedDeliveryDate(
+  orderDate?: string | null,
+  estimatedDays?: number | null,
+): string | null {
+  if (!orderDate || estimatedDays == null || estimatedDays <= 0) {
+    return null;
+  }
+
+  const base = new Date(`${orderDate}T12:00:00`);
+  if (Number.isNaN(base.getTime())) {
+    return null;
+  }
+
+  base.setDate(base.getDate() + estimatedDays);
+
+  return base.toLocaleDateString("pt-BR", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+}
+
 export function formatAddressLine(address: {
   street: string;
   number: string;

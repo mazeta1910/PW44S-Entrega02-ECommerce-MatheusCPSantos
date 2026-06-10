@@ -61,12 +61,6 @@ export function HomePage() {
     }
   }, [isLoading]);
 
-  const handleCategorySelect = (categoryId: number) => {
-    setSelectedCategoryId(categoryId);
-    loadProducts(categoryId);
-    document.getElementById("produtos")?.scrollIntoView({ behavior: "smooth" });
-  };
-
   const handleShowAll = () => {
     setSelectedCategoryId(null);
     loadProducts(null);

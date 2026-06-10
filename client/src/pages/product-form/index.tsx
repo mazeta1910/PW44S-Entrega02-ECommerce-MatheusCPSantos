@@ -150,6 +150,7 @@ export const ProductFormPage = () => {
                   price: data.variantPrice,
                   deliveryType: data.deliveryType,
                   platform: data.platform,
+                  itemCondition: "NEW",
                   active: true,
                 },
               ],

@@ -46,7 +46,7 @@ const login = async (user: IUserLogin) => {
       status: 401,
       success: false,
       message: "Usuário ou senha inválidos",
-      data: error.response?.data,
+      data: error.response?.data as object | undefined,
     };
   }
   return response;

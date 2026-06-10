@@ -22,6 +22,9 @@ const TopMenu: React.FC = () => {
   const { authenticated, authenticatedUser, handleLogout } = useAuth();
 
   const userLabel = getUserDisplayName(authenticatedUser);
+  const isAuthRoute =
+    location.pathname === "/login" || location.pathname === "/register";
+  const showAuthenticatedUi = authenticated && !isAuthRoute;
 
   useEffect(() => {
     const updateCartCount = () => {
@@ -42,7 +45,7 @@ const TopMenu: React.FC = () => {
   };
 
   const adminMenuItems = useMemo<MenuItem[]>(() => {
-    if (!authenticated || !isAdmin(authenticatedUser)) {
+    if (!showAuthenticatedUi || !isAdmin(authenticatedUser)) {
       return [];
     }
 
@@ -91,7 +94,7 @@ const TopMenu: React.FC = () => {
         ],
       },
     ];
-  }, [authenticated, authenticatedUser, navigate]);
+  }, [showAuthenticatedUi, authenticatedUser, navigate]);
 
   const handleLogoClick = () => {
     if (authenticated && isAdmin(authenticatedUser)) {
@@ -163,7 +166,7 @@ const TopMenu: React.FC = () => {
         </div>
 
         <div className="top-menu-bar__actions">
-          {authenticated && isAdmin(authenticatedUser) && (
+          {showAuthenticatedUi && isAdmin(authenticatedUser) && (
             <>
               <Button
                 type="button"
@@ -185,7 +188,7 @@ const TopMenu: React.FC = () => {
 
           {cartButton}
 
-          {authenticated ? (
+          {showAuthenticatedUi ? (
             <>
               <UserAccountMenu
                 userLabel={userLabel}

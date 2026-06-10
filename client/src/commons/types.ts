@@ -113,6 +113,23 @@ export interface IFreightOption {
   estimatedDays: number;
 }
 
+export interface ICouponValidation {
+  code: string;
+  discountAmount: number;
+  valid: boolean;
+  message: string;
+}
+
+export interface ICheckoutOrderPayload {
+  items: { variantId: number; quantity: number }[];
+  deliveryAddress: IAddress;
+  freightPrice?: number;
+  couponCode?: string;
+  couponDiscount?: number;
+  carrierName?: string;
+  estimatedDeliveryDays?: number;
+}
+
 export interface IOrderItem {
   id?: number;
   variantId?: number;
@@ -130,7 +147,28 @@ export interface IOrder {
   items?: IOrderItem[];
   deliveryAddress?: IAddress;
   total: number;
+  freightPrice?: number;
+  couponDiscount?: number;
+  carrierName?: string;
+  estimatedDeliveryDays?: number;
+  status?: OrderStatus;
+  supportRequestMessage?: string;
   orderDate: string;
+}
+
+export type OrderStatus =
+  | "CONFIRMED"
+  | "CANCELLED"
+  | "REFUND_REQUESTED"
+  | "EXCHANGE_REQUESTED"
+  | "REFUNDED"
+  | "EXCHANGED";
+
+export type OrderSupportRequestType = "CANCEL" | "REFUND" | "EXCHANGE";
+
+export interface IOrderSupportRequest {
+  type: OrderSupportRequestType;
+  message?: string;
 }
 
 export interface ICategory {

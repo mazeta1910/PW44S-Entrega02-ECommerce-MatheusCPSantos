@@ -54,6 +54,15 @@ export function AccountLayout() {
   const avatarUrl = getUserAvatarUrl(authenticatedUser);
 
   const breadcrumbSegments = useMemo(() => {
+    const orderDetailMatch = location.pathname.match(/^\/account\/orders\/(\d+)$/);
+    if (orderDetailMatch) {
+      return [
+        { label: "Minha conta", to: "/account" },
+        { label: "Pedidos", to: "/account/orders" },
+        { label: `Pedido #${orderDetailMatch[1]}` },
+      ];
+    }
+
     if (location.pathname.endsWith("/orders")) {
       return [
         { label: "Minha conta", to: "/account" },

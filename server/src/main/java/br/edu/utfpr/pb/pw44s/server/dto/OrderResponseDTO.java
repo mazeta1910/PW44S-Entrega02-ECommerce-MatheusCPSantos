@@ -1,5 +1,6 @@
 package br.edu.utfpr.pb.pw44s.server.dto;
 
+import br.edu.utfpr.pb.pw44s.server.model.enums.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,6 +24,18 @@ public class OrderResponseDTO {
     private AddressDTO deliveryAddress;
 
     private Double total;
+
+    private Double freightPrice;
+
+    private Double couponDiscount;
+
+    private String carrierName;
+
+    private Integer estimatedDeliveryDays;
+
+    private OrderStatus status;
+
+    private String supportRequestMessage;
 
     private LocalDate orderDate;
 }

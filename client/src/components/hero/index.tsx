@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./styles.css";
 
@@ -34,23 +34,20 @@ export default function Hero() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const totalSlides = heroBanners.length;
 
-  // Avançar slide
-  const nextSlide = () => {
-    setCurrentSlide(currentSlide === totalSlides - 1 ? 0 : currentSlide + 1);
-  };
+  const nextSlide = useCallback(() => {
+    setCurrentSlide((current) => (current === totalSlides - 1 ? 0 : current + 1));
+  }, [totalSlides]);
 
-  // Voltar slide
   const prevSlide = () => {
-    setCurrentSlide(currentSlide === 0 ? totalSlides - 1 : currentSlide - 1);
+    setCurrentSlide((current) => (current === 0 ? totalSlides - 1 : current - 1));
   };
 
-  // Opcional: Autoplay (passar sozinho a cada 5s)
   useEffect(() => {
     const interval = setInterval(() => {
       nextSlide();
     }, 5000);
     return () => clearInterval(interval);
-  }, [currentSlide]);
+  }, [nextSlide]);
 
   return (
     <section className="hero-carousel-component">
@@ -61,7 +58,6 @@ export default function Hero() {
             index === currentSlide ? "hero-slide active" : "hero-slide"
           }
         >
-          {/* A imagem de fundo é aplicada via style inline para ser dinâmica */}
           <div
             className="hero-bg"
             style={{ backgroundImage: `url(${banner.imgUrl})` }}
@@ -70,7 +66,6 @@ export default function Hero() {
               <div className="hero-content">
                 <h1>{banner.title}</h1>
                 <p>{banner.subtitle}</p>
-                {/* Verifica se é link externo ou interno */}
                 {banner.link.startsWith("http") ? (
                   <a
                     href={banner.link}
@@ -91,7 +86,6 @@ export default function Hero() {
         </div>
       ))}
 
-      {/* Setas de Navegação */}
       <button
         type="button"
         className="hero-arrow prev surface-icon-button"
@@ -109,14 +103,13 @@ export default function Hero() {
         <i className="pi pi-chevron-right" aria-hidden />
       </button>
 
-      {/* Paginação (Bolinhas) */}
       <div className="hero-pagination">
         {heroBanners.map((_, index) => (
           <div
             key={index}
             className={index === currentSlide ? "hero-dot active" : "hero-dot"}
             onClick={() => setCurrentSlide(index)}
-          ></div>
+          />
         ))}
       </div>
     </section>

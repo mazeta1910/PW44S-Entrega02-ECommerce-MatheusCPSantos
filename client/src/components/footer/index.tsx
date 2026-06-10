@@ -10,7 +10,6 @@ export default function Footer() {
     <footer className="footer">
       <div className="container">
         <div className="footer-grid">
-          {/* Institucional */}
           <div className="footer-column">
             <h3>Institucional</h3>
             <ul>
@@ -29,7 +28,6 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Ajuda */}
           <div className="footer-column">
             <h3>Ajuda</h3>
             <ul>
@@ -51,7 +49,6 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Contato */}
           <div className="footer-column">
             <h3>Contato</h3>
             <ul>
@@ -65,7 +62,6 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Formas de Pagamento */}
           <div className="footer-column">
             <h3>Formas de Pagamento</h3>
             <ul>
@@ -147,7 +143,6 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Copyright */}
         <div className="footer-bottom">
           <p>
             © 2026 Nexus Store — Games, periféricos e hardware. Todos os direitos

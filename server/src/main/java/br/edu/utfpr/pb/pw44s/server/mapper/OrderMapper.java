@@ -5,24 +5,29 @@ import br.edu.utfpr.pb.pw44s.server.dto.OrderItemResponseDTO;
 import br.edu.utfpr.pb.pw44s.server.dto.OrderResponseDTO;
 import br.edu.utfpr.pb.pw44s.server.model.Order;
 import br.edu.utfpr.pb.pw44s.server.model.OrderItem;
+import br.edu.utfpr.pb.pw44s.server.model.enums.OrderStatus;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
-public interface OrderMapper {
+public abstract class OrderMapper {
+
+    @Autowired
+    protected AddressMapper addressMapper;
 
     @Mapping(target = "items", ignore = true)
-    Order toEntity(OrderDTO dto);
+    public abstract Order toEntity(OrderDTO dto);
 
     @Mapping(target = "items", ignore = true)
-    OrderDTO toDto(Order entity);
+    public abstract OrderDTO toDto(Order entity);
 
-    default OrderResponseDTO toResponseDto(Order entity) {
+    public OrderResponseDTO toResponseDto(Order entity) {
         if (entity == null) {
             return null;
         }
@@ -34,13 +39,19 @@ public interface OrderMapper {
         return OrderResponseDTO.builder()
                 .id(entity.getId())
                 .items(items)
-                .deliveryAddress(null)
+                .deliveryAddress(addressMapper.toDto(entity.getDeliveryAddress()))
                 .total(entity.getTotal() != null ? entity.getTotal().doubleValue() : null)
+                .freightPrice(entity.getFreightPrice() != null ? entity.getFreightPrice().doubleValue() : null)
+                .couponDiscount(entity.getCouponDiscount() != null ? entity.getCouponDiscount().doubleValue() : null)
+                .carrierName(entity.getCarrierName())
+                .estimatedDeliveryDays(entity.getEstimatedDeliveryDays())
+                .status(entity.getStatus() != null ? entity.getStatus() : OrderStatus.CONFIRMED)
+                .supportRequestMessage(entity.getSupportRequestMessage())
                 .orderDate(entity.getOrderDate() != null ? entity.getOrderDate().toLocalDate() : null)
                 .build();
     }
 
-    default OrderItemResponseDTO toItemResponse(OrderItem item) {
+    public OrderItemResponseDTO toItemResponse(OrderItem item) {
         var variant = item.getVariant();
         var product = variant != null ? variant.getProduct() : null;
         BigDecimal subtotal = item.getUnitPrice().multiply(BigDecimal.valueOf(item.getQuantity()));

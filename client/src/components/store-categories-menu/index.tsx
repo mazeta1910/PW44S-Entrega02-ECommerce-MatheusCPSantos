@@ -9,7 +9,9 @@ const HOVER_CLOSE_DELAY_MS = 200;
 const SCROLL_STEP_PX = 140;
 const SCROLL_BTN_MIN_ITEMS = 4;
 
-function parseCategories(data: unknown): ICategory[] {
+type StoreCategory = { id: number; name: string };
+
+function parseCategories(data: unknown): StoreCategory[] {
   if (!Array.isArray(data)) {
     return [];
   }
@@ -23,11 +25,11 @@ function parseCategories(data: unknown): ICategory[] {
       }
       return { id: Number(id), name: raw.name };
     })
-    .filter((item): item is ICategory => item != null);
+    .filter((item): item is StoreCategory => item != null);
 }
 
 export function StoreCategoriesMenu() {
-  const [categories, setCategories] = useState<ICategory[]>([]);
+  const [categories, setCategories] = useState<StoreCategory[]>([]);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
   const [canScrollDown, setCanScrollDown] = useState(false);

@@ -30,5 +30,15 @@ public class OrderDTO {
 
     private Double total;
 
+    private Double freightPrice;
+
+    private Double couponDiscount;
+
+    private String couponCode;
+
+    private String carrierName;
+
+    private Integer estimatedDeliveryDays;
+
     private LocalDate orderDate;
 }
