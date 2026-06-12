@@ -125,6 +125,7 @@ export interface VariantDropdownOption {
   label: string;
   value: string;
   disabled?: boolean;
+  variant: IProductVariant;
 }
 
 export interface VariantDropdownGroup {
@@ -153,6 +154,7 @@ export function buildVariantDropdownGroups(
       label: formatVariantOptionLabel(variant),
       value: getVariantKey(variant),
       disabled: !isVariantInStock(variant),
+      variant,
     })),
   }));
 }

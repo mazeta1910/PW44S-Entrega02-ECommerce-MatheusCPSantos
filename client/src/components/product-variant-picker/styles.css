@@ -92,9 +92,43 @@
 
 .product-variant-picker__list-price {
   font-size: 0.78rem;
-  color: var(--text-color-secondary, #94a3b8);
+  color: #ef4444;
   text-decoration: line-through;
   font-weight: 500;
+}
+
+.product-variant-picker__sale-price {
+  color: var(--primary-color, #3b82f6);
+  font-weight: 700;
+}
+
+.product-variant-picker__dropdown-label {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.15rem;
+  line-height: 1.35;
+}
+
+.product-variant-picker__dropdown-name {
+  font-weight: 600;
+}
+
+.product-variant-picker__dropdown-sep {
+  color: var(--text-color-secondary, #94a3b8);
+}
+
+.product-variant-picker__dropdown .product-variant-picker__dropdown-label,
+.product-variant-picker__dropdown-panel .product-variant-picker__dropdown-label {
+  width: 100%;
+}
+
+.product-variant-picker__dropdown-panel .product-variant-picker__list-price {
+  font-size: 0.82rem;
+}
+
+.product-variant-picker__dropdown-panel .product-variant-picker__sale-price {
+  font-size: 0.9rem;
 }
 
 .product-variant-picker__meta {

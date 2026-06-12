@@ -31,10 +31,14 @@
 .catalog-filters {
   position: sticky;
   top: 6rem;
+  max-height: calc(100dvh - var(--app-header-height, 4.5rem) - 2.5rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
   padding: 1.25rem;
   border-radius: 8px;
   background: var(--surface-card, #fff);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  scrollbar-gutter: stable;
 }
 
 .filter-group {

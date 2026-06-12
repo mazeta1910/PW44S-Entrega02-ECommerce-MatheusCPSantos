@@ -23,6 +23,8 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
+  text-align: center;
   gap: 1.25rem;
   padding: 2.5rem 2rem;
   background:
@@ -46,7 +48,7 @@
 
 .login-page__brand-text {
   margin: 0;
-  max-width: 28ch;
+  max-width: 32ch;
   color: rgba(248, 250, 252, 0.82);
   font-size: 0.98rem;
   line-height: 1.55;
@@ -64,6 +66,7 @@
 .login-page__brand-list li {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.55rem;
   color: rgba(248, 250, 252, 0.9);
   font-size: 0.9rem;

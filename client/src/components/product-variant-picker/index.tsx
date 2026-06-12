@@ -9,6 +9,7 @@ import {
   groupProductVariants,
   isVariantInStock,
   shouldUseCompactVariantCards,
+  type VariantDropdownOption,
 } from "@/utils/variant-utils";
 import "./styles.css";
 
@@ -26,6 +27,41 @@ interface VariantOptionButtonProps {
   onSelect: (key: string) => void;
 }
 
+function VariantPriceLabel({ variant }: { variant: IProductVariant }) {
+  const price = Number(variant.price);
+  const listPrice = variant.listPrice != null ? Number(variant.listPrice) : null;
+  const hasDiscount = listPrice != null && listPrice > price;
+
+  return (
+    <span className="product-variant-picker__price">
+      {hasDiscount && (
+        <span className="product-variant-picker__list-price">
+          {formatCurrency(listPrice)}
+        </span>
+      )}
+      <span
+        className={
+          hasDiscount ? "product-variant-picker__sale-price" : undefined
+        }
+      >
+        {formatCurrency(price)}
+      </span>
+    </span>
+  );
+}
+
+function VariantDropdownLabel({ variant }: { variant: IProductVariant }) {
+  return (
+    <span className="product-variant-picker__dropdown-label">
+      <span className="product-variant-picker__dropdown-name">
+        {variant.label}
+      </span>
+      <span className="product-variant-picker__dropdown-sep"> — </span>
+      <VariantPriceLabel variant={variant} />
+    </span>
+  );
+}
+
 function VariantOptionButton({
   variant,
   isSelected,
@@ -33,9 +69,6 @@ function VariantOptionButton({
   onSelect,
 }: VariantOptionButtonProps) {
   const key = getVariantKey(variant);
-  const price = Number(variant.price);
-  const listPrice = variant.listPrice != null ? Number(variant.listPrice) : null;
-  const hasDiscount = listPrice != null && listPrice > price;
   const inStock = isVariantInStock(variant);
 
   return (
@@ -51,14 +84,7 @@ function VariantOptionButton({
     >
       <span className="product-variant-picker__option-main">
         <strong>{variant.label}</strong>
-        <span className="product-variant-picker__price">
-          {hasDiscount && (
-            <span className="product-variant-picker__list-price">
-              {formatCurrency(listPrice)}
-            </span>
-          )}
-          {formatCurrency(price)}
-        </span>
+        <VariantPriceLabel variant={variant} />
       </span>
       {showMeta && (
         <span className="product-variant-picker__meta">
@@ -91,6 +117,25 @@ export function ProductVariantPicker({
       null,
     [variants, selectedVariantKey],
   );
+
+  const renderDropdownOption = (option: VariantDropdownOption) => (
+    <VariantDropdownLabel variant={option.variant} />
+  );
+
+  const renderDropdownValue = (key: string | null) => {
+    if (!key) {
+      return <span>Selecione uma opção</span>;
+    }
+
+    const variant =
+      variants.find((item) => getVariantKey(item) === key) ?? null;
+
+    return variant ? (
+      <VariantDropdownLabel variant={variant} />
+    ) : (
+      <span>{key}</span>
+    );
+  };
 
   if (variants.length === 0) {
     return null;
@@ -148,6 +193,8 @@ export function ProductVariantPicker({
             optionGroupLabel="label"
             optionGroupChildren="items"
             optionDisabled="disabled"
+            itemTemplate={renderDropdownOption}
+            valueTemplate={renderDropdownValue}
             placeholder="Selecione uma opção"
             className="product-variant-picker__dropdown"
             panelClassName="product-variant-picker__dropdown-panel"
