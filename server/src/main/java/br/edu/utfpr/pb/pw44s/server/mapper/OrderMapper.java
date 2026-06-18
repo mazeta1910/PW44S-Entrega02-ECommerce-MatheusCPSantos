@@ -45,6 +45,8 @@ public abstract class OrderMapper {
                 .couponDiscount(entity.getCouponDiscount() != null ? entity.getCouponDiscount().doubleValue() : null)
                 .carrierName(entity.getCarrierName())
                 .estimatedDeliveryDays(entity.getEstimatedDeliveryDays())
+                .paymentMethod(entity.getPaymentMethod())
+                .paymentDiscount(entity.getPaymentDiscount() != null ? entity.getPaymentDiscount().doubleValue() : null)
                 .status(entity.getStatus() != null ? entity.getStatus() : OrderStatus.CONFIRMED)
                 .supportRequestMessage(entity.getSupportRequestMessage())
                 .orderDate(entity.getOrderDate() != null ? entity.getOrderDate().toLocalDate() : null)

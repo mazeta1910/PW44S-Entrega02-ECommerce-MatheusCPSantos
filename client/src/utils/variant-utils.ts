@@ -8,16 +8,19 @@ import { formatCurrency } from "@/utils/product-utils";
 
 export const COMPACT_VARIANT_THRESHOLD = 3;
 
+//interface para agrupar as variantes
 export interface VariantGroup {
   key: string;
   title: string;
   variants: IProductVariant[];
 }
 
+//função para obter a chave da variante
 export function getVariantKey(variant: IProductVariant): string {
   return String(variant.id ?? variant.sku);
 }
 
+//função para verificar se a variante está em estoque
 export function isVariantInStock(variant: IProductVariant): boolean {
   if (variant.active === false) {
     return false;
@@ -27,6 +30,7 @@ export function isVariantInStock(variant: IProductVariant): boolean {
   return stock == null || stock > 0;
 }
 
+//função para obter a melhor variante padrão
 export function getBestDefaultVariant(
   variants: IProductVariant[],
 ): IProductVariant | null {
@@ -36,6 +40,7 @@ export function getBestDefaultVariant(
     return variants[0] ?? null;
   }
 
+  //ordena as variantes por preço e promoção
   return [...available].sort((left, right) => {
     const priceLeft = Number(left.price);
     const priceRight = Number(right.price);
@@ -52,6 +57,7 @@ export function getBestDefaultVariant(
   })[0];
 }
 
+//função para agrupar as variantes por plataforma
 function groupByPlatform(
   variants: IProductVariant[],
   prefix: string,
@@ -72,6 +78,7 @@ function groupByPlatform(
   }));
 }
 
+//função para agrupar as variantes por plataforma
 export function groupProductVariants(
   variants: IProductVariant[],
 ): VariantGroup[] {
@@ -88,6 +95,7 @@ export function groupProductVariants(
   ];
 }
 
+//função para construir a informação de entrega das variantes
 export function buildDeliveryInfo(variants: IProductVariant[]): string {
   const deliveryTypes = new Set<DeliveryType>(
     variants.map((variant) => variant.deliveryType),
@@ -113,14 +121,17 @@ export function buildDeliveryInfo(variants: IProductVariant[]): string {
   return lines.join("\n\n");
 }
 
+//função para formatar a meta da variante
 export function formatVariantMeta(variant: IProductVariant): string {
   return `${getPlatformLabel(variant.platform)} · ${getConditionLabel(variant.itemCondition)} · ${getDeliveryLabel(variant.deliveryType)}`;
 }
 
+//função para verificar se deve usar o modo compacto de variantes
 export function shouldUseCompactVariantCards(variantCount: number): boolean {
   return variantCount <= COMPACT_VARIANT_THRESHOLD;
 }
 
+//interface para opção de dropdown de variantes
 export interface VariantDropdownOption {
   label: string;
   value: string;
@@ -128,11 +139,13 @@ export interface VariantDropdownOption {
   variant: IProductVariant;
 }
 
+//interface para grupo de dropdown de variantes
 export interface VariantDropdownGroup {
   label: string;
   items: VariantDropdownOption[];
 }
 
+//função para formatar a label da opção de dropdown de variantes
 export function formatVariantOptionLabel(variant: IProductVariant): string {
   const price = Number(variant.price);
   const listPrice =
@@ -145,6 +158,7 @@ export function formatVariantOptionLabel(variant: IProductVariant): string {
   return `${variant.label} — ${priceLabel}`;
 }
 
+//função para construir os grupos de dropdown de variantes
 export function buildVariantDropdownGroups(
   variants: IProductVariant[],
 ): VariantDropdownGroup[] {

@@ -1,5 +1,6 @@
 package br.edu.utfpr.pb.pw44s.server.dto;
 
+import br.edu.utfpr.pb.pw44s.server.model.enums.PaymentMethod;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -39,6 +40,9 @@ public class OrderDTO {
     private String carrierName;
 
     private Integer estimatedDeliveryDays;
+
+    @NotNull(message = "A forma de pagamento é obrigatória.")
+    private PaymentMethod paymentMethod;
 
     private LocalDate orderDate;
 }

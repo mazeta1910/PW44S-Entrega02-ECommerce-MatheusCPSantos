@@ -1,6 +1,7 @@
 package br.edu.utfpr.pb.pw44s.server.dto;
 
 import br.edu.utfpr.pb.pw44s.server.model.enums.OrderStatus;
+import br.edu.utfpr.pb.pw44s.server.model.enums.PaymentMethod;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -32,6 +33,10 @@ public class OrderResponseDTO {
     private String carrierName;
 
     private Integer estimatedDeliveryDays;
+
+    private PaymentMethod paymentMethod;
+
+    private Double paymentDiscount;
 
     private OrderStatus status;
 

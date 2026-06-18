@@ -23,10 +23,10 @@ import {
 import { formatZipCodeInput, isValidZipCode, normalizeZipCode } from "@/utils/cep-utils";
 import { showAppToast } from "@/utils/app-toast";
 import { formatCurrency } from "@/utils/product-utils";
+import { PIX_DISCOUNT_PERCENT } from "@/constants/payment-methods";
 import "./styles.css";
 
 const FIXED_DISCOUNT = 0.0;
-const PIX_DISCOUNT_PERCENT = 0.05;
 
 export function CartPage() {
   const navigate = useNavigate();
@@ -117,10 +117,13 @@ export function CartPage() {
 
   const freightPrice = selectedFreight?.price ?? 0;
   const couponDiscount = appliedCoupon?.discountAmount ?? 0;
-  const valueWithDiscount = subtotal - FIXED_DISCOUNT - couponDiscount;
-  const valueWithFreight = Math.max(valueWithDiscount + freightPrice, 0);
-  const pixDiscountValue = valueWithFreight * PIX_DISCOUNT_PERCENT;
-  const totalPix = valueWithFreight - pixDiscountValue;
+  const valueWithDiscount = Math.max(
+    subtotal - FIXED_DISCOUNT - couponDiscount,
+    0,
+  );
+  const valueWithFreight = valueWithDiscount + freightPrice;
+  const pixDiscountPreview = valueWithFreight * PIX_DISCOUNT_PERCENT;
+  const totalWithPixPreview = valueWithFreight - pixDiscountPreview;
 
   const handleCepChange = (value: string) => {
     const formatted = formatZipCodeInput(value);
@@ -437,11 +440,6 @@ export function CartPage() {
                       </div>
                     )}
 
-                    <div className="summary-row-new discount-row">
-                      <span>Desconto Pix</span>
-                      <span>- {formatCurrency(pixDiscountValue)}</span>
-                    </div>
-
                     <div className="summary-row-new">
                       <span>Frete</span>
                       <span>
@@ -455,11 +453,12 @@ export function CartPage() {
 
                     <div id="checkout-section" className="summary-total-block">
                       <div className="summary-row-new total-row">
-                        <span>Total da compra</span>
-                        <span>{formatCurrency(totalPix)}</span>
+                        <span>Total estimado</span>
+                        <span>{formatCurrency(valueWithFreight)}</span>
                       </div>
                       <p className="total-details-card">
-                        {formatCurrency(valueWithFreight)} no cartão
+                        Com Pix na etapa de pagamento:{" "}
+                        {formatCurrency(totalWithPixPreview)} (5% off)
                       </p>
                     </div>
 

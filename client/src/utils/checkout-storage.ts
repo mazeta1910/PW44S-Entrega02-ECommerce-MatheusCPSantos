@@ -1,8 +1,11 @@
 import type { IFreightOption } from "@/commons/types";
+import type { PaymentMethod } from "@/commons/types";
+import { DEFAULT_PAYMENT_METHOD } from "@/constants/payment-methods";
 
 export const CHECKOUT_ADDRESS_KEY = "checkout_delivery_address_id";
 export const CHECKOUT_FREIGHT_KEY = "checkout_freight_option";
 export const CHECKOUT_COUPON_KEY = "checkout_coupon";
+export const CHECKOUT_PAYMENT_METHOD_KEY = "checkout_payment_method";
 export const CART_FREIGHT_ZIP_KEY = "cart_freight_zip";
 
 export interface CheckoutCoupon {
@@ -75,8 +78,27 @@ export function writeCartFreightZip(zipCode: string) {
   sessionStorage.setItem(CART_FREIGHT_ZIP_KEY, zipCode);
 }
 
+export function readCheckoutPaymentMethod(): PaymentMethod {
+  const raw = sessionStorage.getItem(CHECKOUT_PAYMENT_METHOD_KEY);
+  if (
+    raw === "PIX" ||
+    raw === "CREDIT_CARD" ||
+    raw === "DEBIT_CARD" ||
+    raw === "BOLETO" ||
+    raw === "PAYPAL"
+  ) {
+    return raw;
+  }
+  return DEFAULT_PAYMENT_METHOD;
+}
+
+export function writeCheckoutPaymentMethod(method: PaymentMethod) {
+  sessionStorage.setItem(CHECKOUT_PAYMENT_METHOD_KEY, method);
+}
+
 export function clearCheckoutSession() {
   sessionStorage.removeItem(CHECKOUT_ADDRESS_KEY);
   sessionStorage.removeItem(CHECKOUT_FREIGHT_KEY);
   sessionStorage.removeItem(CHECKOUT_COUPON_KEY);
+  sessionStorage.removeItem(CHECKOUT_PAYMENT_METHOD_KEY);
 }

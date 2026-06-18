@@ -1,6 +1,7 @@
 package br.edu.utfpr.pb.pw44s.server.model;
 
 import br.edu.utfpr.pb.pw44s.server.model.enums.OrderStatus;
+import br.edu.utfpr.pb.pw44s.server.model.enums.PaymentMethod;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -62,6 +63,14 @@ public class Order {
     @Column(name = "status", nullable = false)
     @Builder.Default
     private OrderStatus status = OrderStatus.CONFIRMED;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "payment_method", nullable = false)
+    private PaymentMethod paymentMethod;
+
+    @Column(name = "payment_discount", precision = 10, scale = 2)
+    @Builder.Default
+    private BigDecimal paymentDiscount = BigDecimal.ZERO;
 
     @Column(name = "support_request_message", length = 500)
     private String supportRequestMessage;

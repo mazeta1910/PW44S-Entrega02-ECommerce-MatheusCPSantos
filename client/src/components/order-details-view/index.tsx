@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { Tag } from "primereact/tag";
 import type { IOrder } from "@/commons/types";
 import { formatCurrency } from "@/utils/product-utils";
+import { getPaymentMethodLabel } from "@/constants/payment-methods";
 import {
   getOrderStatusLabel,
   getOrderStatusSeverity,
@@ -101,6 +102,17 @@ export function OrderDetailsView({ order, showStatus = false }: OrderDetailsView
       )}
 
       <section className="order-details__section">
+        <h3 className="order-details__title">Pagamento</h3>
+        <div className="order-details__block">
+          <span className="order-details__label">Forma de pagamento</span>
+          <strong>{getPaymentMethodLabel(order.paymentMethod)}</strong>
+          <span className="order-details__payment-note">
+            Pagamento simulado — confirmação registrada no pedido.
+          </span>
+        </div>
+      </section>
+
+      <section className="order-details__section">
         <h3 className="order-details__title">Itens do pedido</h3>
         <ul className="order-details__items">
           {order.items?.map((item) => (
@@ -142,6 +154,12 @@ export function OrderDetailsView({ order, showStatus = false }: OrderDetailsView
             <div className="order-details__summary-row order-details__summary-row--discount">
               <span>Cupom</span>
               <span>- {formatCurrency(Number(order.couponDiscount))}</span>
+            </div>
+          )}
+          {(order.paymentDiscount ?? 0) > 0 && (
+            <div className="order-details__summary-row order-details__summary-row--discount">
+              <span>Desconto Pix</span>
+              <span>- {formatCurrency(Number(order.paymentDiscount))}</span>
             </div>
           )}
           <div className="order-details__summary-row order-details__summary-row--total">

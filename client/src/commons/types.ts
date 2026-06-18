@@ -128,7 +128,15 @@ export interface ICheckoutOrderPayload {
   couponDiscount?: number;
   carrierName?: string;
   estimatedDeliveryDays?: number;
+  paymentMethod: PaymentMethod;
 }
+
+export type PaymentMethod =
+  | "PIX"
+  | "CREDIT_CARD"
+  | "DEBIT_CARD"
+  | "BOLETO"
+  | "PAYPAL";
 
 export interface IOrderItem {
   id?: number;
@@ -151,6 +159,8 @@ export interface IOrder {
   couponDiscount?: number;
   carrierName?: string;
   estimatedDeliveryDays?: number;
+  paymentMethod?: PaymentMethod;
+  paymentDiscount?: number;
   status?: OrderStatus;
   supportRequestMessage?: string;
   orderDate: string;

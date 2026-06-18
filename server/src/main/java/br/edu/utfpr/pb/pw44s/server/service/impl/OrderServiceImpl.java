@@ -15,6 +15,7 @@ import br.edu.utfpr.pb.pw44s.server.model.ProductVariant;
 import br.edu.utfpr.pb.pw44s.server.model.User;
 import br.edu.utfpr.pb.pw44s.server.model.enums.DeliveryType;
 import br.edu.utfpr.pb.pw44s.server.model.enums.OrderStatus;
+import br.edu.utfpr.pb.pw44s.server.model.enums.PaymentMethod;
 import br.edu.utfpr.pb.pw44s.server.repository.AddressRepository;
 import br.edu.utfpr.pb.pw44s.server.repository.OrderRepository;
 import br.edu.utfpr.pb.pw44s.server.repository.ProductVariantRepository;
@@ -26,11 +27,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class OrderServiceImpl extends CrudServiceImpl<Order, Long> implements IOrderService {
+
+    private static final BigDecimal PIX_DISCOUNT_RATE = new BigDecimal("0.05");
 
     private final OrderRepository orderRepository;
     private final ProductVariantRepository productVariantRepository;
@@ -147,6 +151,11 @@ public class OrderServiceImpl extends CrudServiceImpl<Order, Long> implements IO
             order.setEstimatedDeliveryDays(dto.getEstimatedDeliveryDays());
         }
 
+        if (dto.getPaymentMethod() == null) {
+            throw new IllegalArgumentException("Forma de pagamento é obrigatória.");
+        }
+        order.setPaymentMethod(dto.getPaymentMethod());
+
         if (dto.getItems() != null) {
             for (OrderItemDTO itemDto : dto.getItems()) {
                 ProductVariant variant = productVariantRepository
@@ -236,6 +245,20 @@ public class OrderServiceImpl extends CrudServiceImpl<Order, Long> implements IO
             if (total.compareTo(BigDecimal.ZERO) < 0) {
                 total = BigDecimal.ZERO;
             }
+        }
+
+        if (order.getPaymentMethod() == PaymentMethod.PIX) {
+            BigDecimal paymentDiscount = total
+                    .multiply(PIX_DISCOUNT_RATE)
+                    .setScale(2, RoundingMode.HALF_UP);
+            order.setPaymentDiscount(paymentDiscount);
+            total = total.subtract(paymentDiscount);
+        } else {
+            order.setPaymentDiscount(BigDecimal.ZERO);
+        }
+
+        if (total.compareTo(BigDecimal.ZERO) < 0) {
+            total = BigDecimal.ZERO;
         }
 
         order.setTotal(total);

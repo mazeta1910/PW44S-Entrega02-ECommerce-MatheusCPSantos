@@ -101,11 +101,13 @@ export function ProductDetailPage() {
     loadProduct();
   }, [productId]);
 
+  //pega variantes ativas do produto
   const activeVariants = useMemo(
     () => (product ? getActiveVariants(product) : []),
     [product],
   );
 
+  //pega a variante selecionada
   const selectedVariant = useMemo(
     () =>
       activeVariants.find(
@@ -114,33 +116,43 @@ export function ProductDetailPage() {
     [activeVariants, selectedVariantKey],
   );
 
+  //verifica se a variante selecionada está em estoque
   const selectedInStock = selectedVariant
     ? isVariantInStock(selectedVariant)
     : false;
 
+  //pega o preço de exibição da variante selecionada
   const displayPrice = selectedVariant
     ? Number(selectedVariant.price)
     : product
       ? getProductDisplayPrice(product)
       : 0;
 
+  //pega o preço de lista da variante selecionada
   const selectedListPrice =
     selectedVariant?.listPrice != null
       ? Number(selectedVariant.listPrice)
       : null;
 
+  //verifica se há desconto na variante selecionada
   const hasSelectedDiscount =
     selectedListPrice != null && selectedListPrice > displayPrice;
 
+  //pega o preço de lista do produto
   const listPrice = product ? getProductListPrice(product) : null;
+  //pega o percentual de desconto do produto
   const discountPercent = product ? getProductDiscountPercent(product) : null;
+  //verifica se há múltiplas variantes do produto
   const hasMultipleVariants = activeVariants.length > 1;
+  //pega a informação de entrega das variantes
   const deliveryInfo = buildDeliveryInfo(activeVariants);
 
+  //pega o texto de especificações do produto
   const specificationsText =
     product?.specifications?.trim() ||
     "Especificações detalhadas conforme fabricante. Selecione uma opção para ver plataforma, condição e tipo de entrega.";
 
+  //renderiza o componente
   return (
     <div className="page-container">
       <main className="product-detail-page">
@@ -208,22 +220,30 @@ export function ProductDetailPage() {
                 />
 
                 <div className="product-detail__pricing">
-                  {hasSelectedDiscount && (
+                  {//verifica se há desconto na variante selecionada
+                  hasSelectedDiscount && (
+                    //exibe o preço de lista
                     <span className="product-detail__list-price">
                       {formatCurrency(selectedListPrice)}
                     </span>
                   )}
-                  {!hasSelectedDiscount && listPrice != null && !selectedVariant && (
+                  {//verifica se não há desconto e se o preço de lista não é nulo e se não há variante selecionada
+                  !hasSelectedDiscount && listPrice != null && !selectedVariant && (
+                    //exibe o preço de lista
                     <span className="product-detail__list-price">
                       {formatCurrency(listPrice)}
                     </span>
                   )}
+                  
                   <span className="product-detail__price">
+                    //verifica se há múltiplas variantes e se não há variante selecionada
                     {hasMultipleVariants && !selectedVariant ? "A partir de " : ""}
                     {formatCurrency(displayPrice)}
                   </span>
                 </div>
 
+
+                //exibe o seletor de variantes
                 <ProductVariantPicker
                   variants={activeVariants}
                   selectedVariantKey={selectedVariantKey}
@@ -236,6 +256,7 @@ export function ProductDetailPage() {
                     product={product}
                     selectedVariant={selectedVariant}
                     notifyWithToast
+                    
                     disabled={!selectedVariant || !selectedInStock}
                   />
                   <BuyNowFlow

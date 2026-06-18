@@ -17,9 +17,17 @@ import {
   readCheckoutAddressId,
   readCheckoutCoupon,
   readCheckoutFreight,
+  readCheckoutPaymentMethod,
   writeCheckoutCoupon,
   writeCheckoutFreight,
+  writeCheckoutPaymentMethod,
 } from "@/utils/checkout-storage";
+import {
+  calculateCheckoutTotals,
+  getPaymentMethodLabel,
+  PAYMENT_METHOD_OPTIONS,
+  type PaymentMethod,
+} from "@/constants/payment-methods";
 import {
   readCartItems,
   type CartItem,
@@ -42,6 +50,9 @@ export function CheckoutPaymentPage() {
   );
   const [appliedCoupon, setAppliedCoupon] = useState(readCheckoutCoupon());
   const [couponInput, setCouponInput] = useState(appliedCoupon?.code ?? "");
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>(
+    readCheckoutPaymentMethod,
+  );
   const [isLoading, setIsLoading] = useState(true);
   const [freightLoading, setFreightLoading] = useState(false);
   const [couponLoading, setCouponLoading] = useState(false);
@@ -137,7 +148,18 @@ export function CheckoutPaymentPage() {
 
   const freightPrice = selectedFreight?.price ?? 0;
   const couponDiscount = appliedCoupon?.discountAmount ?? 0;
-  const orderTotal = Math.max(subtotal + freightPrice - couponDiscount, 0);
+  const checkoutTotals = calculateCheckoutTotals(
+    subtotal,
+    freightPrice,
+    couponDiscount,
+    paymentMethod,
+  );
+  const { paymentDiscount, total: orderTotal, withFreight } = checkoutTotals;
+
+  const handlePaymentMethodChange = (method: PaymentMethod) => {
+    setPaymentMethod(method);
+    writeCheckoutPaymentMethod(method);
+  };
 
   const handleFreightChange = (option: IFreightOption) => {
     setSelectedFreight(option);
@@ -205,6 +227,15 @@ export function CheckoutPaymentPage() {
       return;
     }
 
+    if (!paymentMethod) {
+      showAppToast({
+        severity: "warn",
+        summary: "Pagamento",
+        detail: "Selecione uma forma de pagamento para continuar.",
+      });
+      return;
+    }
+
     if (invalidItems.length > 0) {
       showAppToast({
         severity: "error",
@@ -227,6 +258,7 @@ export function CheckoutPaymentPage() {
       couponCode: appliedCoupon?.code,
       carrierName: selectedFreight.carrierName,
       estimatedDeliveryDays: selectedFreight.estimatedDays,
+      paymentMethod,
     });
 
     if (response.success && response.data) {
@@ -377,6 +409,46 @@ export function CheckoutPaymentPage() {
               </section>
 
               <section className="checkout-card">
+                <h2 className="checkout-card__title">Forma de pagamento</h2>
+                <p className="checkout-card__subtitle">
+                  Escolha como deseja pagar. O Pix oferece 5% de desconto sobre
+                  o total com frete.
+                </p>
+                <div className="checkout-payment-options">
+                  {PAYMENT_METHOD_OPTIONS.map((option) => {
+                    const inputId = `checkout-payment-${option.value}`;
+                    const isSelected = paymentMethod === option.value;
+
+                    return (
+                      <label
+                        key={option.value}
+                        htmlFor={inputId}
+                        className={`checkout-payment-option${
+                          isSelected ? " checkout-payment-option--selected" : ""
+                        }`}
+                      >
+                        <RadioButton
+                          inputId={inputId}
+                          name="checkout-payment-method"
+                          value={option.value}
+                          checked={isSelected}
+                          onChange={() => handlePaymentMethodChange(option.value)}
+                          disabled={isSubmitting}
+                        />
+                        <span className="checkout-payment-option__body">
+                          <strong>
+                            <i className={`pi ${option.icon}`} aria-hidden />{" "}
+                            {option.label}
+                          </strong>
+                          <span>{option.hint}</span>
+                        </span>
+                      </label>
+                    );
+                  })}
+                </div>
+              </section>
+
+              <section className="checkout-card">
                 <h2 className="checkout-card__title">Resumo do pedido</h2>
                 <ul className="checkout-order-items">
                   {cartItems.map((item: CartItem, index) => (
@@ -419,10 +491,25 @@ export function CheckoutPaymentPage() {
                       <span>- {formatCurrency(couponDiscount)}</span>
                     </div>
                   )}
+                  {paymentDiscount > 0 && (
+                    <div className="checkout-summary-row checkout-summary-row--discount">
+                      <span>Desconto Pix (5%)</span>
+                      <span>- {formatCurrency(paymentDiscount)}</span>
+                    </div>
+                  )}
+                  <div className="checkout-summary-row checkout-summary-row--meta">
+                    <span>Forma de pagamento</span>
+                    <span>{getPaymentMethodLabel(paymentMethod)}</span>
+                  </div>
                   <div className="checkout-summary-row checkout-summary-row--total">
                     <span>Total</span>
                     <span>{formatCurrency(orderTotal)}</span>
                   </div>
+                  {paymentMethod !== "PIX" && (
+                    <p className="checkout-summary-note">
+                      {formatCurrency(withFreight)} antes do desconto Pix
+                    </p>
+                  )}
                 </div>
               </section>
 
