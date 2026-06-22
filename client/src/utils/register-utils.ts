@@ -27,7 +27,7 @@ export function calculateAge(birthDate: Date): number {
   return age;
 }
 
-export function requiresParentId(age: number): boolean {
+export function requiresParentLink(age: number): boolean {
   return age >= 12 && age < 16;
 }
 
@@ -91,5 +91,12 @@ export const registerValidation = {
     validate: (value: boolean) =>
       value === true ||
       "Você deve aceitar os Termos de Uso e a Política de Privacidade.",
+  },
+  parentEmail: {
+    required: "O e-mail do responsável é obrigatório.",
+    pattern: {
+      value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+      message: "Informe um e-mail válido do responsável.",
+    },
   },
 };

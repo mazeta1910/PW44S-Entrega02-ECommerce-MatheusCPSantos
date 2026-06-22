@@ -58,6 +58,9 @@ public class User implements UserDetails {
     @Column(name = "parent_id")
     private Long parentId;
 
+    @Transient
+    private String parentEmail;
+
     @Column(name = "terms_accepted", nullable = false)
     @Builder.Default
     private Boolean termsAccepted = false;

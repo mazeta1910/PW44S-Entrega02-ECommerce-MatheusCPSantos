@@ -63,6 +63,10 @@ public class UserDTO {
 
     private Boolean newsletterSubscription;
 
+    @Email(message = "Informe um e-mail válido para o responsável.")
+    private String parentEmail;
+
+    @JsonIgnore
     private Long parentId;
 
     @NotNull(message = "O aceite dos termos e da política de privacidade é obrigatório.")
@@ -78,7 +82,7 @@ public class UserDTO {
 
         if (age < 12) return false;
 
-        if (age < 16 && parentId == null) return false;
+        if (age < 16 && (parentEmail == null || parentEmail.isBlank())) return false;
 
         return true;
     }

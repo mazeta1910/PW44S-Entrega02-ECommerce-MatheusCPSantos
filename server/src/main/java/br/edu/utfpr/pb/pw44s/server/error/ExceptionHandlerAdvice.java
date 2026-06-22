@@ -30,6 +30,20 @@ public class ExceptionHandlerAdvice {
                 request.getServletPath(), validationErrors);
     }
 
+    @ExceptionHandler({FieldValidationException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiError handlerFieldValidationException(FieldValidationException exception,
+                                                    HttpServletRequest request) {
+        Map<String, String> validationErrors = new HashMap<>();
+        validationErrors.put(exception.getField(), exception.getMessage());
+
+        return new ApiError(
+                HttpStatus.BAD_REQUEST.value(),
+                exception.getMessage(),
+                request.getServletPath(),
+                validationErrors);
+    }
+
     @ExceptionHandler({IllegalArgumentException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiError handlerIllegalArgumentException(IllegalArgumentException exception,

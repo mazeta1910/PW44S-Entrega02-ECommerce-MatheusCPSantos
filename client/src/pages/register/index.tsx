@@ -5,21 +5,20 @@ import { Button } from "primereact/button";
 import { Card } from "primereact/card";
 import { Calendar } from "primereact/calendar";
 import { InputMask } from "primereact/inputmask";
-import { InputNumber } from "primereact/inputnumber";
 import { Checkbox } from "primereact/checkbox";
 import { Divider } from "primereact/divider";
 import { Toast } from "primereact/toast";
 import { Link, useNavigate } from "react-router-dom";
 import { classNames } from "primereact/utils";
 import { useMemo, useRef, useState } from "react";
-import type { IApiError, IRegisterFormValues, IUserRegister } from "@/commons/types";
+import type { IApiError, IRegisterFormValues, IResponse, IUserRegister } from "@/commons/types";
 import AuthService from "@/services/auth-service";
 import {
   calculateAge,
   formatDateToIso,
   isRegisterAgeAllowed,
   registerValidation,
-  requiresParentId,
+  requiresParentLink,
   stripDigits,
 } from "@/utils/register-utils";
 import { PRIME_LOCALE_PT } from "@/constants/prime-locale-pt";
@@ -34,7 +33,7 @@ const defaultValues: IRegisterFormValues = {
   cpf: "",
   phone: "",
   newsletterSubscription: false,
-  parentId: null,
+  parentEmail: "",
   termsAccepted: false,
 };
 
@@ -43,6 +42,7 @@ export const RegisterPage = () => {
     control,
     handleSubmit,
     watch,
+    setError,
     formState: { errors, isSubmitting },
   } = useForm<IRegisterFormValues>({ defaultValues, mode: "onBlur" });
 
@@ -59,35 +59,60 @@ export const RegisterPage = () => {
     [birthDate],
   );
 
-  const showParentField = age != null && requiresParentId(age);
+  const showParentField = age != null && requiresParentLink(age);
   const maxBirthDate = useMemo(() => {
     const date = new Date();
     date.setDate(date.getDate() - 1);
     return date;
   }, []);
 
-  const showApiValidationErrors = (apiError?: IApiError) => {
-    const messages = apiError?.validationErrors
-      ? Object.values(apiError.validationErrors)
-      : [];
+  const isParentAccountMissingMessage = (message: string) =>
+    message.toLowerCase().includes("não encontramos uma conta")
+    || message.toLowerCase().includes("precisa se cadastrar na loja");
 
-    if (messages.length === 0) {
+  const showRegistrationErrors = (response: IResponse) => {
+    const apiError = response.data as IApiError | undefined;
+    const validationErrors = apiError?.validationErrors ?? {};
+    const parentEmailError = validationErrors.parentEmail;
+
+    if (parentEmailError) {
+      setError("parentEmail", { type: "server", message: parentEmailError });
       toast.current?.show({
-        severity: "error",
-        summary: "Erro",
-        detail: apiError?.message ?? "Falha ao cadastrar usuário.",
-        life: 5000,
+        severity: isParentAccountMissingMessage(parentEmailError) ? "warn" : "error",
+        summary: isParentAccountMissingMessage(parentEmailError)
+          ? "Responsável sem conta"
+          : "E-mail do responsável",
+        detail: parentEmailError,
+        life: 9000,
       });
       return;
     }
 
-    messages.forEach((detail) => {
-      toast.current?.show({
-        severity: "error",
-        summary: "Validação",
-        detail,
-        life: 6000,
+    const fieldKeys = Object.keys(validationErrors) as (keyof IRegisterFormValues)[];
+    if (fieldKeys.length > 0) {
+      fieldKeys.forEach((field) => {
+        const detail = validationErrors[field];
+        if (field in defaultValues) {
+          setError(field, { type: "server", message: detail });
+        }
+        toast.current?.show({
+          severity: "error",
+          summary: "Validação",
+          detail,
+          life: 6000,
+        });
       });
+      return;
+    }
+
+    toast.current?.show({
+      severity: "error",
+      summary: "Erro",
+      detail:
+        apiError?.message
+        ?? response.message
+        ?? "Falha ao cadastrar usuário.",
+      life: 5000,
     });
   };
 
@@ -108,12 +133,12 @@ export const RegisterPage = () => {
       return;
     }
 
-    if (requiresParentId(userAge) && data.parentId == null) {
+    if (requiresParentLink(userAge) && !data.parentEmail.trim()) {
       toast.current?.show({
         severity: "warn",
         summary: "Responsável obrigatório",
         detail:
-          "Menores de 16 anos precisam informar o ID da conta do responsável.",
+          "Menores de 16 anos precisam informar o e-mail da conta do responsável.",
         life: 5000,
       });
       return;
@@ -129,7 +154,9 @@ export const RegisterPage = () => {
       phone: stripDigits(data.phone),
       newsletterSubscription: data.newsletterSubscription,
       termsAccepted: data.termsAccepted,
-      ...(data.parentId != null ? { parentId: data.parentId } : {}),
+      ...(data.parentEmail.trim()
+        ? { parentEmail: data.parentEmail.trim() }
+        : {}),
     };
 
     setLoading(true);
@@ -146,7 +173,7 @@ export const RegisterPage = () => {
         return;
       }
 
-      showApiValidationErrors(response.data as IApiError | undefined);
+      showRegistrationErrors(response);
     } catch {
       toast.current?.show({
         severity: "error",
@@ -308,40 +335,59 @@ export const RegisterPage = () => {
               <section className="register-form__section">
                 <h2 className="register-form__section-title">Responsável</h2>
                 <div className="register-form__field register-form__field--full">
-                  <label htmlFor="parentId">ID da conta do responsável</label>
+                  <label htmlFor="parentEmail">E-mail do responsável</label>
                   <Controller
-                    name="parentId"
+                    name="parentEmail"
                     control={control}
                     rules={{
                       validate: (value) => {
                         if (!showParentField) return true;
-                        return value != null && value > 0
-                          ? true
-                          : "Informe o ID da conta do responsável (maior de 18 anos).";
+                        const trimmed = value.trim();
+                        if (!trimmed) {
+                          return "Informe o e-mail da conta do responsável (maior de 18 anos).";
+                        }
+                        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) {
+                          return "Informe um e-mail válido do responsável.";
+                        }
+                        return true;
                       },
                     }}
                     render={({ field }) => (
-                      <InputNumber
-                        id="parentId"
-                        value={field.value}
-                        onValueChange={(event) =>
-                          field.onChange(event.value ?? null)
-                        }
-                        useGrouping={false}
+                      <InputText
+                        id="parentEmail"
+                        {...field}
+                        type="email"
+                        placeholder="responsavel@email.com"
                         className={classNames("w-full", {
-                          "p-invalid": errors.parentId,
+                          "p-invalid": errors.parentEmail,
                         })}
-                        inputClassName="w-full"
-                        placeholder="Ex.: 1"
                       />
                     )}
                   />
-                  {errors.parentId && (
-                    <small className="p-error">{errors.parentId.message}</small>
+                  {errors.parentEmail && (
+                    <small className="p-error">{errors.parentEmail.message}</small>
+                  )}
+                  {errors.parentEmail?.message
+                    && isParentAccountMissingMessage(errors.parentEmail.message) && (
+                    <div className="register-form__parent-alert" role="alert">
+                      <i className="pi pi-info-circle register-form__parent-alert-icon" />
+                      <div>
+                        <strong>O responsável ainda não tem conta na loja</strong>
+                        <p>
+                          Peça para ele criar o cadastro primeiro em{" "}
+                          <Link to="/register" className="register-form__terms-link">
+                            Criar conta
+                          </Link>
+                          . Depois, volte aqui e informe o mesmo e-mail usado
+                          no cadastro dele.
+                        </p>
+                      </div>
+                    </div>
                   )}
                   <small className="register-form__hint">
-                    Obrigatório para menores de 16 anos. O responsável deve ter
-                    conta ativa e ser maior de 18 anos.
+                    Obrigatório para menores de 16 anos. Informe o e-mail da
+                    conta do pai, mãe ou responsável legal — ele precisa já
+                    estar cadastrado na loja e ser maior de 18 anos.
                   </small>
                 </div>
               </section>

@@ -7,7 +7,7 @@ export interface IUserRegister {
   cpf: string;
   phone: string;
   newsletterSubscription?: boolean;
-  parentId?: number | null;
+  parentEmail?: string;
   termsAccepted: boolean;
 }
 
@@ -20,7 +20,7 @@ export interface IRegisterFormValues {
   cpf: string;
   phone: string;
   newsletterSubscription: boolean;
-  parentId: number | null;
+  parentEmail: string;
   termsAccepted: boolean;
 }
 
