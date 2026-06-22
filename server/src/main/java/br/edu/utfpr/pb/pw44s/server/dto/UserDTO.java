@@ -18,8 +18,10 @@ public class UserDTO {
     private Long id;
 
     @NotBlank(message = "O nome completo não pode ser vazio.")
-    @Size(min = 4, max = 100, message = "O nome completo deve ter entre 4 e 100 caracteres.")
-    @Pattern(regexp = "^[A-Za-zÀ-ÿ]+( [A-Za-zÀ-ÿ]+)+$", message = "O nome completo deve conter nome e sobrenome.")
+    @Size(min = 5, max = 100, message = "O nome completo deve ter entre 5 e 100 caracteres.")
+    @Pattern(
+            regexp = "^[A-Za-zÀ-ÿ]{2,}( [A-Za-zÀ-ÿ]{2,})+$",
+            message = "O nome completo deve conter nome e sobrenome (mínimo 2 letras em cada parte).")
     private String fullName;
 
     @com.fasterxml.jackson.annotation.JsonProperty(access = com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY)

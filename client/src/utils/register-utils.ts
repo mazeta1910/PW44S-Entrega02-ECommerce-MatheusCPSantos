@@ -1,7 +1,7 @@
 const PASSWORD_PATTERN =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#]).*$/;
 
-const FULL_NAME_PATTERN = /^[A-Za-zÀ-ÿ]+( [A-Za-zÀ-ÿ]+)+$/;
+const FULL_NAME_PATTERN = /^[A-Za-zÀ-ÿ]{2,}( [A-Za-zÀ-ÿ]{2,})+$/;
 
 export function stripDigits(value: string): string {
   return value.replace(/\D/g, "");
@@ -38,11 +38,11 @@ export function isRegisterAgeAllowed(age: number): boolean {
 export const registerValidation = {
   fullName: {
     required: "O nome completo é obrigatório.",
-    minLength: { value: 4, message: "Mínimo de 4 caracteres." },
     maxLength: { value: 100, message: "Máximo de 100 caracteres." },
     pattern: {
       value: FULL_NAME_PATTERN,
-      message: "Informe nome e sobrenome (apenas letras).",
+      message:
+        "Informe nome e sobrenome completos (mínimo 2 letras em cada parte).",
     },
   },
   password: {
