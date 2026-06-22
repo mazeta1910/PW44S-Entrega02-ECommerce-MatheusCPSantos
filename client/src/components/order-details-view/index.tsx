@@ -1,7 +1,9 @@
 import { useMemo } from "react";
+import { Link } from "react-router-dom";
 import { Tag } from "primereact/tag";
 import type { IOrder } from "@/commons/types";
 import { formatCurrency } from "@/utils/product-utils";
+import { getProductImageUrl } from "@/utils/image-utils";
 import { getPaymentMethodLabel } from "@/constants/payment-methods";
 import {
   getOrderStatusLabel,
@@ -115,26 +117,59 @@ export function OrderDetailsView({ order, showStatus = false }: OrderDetailsView
       <section className="order-details__section">
         <h3 className="order-details__title">Itens do pedido</h3>
         <ul className="order-details__items">
-          {order.items?.map((item) => (
+          {order.items?.map((item) => {
+            const productUrl = item.productId
+              ? `/catalog/product/${item.productId}`
+              : null;
+
+            return (
             <li
               key={item.id ?? `${item.variantId}-${item.productName}`}
               className="order-details__item"
             >
-              <div>
-                <strong>{item.productName}</strong>
-                {item.variantLabel && (
-                  <span className="order-details__item-variant">
-                    {item.variantLabel}
+              <div className="order-details__item-main">
+                <div className="order-details__item-thumb">
+                  {productUrl ? (
+                    <Link to={productUrl} aria-label={`Ver ${item.productName}`}>
+                      <img
+                        src={getProductImageUrl(item.productImage)}
+                        alt={item.productName}
+                        loading="lazy"
+                      />
+                    </Link>
+                  ) : (
+                    <img
+                      src={getProductImageUrl(item.productImage)}
+                      alt={item.productName}
+                      loading="lazy"
+                    />
+                  )}
+                </div>
+                <div className="order-details__item-info">
+                  {productUrl ? (
+                    <Link to={productUrl} className="order-details__item-link">
+                      <strong>{item.productName}</strong>
+                    </Link>
+                  ) : (
+                    <strong>{item.productName}</strong>
+                  )}
+                  {item.variantLabel && (
+                    <span className="order-details__item-variant">
+                      {item.variantLabel}
+                    </span>
+                  )}
+                  <span className="order-details__item-qty">
+                    {item.quantity}x {formatCurrency(Number(item.unitPrice))}
+                    {item.deliveryType === "DIGITAL" ? " · Digital" : " · Físico"}
                   </span>
-                )}
-                <span className="order-details__item-qty">
-                  {item.quantity}x {formatCurrency(Number(item.unitPrice))}
-                  {item.deliveryType === "DIGITAL" ? " · Digital" : " · Físico"}
-                </span>
+                </div>
               </div>
-              <span>{formatCurrency(Number(item.subtotal))}</span>
+              <span className="order-details__item-subtotal">
+                {formatCurrency(Number(item.subtotal))}
+              </span>
             </li>
-          ))}
+            );
+          })}
         </ul>
 
         <div className="order-details__summary">

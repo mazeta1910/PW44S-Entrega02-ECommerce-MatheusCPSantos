@@ -141,7 +141,9 @@ export type PaymentMethod =
 export interface IOrderItem {
   id?: number;
   variantId?: number;
+  productId?: number;
   productName: string;
+  productImage?: string;
   variantLabel?: string;
   deliveryType?: DeliveryType;
   platform?: Platform;
