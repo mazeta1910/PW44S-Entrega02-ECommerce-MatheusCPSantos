@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { ConfirmDialog } from "primereact/confirmdialog";
+import { ScrollToTop } from "@/components/scroll-to-top";
 import TopMenu from "@/components/top-menu";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { SupportChatWidget } from "@/components/support-chat-widget";
@@ -10,6 +11,7 @@ import "./styles.css";
 export function Layout() {
   return (
     <div className="app-shell">
+      <ScrollToTop />
       <ConfirmDialog />
       <AppToast />
       <CookieConsent />

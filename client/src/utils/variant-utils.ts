@@ -130,7 +130,7 @@ export function formatVariantMeta(variant: IProductVariant): string {
 export function shouldUseCompactVariantCards(variantCount: number): boolean {
   return variantCount <= COMPACT_VARIANT_THRESHOLD;
 }
-
+    
 //interface para opção de dropdown de variantes
 export interface VariantDropdownOption {
   label: string;

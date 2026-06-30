@@ -220,30 +220,27 @@ export function ProductDetailPage() {
                 />
 
                 <div className="product-detail__pricing">
-                  {//verifica se há desconto na variante selecionada
-                  hasSelectedDiscount && (
-                    //exibe o preço de lista
+                  {hasSelectedDiscount && (
                     <span className="product-detail__list-price">
-                      {formatCurrency(selectedListPrice)}
+                      {formatCurrency(selectedListPrice!)}
                     </span>
                   )}
-                  {//verifica se não há desconto e se o preço de lista não é nulo e se não há variante selecionada
-                  !hasSelectedDiscount && listPrice != null && !selectedVariant && (
-                    //exibe o preço de lista
-                    <span className="product-detail__list-price">
-                      {formatCurrency(listPrice)}
-                    </span>
-                  )}
-                  
+                  {!hasSelectedDiscount &&
+                    listPrice != null &&
+                    !selectedVariant && (
+                      <span className="product-detail__list-price">
+                        {formatCurrency(listPrice)}
+                      </span>
+                    )}
+
                   <span className="product-detail__price">
-                    //verifica se há múltiplas variantes e se não há variante selecionada
-                    {hasMultipleVariants && !selectedVariant ? "A partir de " : ""}
+                    {hasMultipleVariants && !selectedVariant
+                      ? "A partir de "
+                      : ""}
                     {formatCurrency(displayPrice)}
                   </span>
                 </div>
 
-
-                //exibe o seletor de variantes
                 <ProductVariantPicker
                   variants={activeVariants}
                   selectedVariantKey={selectedVariantKey}

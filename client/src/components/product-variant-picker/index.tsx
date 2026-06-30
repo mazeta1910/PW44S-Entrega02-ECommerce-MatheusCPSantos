@@ -118,23 +118,39 @@ export function ProductVariantPicker({
     [variants, selectedVariantKey],
   );
 
-  const renderDropdownOption = (option: VariantDropdownOption) => (
-    <VariantDropdownLabel variant={option.variant} />
-  );
+  const resolveVariantFromDropdownValue = (
+    option: VariantDropdownOption | string | null | undefined,
+  ) => {
+    if (!option) {
+      return null;
+    }
 
-  const renderDropdownValue = (key: string | null) => {
-    if (!key) {
+    if (typeof option === "object" && option.variant) {
+      return option.variant;
+    }
+
+    const key = typeof option === "string" ? option : option.value;
+    return variants.find((item) => getVariantKey(item) === key) ?? null;
+  };
+
+  const renderDropdownOption = (option: VariantDropdownOption) => {
+    if (!option?.variant) {
+      return null;
+    }
+
+    return <VariantDropdownLabel variant={option.variant} />;
+  };
+
+  const renderDropdownValue = (
+    option: VariantDropdownOption | string | null | undefined,
+  ) => {
+    const variant = resolveVariantFromDropdownValue(option);
+
+    if (!variant) {
       return <span>Selecione uma opção</span>;
     }
 
-    const variant =
-      variants.find((item) => getVariantKey(item) === key) ?? null;
-
-    return variant ? (
-      <VariantDropdownLabel variant={variant} />
-    ) : (
-      <span>{key}</span>
-    );
+    return <VariantDropdownLabel variant={variant} />;
   };
 
   if (variants.length === 0) {

@@ -1,7 +1,36 @@
+const PASSWORD_MIN_LENGTH = 8;
+
 const PASSWORD_PATTERN =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#]).*$/;
 
 const FULL_NAME_PATTERN = /^[A-Za-zÀ-ÿ]{2,}( [A-Za-zÀ-ÿ]{2,})+$/;
+
+/** Mensagens alinhadas ao UserDTO do back-end. */
+export const PASSWORD_MESSAGES = {
+  required: "A senha é obrigatória.",
+  minLength: "A senha deve ter no mínimo 8 caracteres.",
+  pattern:
+    "A senha deve conter pelo menos uma letra maiúscula, uma minúscula, um número e um caractere especial.",
+} as const;
+
+export const PASSWORD_REQUIREMENTS_HINT =
+  "Mínimo de 8 caracteres, com letra maiúscula, minúscula, número e caractere especial (@$!%*?&#).";
+
+export function validatePassword(value: string | undefined): true | string {
+  if (!value?.trim()) {
+    return PASSWORD_MESSAGES.required;
+  }
+
+  if (value.length < PASSWORD_MIN_LENGTH) {
+    return PASSWORD_MESSAGES.minLength;
+  }
+
+  if (!PASSWORD_PATTERN.test(value)) {
+    return PASSWORD_MESSAGES.pattern;
+  }
+
+  return true;
+}
 
 export function stripDigits(value: string): string {
   return value.replace(/\D/g, "");
@@ -46,13 +75,7 @@ export const registerValidation = {
     },
   },
   password: {
-    required: "A senha é obrigatória.",
-    minLength: { value: 8, message: "A senha deve ter no mínimo 8 caracteres." },
-    pattern: {
-      value: PASSWORD_PATTERN,
-      message:
-        "Use maiúscula, minúscula, número e caractere especial (@$!%*?&#).",
-    },
+    validate: validatePassword,
   },
   confirmPassword: {
     required: "A confirmação de senha é obrigatória.",

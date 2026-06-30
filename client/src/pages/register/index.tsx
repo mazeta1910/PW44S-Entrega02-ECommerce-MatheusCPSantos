@@ -17,6 +17,7 @@ import {
   calculateAge,
   formatDateToIso,
   isRegisterAgeAllowed,
+  PASSWORD_REQUIREMENTS_HINT,
   registerValidation,
   requiresParentLink,
   stripDigits,
@@ -410,11 +411,7 @@ export const RegisterPage = () => {
                       id="password"
                       {...field}
                       toggleMask
-                      feedback
-                      promptLabel="Escolha uma senha"
-                      weakLabel="Fraca"
-                      mediumLabel="Média"
-                      strongLabel="Forte"
+                      feedback={false}
                       className={classNames("w-full", {
                         "p-invalid": errors.password,
                       })}
@@ -422,8 +419,12 @@ export const RegisterPage = () => {
                     />
                   )}
                 />
-                {errors.password && (
+                {errors.password ? (
                   <small className="p-error">{errors.password.message}</small>
+                ) : (
+                  <small className="register-form__hint">
+                    {PASSWORD_REQUIREMENTS_HINT}
+                  </small>
                 )}
               </div>
 
